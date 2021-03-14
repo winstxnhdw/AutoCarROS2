@@ -27,12 +27,22 @@ class PathTracker(Node):
 
         # Load parameters
         try:
-            self.tracker_params = rospy.get_param("/path_tracker")
-            self.k = self.tracker_params["control_gain"]
-            self.ksoft = self.tracker_params["softening_gain"]
-            self.kyaw = self.tracker_params["yawrate_gain"]
-            self.max_steer = self.tracker_params["steering_limits"]
-            self.cg2frontaxle = self.tracker_params["centreofgravity_to_frontaxle"]
+            self.declare_parameter(
+                namespace='path_tracker',
+                parameters=[
+                    ('control_gain'),
+                    ('softening_gain'),
+                    ('yawrate_gain'),
+                    ('steering_limits'),
+                    ('centreofgravity_to_frontaxle')
+                ]
+            )
+
+            self.k = self.get_parameter("control_gain")
+            self.ksoft = self.get_parameter("softening_gain")
+            self.kyaw = self.get_parameter("yawrate_gain")
+            self.max_steer = self.get_parameter("steering_limits")
+            self.cg2frontaxle = self.get_parameter("centreofgravity_to_frontaxle")
         
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
@@ -120,7 +130,7 @@ class PathTracker(Node):
     
         pose = PoseStamped()
         pose.header.frame_id = "map"
-        pose.header.stamp = rospy.Time.now()
+        pose.header.stamp = node.get_clock().now().to_msg()
         pose.pose.position.x = self.cx[target_idx]
         pose.pose.position.y = self.cy[target_idx]
         pose.pose.position.z = 0.0
@@ -200,9 +210,6 @@ def main():
 
     # Initialise the class
     path_tracker = PathTracker()
-
-    # Set update rate
-    r = rospy.Rate(path_tracker.frequency)
 
     while not rclpy.ok():
         try:
