@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import rospy
+import rclpy
 import numpy as np
 
+from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Quaternion, Pose2D
 from ngeeann_av_msgs.msg import Path2D, State2D
 from nav_msgs.msg import Path, OccupancyGrid, MapMetaData
@@ -11,46 +12,41 @@ from utils.heading2quaternion import heading_to_quaternion
 from utils.cubic_spline_planner import *
 from utils.spline_planner import *
 
-class FrenetPath:
-
-    def __init__(self):
-
-        # Intialise the longitudinal frenet coordinates
-        self.s = []
-        self.s_s = []
-        self.s_ss = []
-        self.s_sss = []
-
-        # Initialise the lateral frenet coordinates
-        self.d = []
-        self.d_d = []
-        self.d_dd = []
-        self.d_ddd = []
-
-class LocalPathPlanner:
+class LocalPathPlanner(Node):
 
     def __init__(self):
         ''' 
         Class constructor to initialise the class 
         '''
+
+        super().__init__('local_planner')
+
         # Initialise publishers
-        self.local_planner_pub = rospy.Publisher('/ngeeann_av/path', Path2D, queue_size=10)
-        self.path_viz_pub = rospy.Publisher('/ngeeann_av/viz_path', Path, queue_size=10)
-        #self.collisions_pub = rospy.Publisher('/ngeeann_av/viz_collisions', Path, queue_size=10)
-        self.target_vel_pub = rospy.Publisher('/ngeeann_av/target_velocity', Float32, queue_size=10)
+        self.local_planner_pub = node.create_publisher(Path2D, '/ngeeann_av/path')
+        self.path_viz_pub = node.create_publisher(Path, '/ngeeann_av/viz_path')
+        self.target_vel_pub = node.create_publisher(Float32, '/ngeeann_av/target_velocity')
 
         # Initialise subscribers
-        self.goals_sub = rospy.Subscriber('/ngeeann_av/goals', Path2D, self.goals_cb, queue_size=10)
-        self.localisation_sub = rospy.Subscriber('/ngeeann_av/state2D', State2D, self.vehicle_state_cb, queue_size=10)
-        self.gridmap_sub = rospy.Subscriber('/map', OccupancyGrid, self.gridmap_cb, queue_size=10)
+        self.goals_sub = node.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb)
+        self.localisation_sub = node.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb)
+        self.gridmap_sub = node.create_subscription(OccupancyGrid, '/map', self.gridmap_cb)
 
         # Load parameters
         try:
-            self.planner_params = rospy.get_param("/local_path_planner")
-            self.frequency = self.planner_params["update_frequency"]
-            self.frame_id = self.planner_params["frame_id"]
-            self.car_width = self.planner_params["car_width"]
-            self.cg2frontaxle = self.planner_params["centreofgravity_to_frontaxle"]
+            self.declare_parameter(
+                namespace='',
+                parameters=[
+                    ('update_frequency'),
+                    ('frame_id'),
+                    ('car_width'),
+                    ('centreofgravity_to_frontaxle')
+                ]
+            )
+
+            self.frequency = self.get_parameter("update_frequency")
+            self.frame_id = self.get_parameter("frame_id")
+            self.car_width = self.get_parameter("car_width")
+            self.cg2frontaxle = self.get_parameter("centreofgravity_to_frontaxle")
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
@@ -158,7 +154,7 @@ class LocalPathPlanner:
         
         viz_path = Path()
         viz_path.header.frame_id = "map"
-        viz_path.header.stamp = rospy.Time.now()
+        viz_path.header.stamp = node.get_clock().now().to_msg()
 
         for n in range(0, cells):
             # Appending to Target Path
@@ -172,7 +168,7 @@ class LocalPathPlanner:
             vpose = PoseStamped()
             vpose.header.frame_id = self.frame_id
             vpose.header.seq = n
-            vpose.header.stamp = rospy.Time.now()
+            vpose.header.stamp = node.get_clock().now().to_msg()
             vpose.pose.position.x = cx[n]
             vpose.pose.position.y = cy[n]
             vpose.pose.position.z = 0.0
@@ -195,21 +191,15 @@ def main():
     local_planner = LocalPathPlanner()
 
     # Initialise the node
-    rospy.init_node('local_planner')
+    rclpy.init(args=args)
+    node = rclpy.create_node('local_planner')
 
-    # Set update rate
-    r = rospy.Rate(local_planner.frequency) 
-
-    # Wait for messages
-    rospy.wait_for_message('/ngeeann_av/goals', Path2D)
-    rospy.wait_for_message('/map', OccupancyGrid)
-
-    while not rospy.is_shutdown():
+    while not rclpy.ok():
         try:
             target_path = local_planner.create_target_path()
             local_planner.target_vel_pub.publish(local_planner.target_vel)
 
-            r.sleep()
+            rclpy.spin(local_planner)
 
         except KeyboardInterrupt:
             print("\n")

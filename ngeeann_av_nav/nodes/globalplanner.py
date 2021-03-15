@@ -1,37 +1,48 @@
 #!/usr/bin/env python
 
-import rospy
+import rclpy
 import numpy as np
 import pandas as pd
 
+from rclpy.node import Node
 from geometry_msgs.msg import Pose2D, Pose, PoseArray
 from ngeeann_av_msgs.msg import Path2D, State2D
 
-class GlobalPathPlanner:
+class GlobalPathPlanner(Node):
 
     def __init__(self):
 
         ''' Class constructor to initialise the class '''
 
+        super().__init__('global_planner')
+
         # Initialise publisher(s)
-        self.goals_pub = rospy.Publisher('/ngeeann_av/goals', Path2D, queue_size=10)
-        self.goals_viz_pub = rospy.Publisher('/ngeeann_av/viz_goals', PoseArray, queue_size=10)
+        self.goals_pub = node.create_publisher(Path2D, '/ngeeann_av/goals')
+        self.goals_viz_pub = node.create_publisher(PoseArray, '/ngeeann_av/viz_goals')
 
         # Initialise suscriber(s)
-        self.localisation_sub = rospy.Subscriber('/ngeeann_av/state2D', State2D, self.vehicle_state_cb, queue_size=10)
+        self.localisation_sub = node.create_subcsriber(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb)
 
         # Load parameters
         try:
-            self.global_planner_params = rospy.get_param("/global_path_planner")
-            self.frequency = self.global_planner_params["update_frequency"]
-            self.wp_ahead = self.global_planner_params["waypoints_ahead"]
-            self.wp_behind = self.global_planner_params["waypoints_behind"]
-            self.passed_threshold = self.global_planner_params["passed_threshold"]
+            self.declare_parameter(
+                namespace='',
+                parameters=[
+                    ('waypoints_ahead'),
+                    ('waypoints_behind'),
+                    ('passed_threshold'),
+                    ('waypoints'),
+                    ('centreofgravity_to_frontaxle')
+                ]
+            )
 
-            self.tracker_params = rospy.get_param("/path_tracker")
-            self.cg2frontaxle = self.tracker_params["centreofgravity_to_frontaxle"]
+            self.wp_ahead = self.get_parameter("waypoints_ahead")
+            self.wp_behind = self.get_parameter("waypoints_behind")
+            self.passed_threshold = self.get_parameter("passed_threshold")
 
-            dir_path = rospy.get_param("/waypoints")
+            self.cg2frontaxle = self.get_parameter("centreofgravity_to_frontaxle")
+
+            dir_path = self.get_parameter("waypoints")
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
@@ -168,7 +179,7 @@ class GlobalPathPlanner:
 
         viz_goals = PoseArray()
         viz_goals.header.frame_id = "map"
-        viz_goals.header.stamp = rospy.Time.now()
+        viz_goals.header.stamp = node.get_clock().now().to_msg()
 
         for i in range(0, waypoints):
             # Appending to Target Goals
@@ -196,17 +207,14 @@ def main():
     global_planner = GlobalPathPlanner()
 
     # Initialise the node
-    rospy.init_node('global_planner')
+    rclpy.init(args=args)
+    node = rclpy.create_node('global_planner')
 
-    rospy.wait_for_message('/ngeeann_av/state2D', State2D)
-
-    # Set update rate
-    r = rospy.Rate(global_planner.frequency)
-
-    while not rospy.is_shutdown():
+    while not rclpy.ok():
         try:
             global_planner.set_waypoints()
-            r.sleep()
+         
+            rclpy.spin(global_planner)
 
         except KeyboardInterrupt:
             print("\n")

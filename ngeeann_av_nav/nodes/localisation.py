@@ -1,34 +1,38 @@
 #!/usr/bin/env python
 
-import rospy
+import rclpy
 import tf
 import numpy as np
 
+from rclpy.node import Node
 from gazebo_msgs.srv import GetModelState  
 from nav_msgs.msg import Odometry
 from ngeeann_av_msgs.msg import State2D
 from tf.transformations import quaternion_from_euler
 
-class Localisation:
+class Localisation(Node):
 
     def __init__(self):
 
-        # Wait and initialise service
-        rospy.wait_for_service('/ngeeann_av/gazebo/get_model_state') 
-        self.get_model_srv = rospy.ServiceProxy('/ngeeann_av/gazebo/get_model_state', GetModelState)
+        super().__init__('localisation')
 
         # Initialise publishers
-        self.localisation_pub = rospy.Publisher('/ngeeann_av/state2D', State2D, queue_size=10)
-        self.odom_pub = rospy.Publisher('/ngeeann_av/odom', Odometry, queue_size=10)
+        self.localisation_pub = node.create_publisher(State2D, '/ngeeann_av/state2D')
+        self.odom_pub = node.create_publisher(Odometry, '/ngeeann_av/odom')
 
         # Publishes artificial map frame
         self.map_broadcaster = tf.TransformBroadcaster()
 
         # Load parameters
         try:
-            self.localisation_params = rospy.get_param("/localisation")
-            self.frequency = self.localisation_params["update_frequency"]
-            self.model = self.localisation_params["model_name"]
+            self.declare_parameter(
+                namespace='',
+                parameters=[
+                    ('model_name'),
+                ]
+            )
+
+            self.model = self.get_parameter("model_name")
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
@@ -68,7 +72,7 @@ class Localisation:
         odom.pose.pose.orientation.z = self.state.pose.orientation.z
         odom.pose.pose.orientation.w = self.state.pose.orientation.w
 
-        odom.header.stamp = rospy.Time.now()
+        odom.header.stamp = node.get_clock().now().to_msg()
         odom.header.frame_id = "/map"
         odom.pose.pose.orientation = self.state.pose.orientation
 
@@ -88,7 +92,7 @@ class Localisation:
         y = self.state.pose.position.y
         z = self.state.pose.position.z
         odom_quat = [self.state.pose.orientation.x, self.state.pose.orientation.y, self.state.pose.orientation.z, self.state.pose.orientation.w]
-        self.map_broadcaster.sendTransform((x, y, z), odom_quat, rospy.Time.now(), "base_link", "map")
+        self.map_broadcaster.sendTransform((x, y, z), odom_quat, node.get_clock().now().to_msg(), "base_link", "map")
 
 def main():
 
@@ -96,17 +100,16 @@ def main():
     localisation = Localisation()
 
     # Initialise the node
-    rospy.init_node('localisation')
-
-    # Set update rate
-    r = rospy.Rate(localisation.frequency)
+    rclpy.init(args=args)
+    node = rclpy.create_node('localisation')
     
-    while not rospy.is_shutdown():
+    while not rclpy.ok():
         try:
             localisation.state = localisation.get_model_srv(localisation.model, '')
             localisation.update_state()
             localisation.update_odom()
-            r.sleep()
+
+            rclpy.spin(localisation)
 
         except KeyboardInterrupt:
             print("Shutting down ROS node...")

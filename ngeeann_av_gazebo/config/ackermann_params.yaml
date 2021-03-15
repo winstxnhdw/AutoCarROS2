@@ -1,0 +1,21 @@
+left_front_wheel:
+  steering_link_name: fl_1
+  steering_controller_name: l_steer_position_controller
+  axle_controller_name: fl_axle_position_controller
+  diameter: 0.650
+
+right_front_wheel:
+  steering_link_name: fr_1
+  steering_controller_name: r_steer_position_controller
+  axle_controller_name: fr_axle_position_controller
+  diameter: 0.650
+
+left_rear_wheel:
+  link_name: bl_1
+  axle_controller_name: bl_axle_position_controller
+  diameter: 0.650
+
+right_rear_wheel:
+  link_name: br_1
+  axle_controller_name: br_axle_position_controller
+  diameter: 0.650

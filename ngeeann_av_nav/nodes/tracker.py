@@ -15,20 +15,22 @@ from utils.heading2quaternion import heading_to_quaternion
 class PathTracker(Node):
 
     def __init__(self):
-        
+
+        super().__init__('path_tracker')
+
         # Initialise publishers
         self.tracker_pub = node.create_publisher(AckermannDrive, '/ngeeann_av/ackermann_cmd')
         self.lateral_ref_pub = node.create_publisher(PoseStamped, '/ngeeann_av/lateral_ref')
 
         # Initialise subscribers
         self.localisation_sub = node.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb)
-        self.path_sub = node.create_subscription(Path2D, '/ngeeann_av/path', self.path_cb, queue_size=10)
-        self.target_vel_sub = node.create_subscription(Float32, '/ngeeann_av/target_velocity', self.target_vel_cb, queue_size=10)
+        self.path_sub = node.create_subscription(Path2D, '/ngeeann_av/path', self.path_cb)
+        self.target_vel_sub = node.create_subscription(Float32, '/ngeeann_av/target_velocity', self.target_vel_cb)
 
         # Load parameters
         try:
             self.declare_parameter(
-                namespace='path_tracker',
+                namespace='',
                 parameters=[
                     ('control_gain'),
                     ('softening_gain'),

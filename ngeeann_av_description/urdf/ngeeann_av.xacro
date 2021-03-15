@@ -1,0 +1,207 @@
+<?xml version="1.0" ?>
+<robot name="ngeeann_av" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find ngeeann_av_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find ngeeann_av_description)/urdf/ngeeann_av.trans" />
+<xacro:include filename="$(find ngeeann_av_description)/urdf/ngeeann_av.gazebo" />
+<xacro:include filename="$(find ngeeann_av_description)/urdf/hokuyo.xacro" />
+<xacro:include filename="$(find ngeeann_av_description)/urdf/camera.xacro" />
+
+<link name="base_link"/>
+
+<joint name="base_link_joint" type="fixed">
+  <origin xyz="0 0 0.46936" rpy="0 0 0" />
+  <parent link="base_link"/>
+  <child link="chassis_link"/>
+</joint>
+
+<link name="chassis_link">
+  <inertial>
+    <origin rpy="0 0 0" xyz="1.04282e-06 0.07307 0.1816"/>
+    <mass value="1580"/>
+    <inertia ixx="1997.8579" ixy="-3e-05" ixz="-1e-06" iyy="442.7692" iyz="62.5206" izz="2238.0524"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/chassis_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/chassis_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="spoiler_joint" type="fixed">
+  <origin xyz="0 0.05 -0.05" rpy="1.5708 0 3.14159" />
+  <parent link="chassis_link"/>
+  <child link="spoiler_link"/>
+</joint>
+
+<link name="spoiler_link">
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/spoiler.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/spoiler.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="br_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07"/>
+    <mass value="24.5"/>
+    <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.8750 1.0136 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/br_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="darkgrey"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.8750 1.0136 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/br_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bl_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07"/>
+    <mass value="24.5"/>
+    <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.8750 1.0136 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/bl_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="darkgrey"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.8750 1.0136 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/bl_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="fr_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07"/>
+    <mass value="24.5"/>
+    <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.8750 -1.5174 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/fr_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="darkgrey"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.8750 -1.5174 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/fr_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="fl_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07"/>
+    <mass value="24.5"/>
+    <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.8750 -1.5174 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/fl_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="darkgrey"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.8750 -1.5174 0.1444"/>
+    <geometry>
+      <mesh filename="package://ngeeann_av_description/meshes/fl_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="r_steer_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003381 1.5929e-07 0.02162"/>
+    <mass value="1"/>
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+  </inertial>
+</link>
+
+<link name="l_steer_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003381 1.5929e-07 0.02162"/>
+    <mass value="1"/>
+    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+  </inertial>
+</link>
+
+<joint name="br_axle" type="continuous">
+  <origin rpy="0 0 0" xyz="0.8750 -1.013637 -0.144363"/>
+  <parent link="chassis_link"/>
+  <child link="br_1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+</joint>
+
+<joint name="bl_axle" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.8750 -1.013637 -0.144363"/>
+  <parent link="chassis_link"/>
+  <child link="bl_1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+</joint>
+
+<joint name="fr_axle" type="continuous">
+  <origin rpy="0 0 0" xyz="0.05 0.0 0.0"/>
+  <parent link="r_steer_1"/>
+  <child link="fr_1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+</joint>
+
+<joint name="fl_axle" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.05 0.0 0.0"/>
+  <parent link="l_steer_1"/>
+  <child link="fl_1"/>
+  <axis xyz="-1.0 0.0 0.0"/>
+</joint>
+
+<joint name="r_steer" type="revolute">
+  <origin rpy="0 0 0" xyz="0.8250 1.517363 -0.144363"/>
+  <parent link="chassis_link"/>
+  <child link="r_steer_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <dynamics damping="0.01" friction="0.01"/>
+  <limit effort="1000.0" lower="-0.95" upper="0.95" velocity="100"/>
+</joint>
+
+<joint name="l_steer" type="revolute">
+  <origin rpy="0 0 0" xyz="-0.8250 1.517363 -0.144363"/>
+  <parent link="chassis_link"/>
+  <child link="l_steer_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <dynamics damping="0.01" friction="0.01"/>
+  <limit effort="1000.0" lower="-0.95" upper="0.95" velocity="100"/>
+</joint>
+
+</robot>

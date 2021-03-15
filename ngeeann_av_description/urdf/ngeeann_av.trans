@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<robot name="ngeeann_av" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<transmission name="br_axle_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="br_axle">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="br_axle_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="bl_axle_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="bl_axle">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="bl_axle_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="fr_axle_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="fr_axle">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="fr_axle_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="fl_axle_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="fl_axle">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="fl_axle_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="r_steer_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="r_steer">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="r_steer_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="l_steer_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="l_steer">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="l_steer_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+</robot>

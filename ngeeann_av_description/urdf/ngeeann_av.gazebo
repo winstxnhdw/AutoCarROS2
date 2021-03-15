@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<robot name="ngeeann_av" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<!-- <xacro:property name="body_color" value="Gazebo/Silver" /> -->
+
+<!-- Original plugin file
+<gazebo>
+  <plugin filename="libgazebo_ros_control.so" name="control"/>
+</gazebo>  -->
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <legacyModeNS>true</legacyModeNS>
+  </plugin>
+</gazebo>
+
+<gazebo reference="chassis_link">
+  <material>Gazebo/White</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="spoiler_link">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="br_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.7</mu1>
+  <mu2>1.7</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="bl_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.7</mu1>
+  <mu2>1.7</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="fr_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.7</mu1>
+  <mu2>1.7</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="fl_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.1</mu1>
+  <mu2>1.1</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="r_steer_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="l_steer_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+</robot>

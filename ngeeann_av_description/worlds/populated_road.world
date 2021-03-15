@@ -1,0 +1,849 @@
+<?xml version="1.0" ?>
+<sdf version='1.6'>
+  <world name='default'>
+    <scene>
+      <grid>0</grid>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <model name='ground'>
+      <link name='body'>
+        <collision name='geom'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1 1</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <static>1</static>
+    </model>
+    <road name='my_road'>
+      <width>7.34</width>
+      <point>103.67 0 0</point>
+      <point>103.654 1.80929 0</point>
+      <point>103.607 3.61803 0</point>
+      <point>103.528 5.42567 0</point>
+      <point>103.417 7.23165 0</point>
+      <point>103.276 9.03544 0</point>
+      <point>103.102 10.8365 0</point>
+      <point>102.897 12.6342 0</point>
+      <point>102.661 14.4281 0</point>
+      <point>102.394 16.2176 0</point>
+      <point>102.095 18.0021 0</point>
+      <point>101.765 19.7812 0</point>
+      <point>101.405 21.5542 0</point>
+      <point>101.013 23.3207 0</point>
+      <point>100.591 25.08 0</point>
+      <point>100.138 26.8318 0</point>
+      <point>99.654 28.5753 0</point>
+      <point>99.1401 30.3102 0</point>
+      <point>98.596 32.0358 0</point>
+      <point>98.0219 33.7517 0</point>
+      <point>97.4179 35.4572 0</point>
+      <point>96.7843 37.152 0</point>
+      <point>96.1212 38.8355 0</point>
+      <point>95.4287 40.5071 0</point>
+      <point>94.7073 42.1664 0</point>
+      <point>93.9569 43.8128 0</point>
+      <point>93.178 45.4459 0</point>
+      <point>92.3706 47.0652 0</point>
+      <point>91.5352 48.6701 0</point>
+      <point>90.6718 50.2602 0</point>
+      <point>89.7809 51.835 0</point>
+      <point>88.8625 53.394 0</point>
+      <point>87.9171 54.9367 0</point>
+      <point>86.945 56.4627 0</point>
+      <point>85.9463 57.9715 0</point>
+      <point>84.9215 59.4627 0</point>
+      <point>83.8708 60.9357 0</point>
+      <point>82.7945 62.3902 0</point>
+      <point>81.6931 63.8256 0</point>
+      <point>80.5667 65.2416 0</point>
+      <point>79.4158 66.6378 0</point>
+      <point>78.2407 68.0136 0</point>
+      <point>77.0418 69.3688 0</point>
+      <point>75.8194 70.7028 0</point>
+      <point>74.574 72.0152 0</point>
+      <point>73.3058 73.3058 0</point>
+      <point>72.0152 74.574 0</point>
+      <point>70.7028 75.8194 0</point>
+      <point>69.3688 77.0418 0</point>
+      <point>68.0136 78.2407 0</point>
+      <point>66.6378 79.4158 0</point>
+      <point>65.2416 80.5667 0</point>
+      <point>63.8256 81.6931 0</point>
+      <point>62.3902 82.7945 0</point>
+      <point>60.9357 83.8708 0</point>
+      <point>59.4627 84.9215 0</point>
+      <point>57.9715 85.9463 0</point>
+      <point>56.4627 86.945 0</point>
+      <point>54.9367 87.9171 0</point>
+      <point>53.394 88.8625 0</point>
+      <point>51.835 89.7809 0</point>
+      <point>50.2602 90.6718 0</point>
+      <point>48.6701 91.5352 0</point>
+      <point>47.0652 92.3706 0</point>
+      <point>45.4459 93.178 0</point>
+      <point>43.8128 93.9569 0</point>
+      <point>42.1664 94.7073 0</point>
+      <point>40.5071 95.4287 0</point>
+      <point>38.8355 96.1212 0</point>
+      <point>37.152 96.7843 0</point>
+      <point>35.4572 97.4179 0</point>
+      <point>33.7517 98.0219 0</point>
+      <point>32.0358 98.596 0</point>
+      <point>30.3102 99.1401 0</point>
+      <point>28.5753 99.654 0</point>
+      <point>26.8318 100.138 0</point>
+      <point>25.08 100.591 0</point>
+      <point>23.3207 101.013 0</point>
+      <point>21.5542 101.405 0</point>
+      <point>19.7812 101.765 0</point>
+      <point>18.0021 102.095 0</point>
+      <point>16.2176 102.394 0</point>
+      <point>14.4281 102.661 0</point>
+      <point>12.6342 102.897 0</point>
+      <point>10.8365 103.102 0</point>
+      <point>9.03544 103.276 0</point>
+      <point>7.23165 103.417 0</point>
+      <point>5.42567 103.528 0</point>
+      <point>3.61803 103.607 0</point>
+      <point>1.80929 103.654 0</point>
+      <point>-0 103.67 0</point>
+      <point>-1.80929 103.654 0</point>
+      <point>-3.61803 103.607 0</point>
+      <point>-5.42567 103.528 0</point>
+      <point>-7.23165 103.417 0</point>
+      <point>-9.03544 103.276 0</point>
+      <point>-10.8365 103.102 0</point>
+      <point>-12.6342 102.897 0</point>
+      <point>-14.4281 102.661 0</point>
+      <point>-16.2176 102.394 0</point>
+      <point>-18.0021 102.095 0</point>
+      <point>-19.7812 101.765 0</point>
+      <point>-21.5542 101.405 0</point>
+      <point>-23.3207 101.013 0</point>
+      <point>-25.08 100.591 0</point>
+      <point>-26.8318 100.138 0</point>
+      <point>-28.5753 99.654 0</point>
+      <point>-30.3102 99.1401 0</point>
+      <point>-32.0358 98.596 0</point>
+      <point>-33.7517 98.0219 0</point>
+      <point>-35.4572 97.4179 0</point>
+      <point>-37.152 96.7843 0</point>
+      <point>-38.8355 96.1212 0</point>
+      <point>-40.5071 95.4287 0</point>
+      <point>-42.1664 94.7073 0</point>
+      <point>-43.8128 93.9569 0</point>
+      <point>-45.4459 93.178 0</point>
+      <point>-47.0652 92.3706 0</point>
+      <point>-48.6701 91.5352 0</point>
+      <point>-50.2602 90.6718 0</point>
+      <point>-51.835 89.7809 0</point>
+      <point>-53.394 88.8625 0</point>
+      <point>-54.9367 87.9171 0</point>
+      <point>-56.4627 86.945 0</point>
+      <point>-57.9715 85.9463 0</point>
+      <point>-59.4627 84.9215 0</point>
+      <point>-60.9357 83.8708 0</point>
+      <point>-62.3902 82.7945 0</point>
+      <point>-63.8256 81.6931 0</point>
+      <point>-65.2416 80.5667 0</point>
+      <point>-66.6378 79.4158 0</point>
+      <point>-68.0136 78.2407 0</point>
+      <point>-69.3688 77.0418 0</point>
+      <point>-70.7028 75.8194 0</point>
+      <point>-72.0152 74.574 0</point>
+      <point>-73.3058 73.3058 0</point>
+      <point>-74.574 72.0152 0</point>
+      <point>-75.8194 70.7028 0</point>
+      <point>-77.0418 69.3688 0</point>
+      <point>-78.2407 68.0136 0</point>
+      <point>-79.4158 66.6378 0</point>
+      <point>-80.5667 65.2416 0</point>
+      <point>-81.6931 63.8256 0</point>
+      <point>-82.7945 62.3902 0</point>
+      <point>-83.8708 60.9357 0</point>
+      <point>-84.9215 59.4627 0</point>
+      <point>-85.9463 57.9715 0</point>
+      <point>-86.945 56.4627 0</point>
+      <point>-87.9171 54.9367 0</point>
+      <point>-88.8625 53.394 0</point>
+      <point>-89.7809 51.835 0</point>
+      <point>-90.6718 50.2602 0</point>
+      <point>-91.5352 48.6701 0</point>
+      <point>-92.3706 47.0652 0</point>
+      <point>-93.178 45.4459 0</point>
+      <point>-93.9569 43.8128 0</point>
+      <point>-94.7073 42.1664 0</point>
+      <point>-95.4287 40.5071 0</point>
+      <point>-96.1212 38.8355 0</point>
+      <point>-96.7843 37.152 0</point>
+      <point>-97.4179 35.4572 0</point>
+      <point>-98.0219 33.7517 0</point>
+      <point>-98.596 32.0358 0</point>
+      <point>-99.1401 30.3102 0</point>
+      <point>-99.654 28.5753 0</point>
+      <point>-100.138 26.8318 0</point>
+      <point>-100.591 25.08 0</point>
+      <point>-101.013 23.3207 0</point>
+      <point>-101.405 21.5542 0</point>
+      <point>-101.765 19.7812 0</point>
+      <point>-102.095 18.0021 0</point>
+      <point>-102.394 16.2176 0</point>
+      <point>-102.661 14.4281 0</point>
+      <point>-102.897 12.6342 0</point>
+      <point>-103.102 10.8365 0</point>
+      <point>-103.276 9.03544 0</point>
+      <point>-103.417 7.23165 0</point>
+      <point>-103.528 5.42567 0</point>
+      <point>-103.607 3.61803 0</point>
+      <point>-103.654 1.80929 0</point>
+      <point>-103.67 0 0</point>
+      <point>-103.654 -1.80929 0</point>
+      <point>-103.607 -3.61803 0</point>
+      <point>-103.528 -5.42567 0</point>
+      <point>-103.417 -7.23165 0</point>
+      <point>-103.276 -9.03544 0</point>
+      <point>-103.102 -10.8365 0</point>
+      <point>-102.897 -12.6342 0</point>
+      <point>-102.661 -14.4281 0</point>
+      <point>-102.394 -16.2176 0</point>
+      <point>-102.095 -18.0021 0</point>
+      <point>-101.765 -19.7812 0</point>
+      <point>-101.405 -21.5542 0</point>
+      <point>-101.013 -23.3207 0</point>
+      <point>-100.591 -25.08 0</point>
+      <point>-100.138 -26.8318 0</point>
+      <point>-99.654 -28.5753 0</point>
+      <point>-99.1401 -30.3102 0</point>
+      <point>-98.596 -32.0358 0</point>
+      <point>-98.0219 -33.7517 0</point>
+      <point>-97.4179 -35.4572 0</point>
+      <point>-96.7843 -37.152 0</point>
+      <point>-96.1212 -38.8355 0</point>
+      <point>-95.4287 -40.5071 0</point>
+      <point>-94.7073 -42.1664 0</point>
+      <point>-93.9569 -43.8128 0</point>
+      <point>-93.178 -45.4459 0</point>
+      <point>-92.3706 -47.0652 0</point>
+      <point>-91.5352 -48.6701 0</point>
+      <point>-90.6718 -50.2602 0</point>
+      <point>-89.7809 -51.835 0</point>
+      <point>-88.8625 -53.394 0</point>
+      <point>-87.9171 -54.9367 0</point>
+      <point>-86.945 -56.4627 0</point>
+      <point>-85.9463 -57.9715 0</point>
+      <point>-84.9215 -59.4627 0</point>
+      <point>-83.8708 -60.9357 0</point>
+      <point>-82.7945 -62.3902 0</point>
+      <point>-81.6931 -63.8256 0</point>
+      <point>-80.5667 -65.2416 0</point>
+      <point>-79.4158 -66.6378 0</point>
+      <point>-78.2407 -68.0136 0</point>
+      <point>-77.0418 -69.3688 0</point>
+      <point>-75.8194 -70.7028 0</point>
+      <point>-74.574 -72.0152 0</point>
+      <point>-73.3058 -73.3058 0</point>
+      <point>-72.0152 -74.574 0</point>
+      <point>-70.7028 -75.8194 0</point>
+      <point>-69.3688 -77.0418 0</point>
+      <point>-68.0136 -78.2407 0</point>
+      <point>-66.6378 -79.4158 0</point>
+      <point>-65.2416 -80.5667 0</point>
+      <point>-63.8256 -81.6931 0</point>
+      <point>-62.3902 -82.7945 0</point>
+      <point>-60.9357 -83.8708 0</point>
+      <point>-59.4627 -84.9215 0</point>
+      <point>-57.9715 -85.9463 0</point>
+      <point>-56.4627 -86.945 0</point>
+      <point>-54.9367 -87.9171 0</point>
+      <point>-53.394 -88.8625 0</point>
+      <point>-51.835 -89.7809 0</point>
+      <point>-50.2602 -90.6718 0</point>
+      <point>-48.6701 -91.5352 0</point>
+      <point>-47.0652 -92.3706 0</point>
+      <point>-45.4459 -93.178 0</point>
+      <point>-43.8128 -93.9569 0</point>
+      <point>-42.1664 -94.7073 0</point>
+      <point>-40.5071 -95.4287 0</point>
+      <point>-38.8355 -96.1212 0</point>
+      <point>-37.152 -96.7843 0</point>
+      <point>-35.4572 -97.4179 0</point>
+      <point>-33.7517 -98.0219 0</point>
+      <point>-32.0358 -98.596 0</point>
+      <point>-30.3102 -99.1401 0</point>
+      <point>-28.5753 -99.654 0</point>
+      <point>-26.8318 -100.138 0</point>
+      <point>-25.08 -100.591 0</point>
+      <point>-23.3207 -101.013 0</point>
+      <point>-21.5542 -101.405 0</point>
+      <point>-19.7812 -101.765 0</point>
+      <point>-18.0021 -102.095 0</point>
+      <point>-16.2176 -102.394 0</point>
+      <point>-14.4281 -102.661 0</point>
+      <point>-12.6342 -102.897 0</point>
+      <point>-10.8365 -103.102 0</point>
+      <point>-9.03544 -103.276 0</point>
+      <point>-7.23165 -103.417 0</point>
+      <point>-5.42567 -103.528 0</point>
+      <point>-3.61803 -103.607 0</point>
+      <point>-1.80929 -103.654 0</point>
+      <point>-0 -103.67 0</point>
+      <point>1.80929 -103.654 0</point>
+      <point>3.61803 -103.607 0</point>
+      <point>5.42567 -103.528 0</point>
+      <point>7.23165 -103.417 0</point>
+      <point>9.03544 -103.276 0</point>
+      <point>10.8365 -103.102 0</point>
+      <point>12.6342 -102.897 0</point>
+      <point>14.4281 -102.661 0</point>
+      <point>16.2176 -102.394 0</point>
+      <point>18.0021 -102.095 0</point>
+      <point>19.7812 -101.765 0</point>
+      <point>21.5542 -101.405 0</point>
+      <point>23.3207 -101.013 0</point>
+      <point>25.08 -100.591 0</point>
+      <point>26.8318 -100.138 0</point>
+      <point>28.5753 -99.654 0</point>
+      <point>30.3102 -99.1401 0</point>
+      <point>32.0358 -98.596 0</point>
+      <point>33.7517 -98.0219 0</point>
+      <point>35.4572 -97.4179 0</point>
+      <point>37.152 -96.7843 0</point>
+      <point>38.8355 -96.1212 0</point>
+      <point>40.5071 -95.4287 0</point>
+      <point>42.1664 -94.7073 0</point>
+      <point>43.8128 -93.9569 0</point>
+      <point>45.4459 -93.178 0</point>
+      <point>47.0652 -92.3706 0</point>
+      <point>48.6701 -91.5352 0</point>
+      <point>50.2602 -90.6718 0</point>
+      <point>51.835 -89.7809 0</point>
+      <point>53.394 -88.8625 0</point>
+      <point>54.9367 -87.9171 0</point>
+      <point>56.4627 -86.945 0</point>
+      <point>57.9715 -85.9463 0</point>
+      <point>59.4627 -84.9215 0</point>
+      <point>60.9357 -83.8708 0</point>
+      <point>62.3902 -82.7945 0</point>
+      <point>63.8256 -81.6931 0</point>
+      <point>65.2416 -80.5667 0</point>
+      <point>66.6378 -79.4158 0</point>
+      <point>68.0136 -78.2407 0</point>
+      <point>69.3688 -77.0418 0</point>
+      <point>70.7028 -75.8194 0</point>
+      <point>72.0152 -74.574 0</point>
+      <point>73.3058 -73.3058 0</point>
+      <point>74.574 -72.0152 0</point>
+      <point>75.8194 -70.7028 0</point>
+      <point>77.0418 -69.3688 0</point>
+      <point>78.2407 -68.0136 0</point>
+      <point>79.4158 -66.6378 0</point>
+      <point>80.5667 -65.2416 0</point>
+      <point>81.6931 -63.8256 0</point>
+      <point>82.7945 -62.3902 0</point>
+      <point>83.8708 -60.9357 0</point>
+      <point>84.9215 -59.4627 0</point>
+      <point>85.9463 -57.9715 0</point>
+      <point>86.945 -56.4627 0</point>
+      <point>87.9171 -54.9367 0</point>
+      <point>88.8625 -53.394 0</point>
+      <point>89.7809 -51.835 0</point>
+      <point>90.6718 -50.2602 0</point>
+      <point>91.5352 -48.6701 0</point>
+      <point>92.3706 -47.0652 0</point>
+      <point>93.178 -45.4459 0</point>
+      <point>93.9569 -43.8128 0</point>
+      <point>94.7073 -42.1664 0</point>
+      <point>95.4287 -40.5071 0</point>
+      <point>96.1212 -38.8355 0</point>
+      <point>96.7843 -37.152 0</point>
+      <point>97.4179 -35.4572 0</point>
+      <point>98.0219 -33.7517 0</point>
+      <point>98.596 -32.0358 0</point>
+      <point>99.1401 -30.3102 0</point>
+      <point>99.654 -28.5753 0</point>
+      <point>100.138 -26.8318 0</point>
+      <point>100.591 -25.08 0</point>
+      <point>101.013 -23.3207 0</point>
+      <point>101.405 -21.5542 0</point>
+      <point>101.765 -19.7812 0</point>
+      <point>102.095 -18.0021 0</point>
+      <point>102.394 -16.2176 0</point>
+      <point>102.661 -14.4281 0</point>
+      <point>102.897 -12.6342 0</point>
+      <point>103.102 -10.8365 0</point>
+      <point>103.276 -9.03544 0</point>
+      <point>103.417 -7.23165 0</point>
+      <point>103.528 -5.42567 0</point>
+      <point>103.607 -3.61803 0</point>
+      <point>103.654 -1.80929 0</point>
+      <point>103.67 0 0</point>
+    </road>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='Stop Sign'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_sign/meshes/stop_sign.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_sign/materials/scripts</uri>
+              <uri>model://stop_sign/materials/textures</uri>
+              <name>StopSign/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>99.6114 3.22722 0 0 -0 0</pose>
+    </model>
+    <model name='stop_light_post'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='post'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_light_post/meshes/stop_light_post.obj</uri>
+              <scale>0.01 0.01 0.01</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='post'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_light_post/meshes/stop_light_post.obj</uri>
+              <scale>0.01 0.01 0.01</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <static>1</static>
+      <link name='right_light::link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_light/meshes/stop_light.obj</uri>
+              <scale>0.01 0.01 0.01</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='frame'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_light/meshes/stop_light.obj</uri>
+              <scale>0.01 0.01 0.01</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='red'>
+          <pose frame=''>-0.001123 -0.082251 -0.147514 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>StopLight/Light</name>
+            </script>
+            <ambient>1 0 0 1</ambient>
+            <specular>1 0 0 1</specular>
+          </material>
+        </visual>
+        <visual name='yellow'>
+          <pose frame=''>-0.001123 -0.082251 -0.402 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>StopLight/Light</name>
+            </script>
+            <ambient>1 1 0 1</ambient>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        <visual name='green'>
+          <pose frame=''>-0.001123 -0.082251 -0.655 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>StopLight/Light</name>
+            </script>
+            <ambient>0 1 0 1</ambient>
+            <specular>0 1 0 1</specular>
+          </material>
+        </visual>
+        <pose frame=''>0 -0.05 4 0 -0 0</pose>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <static>1</static>
+      <link name='center_light::link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_light/meshes/stop_light.obj</uri>
+              <scale>0.01 0.01 0.01</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='frame'>
+          <geometry>
+            <mesh>
+              <uri>model://stop_light/meshes/stop_light.obj</uri>
+              <scale>0.01 0.01 0.01</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='red'>
+          <pose frame=''>-0.001123 -0.082251 -0.147514 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>StopLight/Light</name>
+            </script>
+            <ambient>1 0 0 1</ambient>
+            <specular>1 0 0 1</specular>
+          </material>
+        </visual>
+        <visual name='yellow'>
+          <pose frame=''>-0.001123 -0.082251 -0.402 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>StopLight/Light</name>
+            </script>
+            <ambient>1 1 0 1</ambient>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        <visual name='green'>
+          <pose frame=''>-0.001123 -0.082251 -0.655 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.1012</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://stop_light/materials/scripts/</uri>
+              <uri>model://stop_light/materials/textures/</uri>
+              <name>StopLight/Light</name>
+            </script>
+            <ambient>0 1 0 1</ambient>
+            <specular>0 1 0 1</specular>
+          </material>
+        </visual>
+        <pose frame=''>-2 0.04 5.82 0 -0 0</pose>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>93.3784 32.473 0 0 -0 0</pose>
+    </model>
+    <model name='pickup'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0 0 0 0 -1.5708</pose>
+          <geometry>
+            <mesh>
+              <uri>model://pickup/meshes/pickup.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <pose frame=''>0 0 0 0 0 -1.5708</pose>
+          <geometry>
+            <mesh>
+              <uri>model://pickup/meshes/pickup.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>94.8435 37.4324 0 0 -0 0</pose>
+    </model>
+    <model name='suv'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <pose frame=''>0 0 0 0 0 -1.5708</pose>
+          <geometry>
+            <mesh>
+              <scale>0.06 0.06 0.06</scale>
+              <uri>model://suv/meshes/suv.obj</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <pose frame=''>0 0 0 0 0 -1.5708</pose>
+          <geometry>
+            <mesh>
+              <scale>0.06 0.06 0.06</scale>
+              <uri>model://suv/meshes/suv.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>105.296 7.73075 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>97 362000000</sim_time>
+      <real_time>0 0</real_time>
+      <wall_time>1589896135 12027665</wall_time>
+      <iterations>97362</iterations>
+      <model name='Stop Sign'>
+        <pose frame=''>99.6114 3.22722 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>99.6114 3.22722 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='body'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='person_standing'>
+        <pose frame=''>108.756 0.343662 0 1e-06 1e-06 -1.57064</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>108.756 0.343662 0 1e-06 1e-06 -1.57064</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>1.51706 2.1997 1.44903 0.968364 1.38943 2.96249</acceleration>
+          <wrench>121.365 175.976 115.922 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='pickup'>
+        <pose frame=''>95.0666 36.2265 0 0 -0 1.93588</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>95.0666 36.2265 0 0 -0 1.93588</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='stop_light_post'>
+        <pose frame=''>99.042 42.2442 0 0 -0 0.321385</pose>
+        <scale>1 1 1</scale>
+        <link name='center_light::link'>
+          <pose frame=''>97.1318 41.6504 5.82 0 -0 0.321385</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='link'>
+          <pose frame=''>99.042 42.2442 0 0 -0 0.321385</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='right_light::link'>
+          <pose frame=''>99.0578 42.1967 4 0 -0 0.321385</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='suv'>
+        <pose frame=''>105.105 7.81798 0 0 0 -1.49285</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>105.105 7.81798 0 0 0 -1.49285</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>104.856 -17.243 7.34055 0 0.217796 1.45938</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
