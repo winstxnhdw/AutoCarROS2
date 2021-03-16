@@ -21,7 +21,7 @@ class GlobalPathPlanner(Node):
         self.goals_viz_pub = node.create_publisher(PoseArray, '/ngeeann_av/viz_goals')
 
         # Initialise suscriber(s)
-        self.localisation_sub = node.create_subcsriber(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb)
+        self.localisation_sub = node.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb)
 
         # Load parameters
         try:

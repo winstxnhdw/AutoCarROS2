@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 
 import threading
-import rospy
+import rclpy
 import numpy as np
 import numpy.ma as ma
 import sensor_msgs.point_cloud2 as pc2
 
+from rclpy.node import Node
 from geometry_msgs.msg import Pose, Point, Quaternion, Pose2D
 from ngeeann_av_msgs.msg import Path2D, State2D
 from nav_msgs.msg import OccupancyGrid, MapMetaData
 from sensor_msgs.msg import LaserScan
 
-class Map:
+class Map():
 
     def __init__(self, origin_x=0, origin_y=0, resolution=0.2, width=650, height=650):
         ''' 
@@ -92,7 +93,7 @@ class Map:
         grid_msg = OccupancyGrid()
 
         # Set up the header.
-        grid_msg.header.stamp = rospy.Time.now()
+        grid_msg.header.stamp = node.get_clock().now().to_msg(
         grid_msg.header.frame_id = "map"
 
         # .info is a nav_msgs/MapMetaData message. 
@@ -135,9 +136,11 @@ class Map:
             self.grid[iy, ix] = self.grid[iy, ix] + val
             self.grid[iy, ix] = np.clip(self.grid[iy, ix], 0, 1)
 
-class GridMapping(object):
+class GridMapping(Node):
     
     def __init__(self):
+
+        super().__init__('grid_mapping')
 
         self.lock = threading.Lock()
         self.scan = None
@@ -149,11 +152,11 @@ class GridMapping(object):
         self.gmap = Map()
         
         # Initialise publishers
-        self.viz_map_pub = rospy.Publisher('/map', OccupancyGrid, latch=True, queue_size=30)
+        self.viz_map_pub = node.create_publisher('/map', OccupancyGrid, latch=True, queue_size=30)
 
         # Initialise subscribers
-        rospy.Subscriber('/ngeeann_av/state2D', State2D, self.vehicle_state_cb)
-        rospy.Subscriber('/laser/scan', LaserScan, self.scan_cb)
+        node.create_subscription('/ngeeann_av/state2D', State2D, self.vehicle_state_cb)
+        node.create_subscription('/laser/scan', LaserScan, self.scan_cb)
 
     def publish_map(self, gmap):
         '''
@@ -282,18 +285,17 @@ def main():
     '''
         The main function.
     '''
-    gridmapping = GridMapping()
+    grid_mapping = GridMapping()
 
-    rospy.init_node("bof")
+    # Initialise the node
+    rclpy.init(args=args)
+    node = rclpy.create_node('bof')
 
-    r = rospy.Rate(10)
-
-    rospy.wait_for_message('/laser/scan', LaserScan)
-
-    while not rospy.is_shutdown():
+    while not rclpy.ok():
         try:
-            gridmapping.inverse_range_sensor_model()
-            r.sleep()
+            grid_mapping.inverse_range_sensor_model()
+            
+            rclpy.spin(bof)
 
         except KeyboardInterrupt:
             print("\n")

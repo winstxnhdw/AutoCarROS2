@@ -1,13 +1,8 @@
- ## ! DO NOT MANUALLY INVOKE THIS setup.py, USE CATKIN INSTEAD
+from setuptools import setup, find_packages
 
-from distutils.core import setup
-from catkin_pkg.python_setup import generate_distutils_setup
+package_name = "utils"
 
-# Fetch values from package.xml
-setup_args = generate_distutils_setup \
-(
-    packages=['utils'],
+setup(
+    packages=find_packages(package_name),
     package_dir={'': 'src'},
 )
-
-setup(**setup_args)
