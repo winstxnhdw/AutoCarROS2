@@ -1,12 +1,82 @@
 <?xml version="1.0" ?>
 <robot name="ngeeann_av" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find ngeeann_av_description)/urdf/materials.xacro" />
-<xacro:include filename="$(find ngeeann_av_description)/urdf/ngeeann_av.trans" />
-<xacro:include filename="$(find ngeeann_av_description)/urdf/ngeeann_av.gazebo" />
-<xacro:include filename="$(find ngeeann_av_description)/urdf/hokuyo.xacro" />
-<xacro:include filename="$(find ngeeann_av_description)/urdf/camera.xacro" />
 
+<!-- RVIZ MATERIAL COLOUR -->
+<material name="silver">
+  <color rgba="0.1 0.1 0.1 0.5"/>
+</material>
+
+<material name="darkgrey">
+  <color rgba="0 0 0 0.7"/>
+</material>
+
+
+
+<!-- ROS2 CONTROL -->
+<ros2_control name="GazeboSystem" type="system">
+<hardware>
+    <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+</hardware>
+  <joint name="bl_axle">
+      <command_interface name="velocity">
+      <param name="min">-15</param>
+      <param name="max">15</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+  </joint>
+  <joint name="br_axle">
+      <command_interface name="velocity">
+      <param name="min">-15</param>
+      <param name="max">15</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+  </joint>
+  <joint name="fl_axle">
+      <command_interface name="velocity">
+      <param name="min">-15</param>
+      <param name="max">15</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+  </joint>
+  <joint name="fr_axle">
+      <command_interface name="velocity">
+      <param name="min">-15</param>
+      <param name="max">15</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+  </joint>
+  <joint name="l_steer">
+  <command_interface name="position">
+      <param name="min">-0.95</param>
+      <param name="max">0.95</param>
+  </command_interface>
+  <state_interface name="position"/>
+  </joint>
+  <joint name="r_steer">
+  <command_interface name="position">
+      <param name="min">-0.95</param>
+      <param name="max">0.95</param>
+  </command_interface>
+  <state_interface name="position"/>
+  </joint>
+</ros2_control>
+
+
+
+
+
+
+
+<!-- ROBOT DEFINITION -->
 <link name="base_link"/>
 
 <joint name="base_link_joint" type="fixed">
@@ -203,5 +273,72 @@
   <dynamics damping="0.01" friction="0.01"/>
   <limit effort="1000.0" lower="-0.95" upper="0.95" velocity="100"/>
 </joint>
+
+<!-- GAZEBO -->
+<gazebo>
+<plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+    <robot_param>robot_description</robot_param>
+    <robot_param_node>robot_state_publisher</robot_param_node>
+    <parameters>$(find ngeeann_av_description)/config/controller.yaml</parameters>
+</plugin>
+</gazebo>
+
+<gazebo reference="chassis_link">
+  <material>Gazebo/White</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="spoiler_link">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="br_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.7</mu1>
+  <mu2>1.7</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="bl_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.7</mu1>
+  <mu2>1.7</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="fr_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.7</mu1>
+  <mu2>1.7</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="fl_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>1.1</mu1>
+  <mu2>1.1</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="r_steer_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="l_steer_1">
+  <material>Gazebo/DarkGrey</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
 
 </robot>
