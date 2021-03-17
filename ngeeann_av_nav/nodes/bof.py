@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import threading
 import rclpy
 import numpy as np

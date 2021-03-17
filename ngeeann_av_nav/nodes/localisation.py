@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import rclpy
 import tf
 import numpy as np
