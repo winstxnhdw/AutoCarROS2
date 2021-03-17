@@ -9,8 +9,8 @@ from rclpy.node import Node
 from ngeeann_av_msgs.msg import State2D, Path2D, AckermannDrive
 from geometry_msgs.msg import Pose2D, PoseStamped, Quaternion
 from std_msgs.msg import Float32
-from utils.normalise_angle import normalise_angle
-from utils.heading2quaternion import heading_to_quaternion
+from normalise_angle import normalise_angle
+from heading2quaternion import heading_to_quaternion
 
 class PathTracker(Node):
 
@@ -19,24 +19,24 @@ class PathTracker(Node):
         super().__init__('path_tracker')
 
         # Initialise publishers
-        self.tracker_pub = node.create_publisher(AckermannDrive, '/ngeeann_av/ackermann_cmd')
-        self.lateral_ref_pub = node.create_publisher(PoseStamped, '/ngeeann_av/lateral_ref')
+        self.tracker_pub = self.create_publisher(AckermannDrive, '/ngeeann_av/ackermann_cmd', 10)
+        self.lateral_ref_pub = self.create_publisher(PoseStamped, '/ngeeann_av/lateral_ref', 10)
 
         # Initialise subscribers
-        self.localisation_sub = node.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb)
-        self.path_sub = node.create_subscription(Path2D, '/ngeeann_av/path', self.path_cb)
-        self.target_vel_sub = node.create_subscription(Float32, '/ngeeann_av/target_velocity', self.target_vel_cb)
+        self.localisation_sub = self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
+        self.path_sub = self.create_subscription(Path2D, '/ngeeann_av/path', self.path_cb, 10)
+        self.target_vel_sub = self.create_subscription(Float32, '/ngeeann_av/target_velocity', self.target_vel_cb, 10)
 
         # Load parameters
         try:
-            self.declare_parameter(
+            self.declare_parameters(
                 namespace='',
                 parameters=[
-                    ('control_gain'),
-                    ('softening_gain'),
-                    ('yawrate_gain'),
-                    ('steering_limits'),
-                    ('centreofgravity_to_frontaxle')
+                    ('control_gain', None),
+                    ('softening_gain', None),
+                    ('yawrate_gain', None),
+                    ('steering_limits', None),
+                    ('centreofgravity_to_frontaxle', None)
                 ]
             )
 
@@ -132,7 +132,7 @@ class PathTracker(Node):
     
         pose = PoseStamped()
         pose.header.frame_id = "map"
-        pose.header.stamp = node.get_clock().now().to_msg()
+        pose.header.stamp = self.get_clock().now().to_msg()
         pose.pose.position.x = self.cx[target_idx]
         pose.pose.position.y = self.cy[target_idx]
         pose.pose.position.z = 0.0
@@ -199,7 +199,7 @@ class PathTracker(Node):
         drive.steering_angle_velocity = 0.0
         self.tracker_pub.publish(drive)
 
-def main():
+def main(args=None):
     
     # Time execution
     begin_time = datetime.datetime.now()
@@ -208,12 +208,11 @@ def main():
 
     # Initialise the node
     rclpy.init(args=args)
-    node = rclpy.create_node('path_tracker')
 
     # Initialise the class
     path_tracker = PathTracker()
 
-    while not rclpy.ok():
+    while rclpy.ok():
         try:
             if path_tracker.cyaw:
                 path_tracker.stanley_control()

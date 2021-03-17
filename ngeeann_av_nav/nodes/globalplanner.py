@@ -17,22 +17,22 @@ class GlobalPathPlanner(Node):
         super().__init__('global_planner')
 
         # Initialise publisher(s)
-        self.goals_pub = node.create_publisher(Path2D, '/ngeeann_av/goals')
-        self.goals_viz_pub = node.create_publisher(PoseArray, '/ngeeann_av/viz_goals')
+        self.goals_pub = self.create_publisher(Path2D, '/ngeeann_av/goals')
+        self.goals_viz_pub = self.create_publisher(PoseArray, '/ngeeann_av/viz_goals')
 
         # Initialise suscriber(s)
-        self.localisation_sub = node.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb)
+        self.localisation_sub = self.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb)
 
         # Load parameters
         try:
-            self.declare_parameter(
+            self.declare_parameters(
                 namespace='',
                 parameters=[
-                    ('waypoints_ahead'),
-                    ('waypoints_behind'),
-                    ('passed_threshold'),
-                    ('waypoints'),
-                    ('centreofgravity_to_frontaxle')
+                    ('waypoints_ahead', None),
+                    ('waypoints_behind', None),
+                    ('passed_threshold', None),
+                    ('waypoints', None),
+                    ('centreofgravity_to_frontaxle', None)
                 ]
             )
 
@@ -179,7 +179,7 @@ class GlobalPathPlanner(Node):
 
         viz_goals = PoseArray()
         viz_goals.header.frame_id = "map"
-        viz_goals.header.stamp = node.get_clock().now().to_msg()
+        viz_goals.header.stamp = self.get_clock().now().to_msg()
 
         for i in range(0, waypoints):
             # Appending to Target Goals
@@ -201,16 +201,15 @@ class GlobalPathPlanner(Node):
 
         print("Total goals published: {}\n".format(waypoints))
         
-def main():
+def main(args=None):
     
     # Initialise the class
     global_planner = GlobalPathPlanner()
 
     # Initialise the node
     rclpy.init(args=args)
-    node = rclpy.create_node('global_planner')
 
-    while not rclpy.ok():
+    while rclpy.ok():
         try:
             global_planner.set_waypoints()
          

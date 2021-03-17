@@ -10,7 +10,6 @@ from nav_msgs.msg import Path, OccupancyGrid, MapMetaData
 from std_msgs.msg import Float32
 from utils.heading2quaternion import heading_to_quaternion
 from utils.cubic_spline_planner import *
-from utils.spline_planner import *
 
 class LocalPathPlanner(Node):
 
@@ -22,24 +21,24 @@ class LocalPathPlanner(Node):
         super().__init__('local_planner')
 
         # Initialise publishers
-        self.local_planner_pub = node.create_publisher(Path2D, '/ngeeann_av/path')
-        self.path_viz_pub = node.create_publisher(Path, '/ngeeann_av/viz_path')
-        self.target_vel_pub = node.create_publisher(Float32, '/ngeeann_av/target_velocity')
+        self.local_planner_pub = self.create_publisher(Path2D, '/ngeeann_av/path')
+        self.path_viz_pub = self.create_publisher(Path, '/ngeeann_av/viz_path')
+        self.target_vel_pub = self.create_publisher(Float32, '/ngeeann_av/target_velocity')
 
         # Initialise subscribers
-        self.goals_sub = node.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb)
-        self.localisation_sub = node.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb)
-        self.gridmap_sub = node.create_subscription(OccupancyGrid, '/map', self.gridmap_cb)
+        self.goals_sub = self.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb)
+        self.localisation_sub = self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb)
+        self.gridmap_sub = self.create_subscription(OccupancyGrid, '/map', self.gridmap_cb)
 
         # Load parameters
         try:
-            self.declare_parameter(
+            self.declare_parameters(
                 namespace='',
                 parameters=[
-                    ('update_frequency'),
-                    ('frame_id'),
-                    ('car_width'),
-                    ('centreofgravity_to_frontaxle')
+                    ('update_frequency', None),
+                    ('frame_id', None),
+                    ('car_width', None),
+                    ('centreofgravity_to_frontaxle', None)
                 ]
             )
 
@@ -154,7 +153,7 @@ class LocalPathPlanner(Node):
         
         viz_path = Path()
         viz_path.header.frame_id = "map"
-        viz_path.header.stamp = node.get_clock().now().to_msg()
+        viz_path.header.stamp = self.get_clock().now().to_msg()
 
         for n in range(0, cells):
             # Appending to Target Path
@@ -168,7 +167,7 @@ class LocalPathPlanner(Node):
             vpose = PoseStamped()
             vpose.header.frame_id = self.frame_id
             vpose.header.seq = n
-            vpose.header.stamp = node.get_clock().now().to_msg()
+            vpose.header.stamp = self.get_clock().now().to_msg()
             vpose.pose.position.x = cx[n]
             vpose.pose.position.y = cy[n]
             vpose.pose.position.z = 0.0
@@ -183,7 +182,7 @@ class LocalPathPlanner(Node):
         '''
         ocx, ocy, ocyaw = calc_spline_course(self.ax, self.ay, self.ds)
 
-def main():
+def main(args=None):
     ''' 
     Main function to initialise the class and node. 
     '''
@@ -192,9 +191,8 @@ def main():
 
     # Initialise the node
     rclpy.init(args=args)
-    node = rclpy.create_node('local_planner')
 
-    while not rclpy.ok():
+    while rclpy.ok():
         try:
             target_path = local_planner.create_target_path()
             local_planner.target_vel_pub.publish(local_planner.target_vel)

@@ -93,7 +93,7 @@ class Map():
         grid_msg = OccupancyGrid()
 
         # Set up the header.
-        grid_msg.header.stamp = node.get_clock().now().to_msg(
+        grid_msg.header.stamp = self.get_clock().now().to_msg(
         grid_msg.header.frame_id = "map"
 
         # .info is a nav_msgs/MapMetaData message. 
@@ -152,11 +152,11 @@ class GridMapping(Node):
         self.gmap = Map()
         
         # Initialise publishers
-        self.viz_map_pub = node.create_publisher('/map', OccupancyGrid, latch=True, queue_size=30)
+        self.viz_map_pub = self.create_publisher('/map', OccupancyGrid, latch=True, queue_size=30)
 
         # Initialise subscribers
-        node.create_subscription('/ngeeann_av/state2D', State2D, self.vehicle_state_cb)
-        node.create_subscription('/laser/scan', LaserScan, self.scan_cb)
+        self.create_subscription('/ngeeann_av/state2D', State2D, self.vehicle_state_cb)
+        self.create_subscription('/laser/scan', LaserScan, self.scan_cb)
 
     def publish_map(self, gmap):
         '''
@@ -281,7 +281,7 @@ class GridMapping(Node):
 
         return transform 
 
-def main():
+def main(args=None):
     '''
         The main function.
     '''
@@ -289,9 +289,8 @@ def main():
 
     # Initialise the node
     rclpy.init(args=args)
-    node = rclpy.create_node('bof')
 
-    while not rclpy.ok():
+    while rclpy.ok():
         try:
             grid_mapping.inverse_range_sensor_model()
             
