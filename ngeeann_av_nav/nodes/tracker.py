@@ -40,11 +40,11 @@ class PathTracker(Node):
                 ]
             )
 
-            self.k = self.get_parameter("control_gain")
-            self.ksoft = self.get_parameter("softening_gain")
-            self.kyaw = self.get_parameter("yawrate_gain")
-            self.max_steer = self.get_parameter("steering_limits")
-            self.cg2frontaxle = self.get_parameter("centreofgravity_to_frontaxle")
+            self.k = float(self.get_parameter("control_gain").value)
+            self.ksoft = float(self.get_parameter("softening_gain").value)
+            self.kyaw = float(self.get_parameter("yawrate_gain").value)
+            self.max_steer = float(self.get_parameter("steering_limits").value)
+            self.cg2frontaxle = float(self.get_parameter("centreofgravity_to_frontaxle").value)
         
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")

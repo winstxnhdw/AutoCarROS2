@@ -17,8 +17,8 @@ class Localisation(Node):
         super().__init__('localisation')
 
         # Initialise publishers
-        self.localisation_pub = self.create_publisher(State2D, '/ngeeann_av/state2D')
-        self.odom_pub = self.create_publisher(Odometry, '/ngeeann_av/odom')
+        self.localisation_pub = self.create_publisher(State2D, '/ngeeann_av/state2D', 10)
+        self.odom_pub = self.create_publisher(Odometry, '/ngeeann_av/odom', 10)
 
         # Publishes artificial map frame
         self.map_broadcaster = tf.TransformBroadcaster()

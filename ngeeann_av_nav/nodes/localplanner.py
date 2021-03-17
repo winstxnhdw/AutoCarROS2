@@ -8,8 +8,8 @@ from geometry_msgs.msg import PoseStamped, Quaternion, Pose2D
 from ngeeann_av_msgs.msg import Path2D, State2D
 from nav_msgs.msg import Path, OccupancyGrid, MapMetaData
 from std_msgs.msg import Float32
-from utils.heading2quaternion import heading_to_quaternion
-from utils.cubic_spline_planner import *
+from heading2quaternion import heading_to_quaternion
+from cubic_spline_planner import *
 
 class LocalPathPlanner(Node):
 
@@ -21,14 +21,14 @@ class LocalPathPlanner(Node):
         super().__init__('local_planner')
 
         # Initialise publishers
-        self.local_planner_pub = self.create_publisher(Path2D, '/ngeeann_av/path')
-        self.path_viz_pub = self.create_publisher(Path, '/ngeeann_av/viz_path')
-        self.target_vel_pub = self.create_publisher(Float32, '/ngeeann_av/target_velocity')
+        self.local_planner_pub = self.create_publisher(Path2D, '/ngeeann_av/path', 10)
+        self.path_viz_pub = self.create_publisher(Path, '/ngeeann_av/viz_path', 10)
+        self.target_vel_pub = self.create_publisher(Float32, '/ngeeann_av/target_velocity', 10)
 
         # Initialise subscribers
-        self.goals_sub = self.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb)
-        self.localisation_sub = self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb)
-        self.gridmap_sub = self.create_subscription(OccupancyGrid, '/map', self.gridmap_cb)
+        self.goals_sub = self.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb, 10)
+        self.localisation_sub = self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
+        self.gridmap_sub = self.create_subscription(OccupancyGrid, '/map', self.gridmap_cb, 10)
 
         # Load parameters
         try:
@@ -42,10 +42,10 @@ class LocalPathPlanner(Node):
                 ]
             )
 
-            self.frequency = self.get_parameter("update_frequency")
-            self.frame_id = self.get_parameter("frame_id")
-            self.car_width = self.get_parameter("car_width")
-            self.cg2frontaxle = self.get_parameter("centreofgravity_to_frontaxle")
+            self.frequency = float(self.get_parameter("update_frequency").value)
+            self.frame_id = str(self.get_parameter("frame_id").value)
+            self.car_width = float(self.get_parameter("car_width").value)
+            self.cg2frontaxle = float(self.get_parameter("centreofgravity_to_frontaxle").value)
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
@@ -186,11 +186,12 @@ def main(args=None):
     ''' 
     Main function to initialise the class and node. 
     '''
-    # Initialise the class
-    local_planner = LocalPathPlanner()
 
     # Initialise the node
     rclpy.init(args=args)
+
+    # Initialise the class
+    local_planner = LocalPathPlanner()
 
     while rclpy.ok():
         try:

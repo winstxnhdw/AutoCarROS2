@@ -3,14 +3,14 @@ localisation:
         update_frequency: 50.0
         model_name: "ngeeann_av"
 
-local_path_planner:
+local_planner:
     ros__parameters:
         update_frequency: 10.0
         car_width: 2.0
         centreofgravity_to_frontaxle: 1.483
         frame_id: "base_link"
 
-global_path_planner:
+global_planner:
     ros__parameters:
         update_frequency: 2.0
         waypoints_ahead: 3

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
 import rclpy
+import os
 import numpy as np
 import pandas as pd
 
 from rclpy.node import Node
 from geometry_msgs.msg import Pose2D, Pose, PoseArray
 from ngeeann_av_msgs.msg import Path2D, State2D
+from ament_index_python.packages import get_package_share_directory
 
 class GlobalPathPlanner(Node):
 
@@ -17,11 +19,11 @@ class GlobalPathPlanner(Node):
         super().__init__('global_planner')
 
         # Initialise publisher(s)
-        self.goals_pub = self.create_publisher(Path2D, '/ngeeann_av/goals')
-        self.goals_viz_pub = self.create_publisher(PoseArray, '/ngeeann_av/viz_goals')
+        self.goals_pub = self.create_publisher(Path2D, '/ngeeann_av/goals', 10)
+        self.goals_viz_pub = self.create_publisher(PoseArray, '/ngeeann_av/viz_goals', 10)
 
         # Initialise suscriber(s)
-        self.localisation_sub = self.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb)
+        self.localisation_sub = self.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
 
         # Load parameters
         try:
@@ -36,19 +38,17 @@ class GlobalPathPlanner(Node):
                 ]
             )
 
-            self.wp_ahead = self.get_parameter("waypoints_ahead")
-            self.wp_behind = self.get_parameter("waypoints_behind")
-            self.passed_threshold = self.get_parameter("passed_threshold")
+            self.wp_ahead = int(self.get_parameter("waypoints_ahead").value)
+            self.wp_behind = int(self.get_parameter("waypoints_behind").value)
+            self.passed_threshold = float(self.get_parameter("passed_threshold").value)
 
-            self.cg2frontaxle = self.get_parameter("centreofgravity_to_frontaxle")
-
-            dir_path = self.get_parameter("waypoints")
+            self.cg2frontaxle = float(self.get_parameter("centreofgravity_to_frontaxle").value)
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
 
         # Get path to waypoints.csv
-        
+        dir_path = os.path.join(get_package_share_directory('ngeeann_av_nav'), 'scripts', 'waypoints.csv')
         df = pd.read_csv(dir_path)
 
         print("Waypoint directory: {}".format(dir_path))

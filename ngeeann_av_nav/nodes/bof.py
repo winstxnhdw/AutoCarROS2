@@ -152,11 +152,11 @@ class GridMapping(Node):
         self.gmap = Map()
         
         # Initialise publishers
-        self.viz_map_pub = self.create_publisher('/map', OccupancyGrid, latch=True, queue_size=30)
+        self.viz_map_pub = self.create_publisher(OccupancyGrid, '/map', 10)
 
         # Initialise subscribers
-        self.create_subscription('/ngeeann_av/state2D', State2D, self.vehicle_state_cb)
-        self.create_subscription('/laser/scan', LaserScan, self.scan_cb)
+        self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
+        self.create_subscription(LaserScan, '/laser/scan', self.scan_cb, 10)
 
     def publish_map(self, gmap):
         '''

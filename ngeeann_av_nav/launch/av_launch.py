@@ -20,5 +20,32 @@ def generate_launch_description():
         executable = 'tracker.py',
         parameters = [config]
     )
+
+    node=Node(
+        package = navpkg,
+        name = 'global_planner',
+        executable = 'globalplanner.py',
+        parameters = [config]
+    )
+
+    node=Node(
+        package = navpkg,
+        name = 'localisation',
+        executable = 'localisation.py',
+        parameters = [config]
+    )
+
+    node=Node(
+        package = navpkg,
+        name = 'bof',
+        executable = 'bof.py',
+    )
+
+    node=Node(
+        package = navpkg,
+        name = 'local_planner',
+        executable = 'localplanner.py',
+        parameters = [config]
+    )
     ld.add_action(node)
     return ld
