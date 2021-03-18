@@ -26,7 +26,7 @@ class LocalPathPlanner(Node):
         self.target_vel_pub = self.create_publisher(Float32, '/ngeeann_av/target_velocity', 10)
 
         # Initialise subscribers
-        self.goals_sub = self.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb, 10)
+        # self.goals_sub = self.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb, 10)
         self.localisation_sub = self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
         self.gridmap_sub = self.create_subscription(OccupancyGrid, '/map', self.gridmap_cb, 10)
 
@@ -57,8 +57,10 @@ class LocalPathPlanner(Node):
 
         # Class variables to use whenever within the class when necessary
         self.target_vel = 3.0
-        self.ax = []
-        self.ay = []
+        # self.ax = []
+        # self.ay = []
+        self.ax = [103.67, 102.6610906864386, 99.65400001792553, 94.70725759380844, 87.91714612853669]
+        self.ay = [0, 14.428075376529984, 28.575324677548302, 42.16638778766821, 54.93673012305635]
         self.gmap = OccupancyGrid()
 
     def goals_cb(self, msg):
