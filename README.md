@@ -8,19 +8,6 @@ This project contains the ROS2 variant of the [AutoCarROS](https://github.com/wi
 <br />
 ![Obstacle Avoidance](https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/obstacle_avoidance.gif?raw=true)
 
-## Launch Files
-|Launch File|Launches|Purpose|
-|-----------|--------|-------|
-|gazebo.launch|gazebo, no world, ngeeann_av|For debugging
-|road.launch|gazebo, road.world, ngeeann_av|Foundational launch file for future launch files
-|display.launch|rviz, ngeeann_av|Foundational launch file for future launch files
-|controller.launch|axle controllers, steer controllers|Foundational launch file for future launch files
-
-### ackermann_vehicle.launch
-Launches the populated_road.world file into Gazebo and spawns the ngeeann_av onto a populated road world. It also launches ackermann_controller.launch, RViz, the controller spawner and ackermann controller. If your Gazebo does not start, this is because you do not have the required Gazebo models in your models folder. To fix this, you may change the ackermann_vehicle.launch parameters to launch the unpopulated road variant, road.launch.
-
-### ackerman_controller.launch
-Launches nodes used by both RViz and Gazebo when visualizing a vehicle with Ackermann steering.
 ## Renders
 <b>"Because the layman doesn't care unless it looks cool."<b>
 <br />

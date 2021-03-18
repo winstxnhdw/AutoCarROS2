@@ -17,18 +17,18 @@ class Localisation(Node):
         super().__init__('localisation')
 
         # Initialise publishers
-        self.localisation_pub = node.create_publisher(State2D, '/ngeeann_av/state2D')
-        self.odom_pub = node.create_publisher(Odometry, '/ngeeann_av/odom')
+        self.localisation_pub = self.create_publisher(State2D, '/ngeeann_av/state2D', 10)
+        self.odom_pub = self.create_publisher(Odometry, '/ngeeann_av/odom', 10)
 
         # Publishes artificial map frame
         self.map_broadcaster = tf.TransformBroadcaster()
 
         # Load parameters
         try:
-            self.declare_parameter(
+            self.declare_parameters(
                 namespace='',
                 parameters=[
-                    ('model_name'),
+                    ('model_name', None)
                 ]
             )
 
@@ -72,7 +72,7 @@ class Localisation(Node):
         odom.pose.pose.orientation.z = self.state.pose.orientation.z
         odom.pose.pose.orientation.w = self.state.pose.orientation.w
 
-        odom.header.stamp = node.get_clock().now().to_msg()
+        odom.header.stamp = self.get_clock().now().to_msg()
         odom.header.frame_id = "/map"
         odom.pose.pose.orientation = self.state.pose.orientation
 
@@ -92,18 +92,17 @@ class Localisation(Node):
         y = self.state.pose.position.y
         z = self.state.pose.position.z
         odom_quat = [self.state.pose.orientation.x, self.state.pose.orientation.y, self.state.pose.orientation.z, self.state.pose.orientation.w]
-        self.map_broadcaster.sendTransform((x, y, z), odom_quat, node.get_clock().now().to_msg(), "base_link", "map")
+        self.map_broadcaster.sendTransform((x, y, z), odom_quat, self.get_clock().now().to_msg(), "base_link", "map")
 
-def main():
+def main(args=None):
 
     # Initialise the class
     localisation = Localisation()
 
     # Initialise the node
     rclpy.init(args=args)
-    node = rclpy.create_node('localisation')
     
-    while not rclpy.ok():
+    while rclpy.ok():
         try:
             localisation.state = localisation.get_model_srv(localisation.model, '')
             localisation.update_state()

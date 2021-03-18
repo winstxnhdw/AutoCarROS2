@@ -25,12 +25,22 @@ find_package(nav_msgs REQUIRED)
 
 ament_python_install_package(nodes/)
 
+install(DIRECTORY
+  launch
+  config
+  DESTINATION share/${PROJECT_NAME}
+)
+
 install(PROGRAMS
   nodes/bof.py
   nodes/globalplanner.py
   nodes/localisation.py
   nodes/localplanner.py
   nodes/tracker.py
+
+  src/utils/normalise_angle.py
+  src/utils/heading2quaternion.py
+  src/utils/cubic_spline_planner.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

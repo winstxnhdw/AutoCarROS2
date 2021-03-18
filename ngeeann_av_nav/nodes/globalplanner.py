@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
 import rclpy
+import os
 import numpy as np
 import pandas as pd
 
 from rclpy.node import Node
 from geometry_msgs.msg import Pose2D, Pose, PoseArray
 from ngeeann_av_msgs.msg import Path2D, State2D
+from ament_index_python.packages import get_package_share_directory
 
 class GlobalPathPlanner(Node):
 
@@ -17,38 +19,36 @@ class GlobalPathPlanner(Node):
         super().__init__('global_planner')
 
         # Initialise publisher(s)
-        self.goals_pub = node.create_publisher(Path2D, '/ngeeann_av/goals')
-        self.goals_viz_pub = node.create_publisher(PoseArray, '/ngeeann_av/viz_goals')
+        self.goals_pub = self.create_publisher(Path2D, '/ngeeann_av/goals', 10)
+        self.goals_viz_pub = self.create_publisher(PoseArray, '/ngeeann_av/viz_goals', 10)
 
         # Initialise suscriber(s)
-        self.localisation_sub = node.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb)
+        self.localisation_sub = self.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
 
         # Load parameters
         try:
-            self.declare_parameter(
+            self.declare_parameters(
                 namespace='',
                 parameters=[
-                    ('waypoints_ahead'),
-                    ('waypoints_behind'),
-                    ('passed_threshold'),
-                    ('waypoints'),
-                    ('centreofgravity_to_frontaxle')
+                    ('waypoints_ahead', None),
+                    ('waypoints_behind', None),
+                    ('passed_threshold', None),
+                    ('waypoints', None),
+                    ('centreofgravity_to_frontaxle', None)
                 ]
             )
 
-            self.wp_ahead = self.get_parameter("waypoints_ahead")
-            self.wp_behind = self.get_parameter("waypoints_behind")
-            self.passed_threshold = self.get_parameter("passed_threshold")
+            self.wp_ahead = int(self.get_parameter("waypoints_ahead").value)
+            self.wp_behind = int(self.get_parameter("waypoints_behind").value)
+            self.passed_threshold = float(self.get_parameter("passed_threshold").value)
 
-            self.cg2frontaxle = self.get_parameter("centreofgravity_to_frontaxle")
-
-            dir_path = self.get_parameter("waypoints")
+            self.cg2frontaxle = float(self.get_parameter("centreofgravity_to_frontaxle").value)
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
 
         # Get path to waypoints.csv
-        
+        dir_path = os.path.join(get_package_share_directory('ngeeann_av_nav'), 'scripts', 'waypoints.csv')
         df = pd.read_csv(dir_path)
 
         print("Waypoint directory: {}".format(dir_path))
@@ -179,7 +179,7 @@ class GlobalPathPlanner(Node):
 
         viz_goals = PoseArray()
         viz_goals.header.frame_id = "map"
-        viz_goals.header.stamp = node.get_clock().now().to_msg()
+        viz_goals.header.stamp = self.get_clock().now().to_msg()
 
         for i in range(0, waypoints):
             # Appending to Target Goals
@@ -201,16 +201,15 @@ class GlobalPathPlanner(Node):
 
         print("Total goals published: {}\n".format(waypoints))
         
-def main():
+def main(args=None):
     
     # Initialise the class
     global_planner = GlobalPathPlanner()
 
     # Initialise the node
     rclpy.init(args=args)
-    node = rclpy.create_node('global_planner')
 
-    while not rclpy.ok():
+    while rclpy.ok():
         try:
             global_planner.set_waypoints()
          
