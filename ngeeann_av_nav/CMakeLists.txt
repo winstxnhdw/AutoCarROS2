@@ -28,6 +28,7 @@ ament_python_install_package(nodes/)
 install(DIRECTORY
   launch
   config
+  scripts
   DESTINATION share/${PROJECT_NAME}
 )
 

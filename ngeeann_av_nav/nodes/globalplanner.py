@@ -23,7 +23,7 @@ class GlobalPathPlanner(Node):
         self.goals_viz_pub = self.create_publisher(PoseArray, '/ngeeann_av/viz_goals', 10)
 
         # Initialise suscriber(s)
-        self.localisation_sub = self.create_subscription(State2D,, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
+        self.localisation_sub = self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
 
         # Load parameters
         try:
@@ -41,7 +41,6 @@ class GlobalPathPlanner(Node):
             self.wp_ahead = int(self.get_parameter("waypoints_ahead").value)
             self.wp_behind = int(self.get_parameter("waypoints_behind").value)
             self.passed_threshold = float(self.get_parameter("passed_threshold").value)
-
             self.cg2frontaxle = float(self.get_parameter("centreofgravity_to_frontaxle").value)
 
         except:
@@ -203,11 +202,11 @@ class GlobalPathPlanner(Node):
         
 def main(args=None):
     
-    # Initialise the class
-    global_planner = GlobalPathPlanner()
-
     # Initialise the node
     rclpy.init(args=args)
+    
+    # Initialise the class
+    global_planner = GlobalPathPlanner()
 
     while rclpy.ok():
         try:

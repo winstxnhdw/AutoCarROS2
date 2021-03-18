@@ -16,6 +16,7 @@ global_planner:
         waypoints_ahead: 3
         waypoints_behind: 2
         passed_threshold: 0.25
+        centreofgravity_to_frontaxle: 1.483
 
 path_tracker:
     ros__parameters:

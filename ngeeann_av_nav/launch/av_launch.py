@@ -47,5 +47,6 @@ def generate_launch_description():
         executable = 'localplanner.py',
         parameters = [config]
     )
+
     ld.add_action(node)
     return ld
