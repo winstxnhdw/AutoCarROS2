@@ -18,8 +18,7 @@ def generate_launch_description():
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
     spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
-                    arguments=['-topic', 'robot_description',
-                                '-entity', 'ngeeann_av'],
+                    arguments=['-entity', 'ngeeann_av', '-topic', '/robot_description'],
                     output='screen')
 
     return LaunchDescription([
@@ -44,6 +43,7 @@ def generate_launch_description():
             PythonLaunchDescriptionSource([robot_state_pub_dir, '/robot_state_pub_launch.py']),
             launch_arguments={'use_sim_time': use_sim_time}.items(),
         ),
-        spawn_entity,
+
+        spawn_entity,        
 
     ])

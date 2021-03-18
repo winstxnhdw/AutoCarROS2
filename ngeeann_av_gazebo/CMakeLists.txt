@@ -32,8 +32,19 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+link_directories(
+  ${GAZEBO_LIBRARY_DIRS}
+)
+
+include_directories(
+  include
+  ${GAZEBO_INCLUDE_DIRS}
+)
+
 install(DIRECTORY
   launch
+  models
+  worlds
   DESTINATION share/${PROJECT_NAME}/
 )
 

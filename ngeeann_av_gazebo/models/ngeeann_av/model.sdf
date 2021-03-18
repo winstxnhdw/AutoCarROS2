@@ -1,0 +1,406 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  
+  <model name="ngeeann_av">
+      <pose>0 0 0.00 0 0 0</pose>
+
+      <link name="base_link"/>
+
+      <link name="chassis_link">
+        <pose>0 0 0 0 0 1.57</pose>
+        <inertial>
+          <mass>1326.0</mass>
+          <pose>0 -0.266 0.48 0 0 0</pose>
+          <inertia>
+            <ixx>2581.13354740</ixx>
+            <ixy>0.0</ixy>
+            <iyy>591.30846112</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>2681.95008628</izz>
+          </inertia>
+        </inertial>
+        <visual name="chassis_visual">
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/chassis_link.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="chassis_collision">
+          <pose>0.0 0.05 0.625 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/chassis_link.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <link name="fl_1">
+        <pose>1.41 0.76 0.3 0 0 1.57</pose>
+        <inertial>
+          <mass>11</mass>
+          <inertia>
+            <ixx>0.58631238</ixx>
+            <ixy>0.0</ixy>
+            <iyy>0.33552910</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>0.33552910</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <pose>0.04 0.0 0.0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/fl_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/fl_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+                <slip1>0.0</slip1>
+                <slip2>0.0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <min_depth>0.001</min_depth>
+                <kp>1e9</kp>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+      <link name="fr_1">
+        <pose>1.41 -0.76 0.3 0 0 1.57</pose>
+        <inertial>
+          <mass>11</mass>
+          <inertia>
+            <ixx>0.58631238</ixx>
+            <ixy>0.0</ixy>
+            <iyy>0.33552910</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>0.33552910</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <pose>-0.04 0.0 0.0 0 0 0</pose>
+          <pose>0 0 0.0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/fr_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/fr_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+                <slip1>0.0</slip1>
+                <slip2>0.0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <min_depth>0.001</min_depth>
+                <kp>1e9</kp>
+              </ode>
+            </contact>
+          </surface>
+
+        </collision>
+      </link>
+
+
+      <link name="bl_1">
+        <pose>-1.45 0.786 0.3 0 0 1.57</pose>
+        <inertial>
+          <mass>11</mass>
+          <inertia>
+            <ixx>0.58631238</ixx>
+            <ixy>0.0</ixy>
+            <iyy>0.33552910</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>0.33552910</izz>
+          </inertia>
+        </inertial>
+
+        <visual name="visual">
+          <pose>0.04 0.0 0.0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/bl_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+
+        <collision name="collision">
+          <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/bl_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.1</mu>
+                <mu2>1.1</mu2>
+                <slip1>0.0</slip1>
+                <slip2>0.0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <min_depth>0.001</min_depth>
+                <kp>1e9</kp>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+      <link name="br_1">
+        <pose>-1.45 -0.786 0.3 0 0 1.57</pose>
+        <inertial>
+          <mass>11</mass>
+          <inertia>
+            <ixx>0.58631238</ixx>
+            <ixy>0.0</ixy>
+            <iyy>0.33552910</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>0.33552910</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <pose>-0.04 0.0 0.0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/br_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+
+        <collision name="collision">
+          <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://ngeeann_av/meshes/br_1.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.1</mu>
+                <mu2>1.1</mu2>
+                <slip1>0.0</slip1>
+                <slip2>0.0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <min_depth>0.001</min_depth>
+                <kp>1e9</kp>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+      <joint name="base_joint" type="fixed">
+        <parent>base_link</parent>
+        <child>chassis_link</child>
+        <pose>0.0 0.0 0.0 0 0 0</pose>
+      </joint>
+
+      <joint type="universal" name="front_left_combined_joint">
+        <pose>0 0 0 -0.08726646259971647 0 0</pose>
+        <child>fl_1</child>
+        <parent>chassis_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <!-- +- 50 degrees -->
+            <lower>-0.8727</lower>
+            <upper>0.8727</upper>
+          </limit>
+        </axis>
+        <axis2>
+          <xyz>1 0 0</xyz>
+          <dynamics>
+            <friction>18.0474092253</friction>
+          </dynamics>
+        </axis2>
+      </joint>
+
+      <joint type="universal" name="front_right_combined_joint">
+        <pose>0 0 0 -0.08726646259971647 0 0</pose>
+        <child>fr_1</child>
+        <parent>chassis_link</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <!-- +- 50 degrees -->
+            <lower>-0.8727</lower>
+            <upper>0.8727</upper>
+          </limit>
+        </axis>
+        <axis2>
+          <xyz>1 0 0</xyz>
+          <dynamics>
+            <friction>18.0474092253</friction>
+          </dynamics>
+        </axis2>
+      </joint>
+
+      <link name="rear_axle">
+        <pose>-1.45 0 0.3 0 0 0</pose>
+        <inertial>
+          <mass>30.0</mass>
+          <inertia>
+            <ixx>0.08437499999999999</ixx>
+            <ixy>0.0</ixy>
+            <iyy>4.64581</iyy>
+            <ixz>0.0</ixz>
+            <iyz>0.0</iyz>
+            <izz>4.64581</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <pose>0.0 0.0 0.0 0 1.5707963267948966 0</pose>
+          <geometry>
+            <cylinder>
+              <length>1.357</length>
+              <radius>0.075</radius>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Grey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+      </link>
+
+      <joint type="revolute" name="rear_axle_joint">
+        <child>rear_axle</child>
+        <parent>chassis_link</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-0.05089058524173028</lower>
+            <upper>0.05089058524173028</upper>
+          </limit>
+          <dynamics>
+            <spring_stiffness>20000.0</spring_stiffness>
+            <damping>2000.0</damping>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint type="revolute" name="rear_left_wheel_joint">
+        <child>bl_1</child>
+        <parent>rear_axle</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <dynamics>
+            <friction>12.031606150200002</friction>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint type="revolute" name="rear_right_wheel_joint">
+        <child>br_1</child>
+        <parent>rear_axle</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <dynamics>
+            <friction>12.031606150200002</friction>
+          </dynamics>
+        </axis>
+      </joint>
+
+      <plugin name='ackermann_drive' filename='libgazebo_ros_ackermann_drive.so'>
+
+        <ros>
+          <namespace>demo</namespace>
+          <remapping>cmd_vel:=cmd_demo</remapping>
+          <remapping>odom:=odom_demo</remapping>
+          <remapping>distance:=distance_demo</remapping>
+        </ros>
+
+        <update_rate>100.0</update_rate>
+
+        <!-- wheels -->
+        <front_left_joint>front_left_combined_joint</front_left_joint>
+        <front_right_joint>front_right_combined_joint</front_right_joint>
+        <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
+        <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
+        <left_steering_joint>front_left_combined_joint</left_steering_joint>
+        <right_steering_joint>front_right_combined_joint</right_steering_joint>
+        <steering_wheel_joint>steering_joint</steering_wheel_joint>
+
+        <!-- Max absolute steer angle for tyre in radians-->
+        <!-- Any cmd_vel angular z greater than this would be capped -->
+        <max_steer>0.6458</max_steer>
+
+        <!-- Max absolute steering angle of steering wheel -->
+        <max_steering_angle>7.85</max_steering_angle>
+
+        <!-- Max absolute linear speed in m/s -->
+        <max_speed>20</max_speed>
+
+        <!-- PID tuning -->
+        <left_steering_pid_gain>1500 0 1</left_steering_pid_gain>
+        <left_steering_i_range>0 0</left_steering_i_range>
+        <right_steering_pid_gain>1500 0 1</right_steering_pid_gain>
+        <right_steering_i_range>0 0</right_steering_i_range>
+        <linear_velocity_pid_gain>1000 0 1</linear_velocity_pid_gain>
+        <linear_velocity_i_range>0 0</linear_velocity_i_range>
+
+        <!-- output -->
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+        <publish_wheel_tf>true</publish_wheel_tf>
+        <publish_distance>true</publish_distance>
+
+        <odometry_frame>odom_demo</odometry_frame>
+        <robot_base_frame>base_link</robot_base_frame>
+
+      </plugin>
+    </model>
+
+</sdf>

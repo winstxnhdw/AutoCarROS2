@@ -14,10 +14,10 @@
 
 
 <!-- ROS2 CONTROL -->
-<ros2_control name="GazeboSystem" type="system">
-<hardware>
-    <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-</hardware>
+<!-- <ros2_control name="GazeboSystem" type="system">
+  <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+  </hardware>
   <joint name="bl_axle">
       <command_interface name="velocity">
       <param name="min">-15</param>
@@ -68,24 +68,12 @@
   </command_interface>
   <state_interface name="position"/>
   </joint>
-</ros2_control>
-
-
-
-
+</ros2_control> -->
 
 
 
 <!-- ROBOT DEFINITION -->
-<link name="base_link"/>
-
-<joint name="base_link_joint" type="fixed">
-  <origin xyz="0 0 0.46936" rpy="0 0 0" />
-  <parent link="base_link"/>
-  <child link="chassis_link"/>
-</joint>
-
-<link name="chassis_link">
+<link name="base_link">
   <inertial>
     <origin rpy="0 0 0" xyz="1.04282e-06 0.07307 0.1816"/>
     <mass value="1580"/>
@@ -108,7 +96,7 @@
 
 <joint name="spoiler_joint" type="fixed">
   <origin xyz="0 0.05 -0.05" rpy="1.5708 0 3.14159" />
-  <parent link="chassis_link"/>
+  <parent link="base_link"/>
   <child link="spoiler_link"/>
 </joint>
 
@@ -230,14 +218,14 @@
 
 <joint name="br_axle" type="continuous">
   <origin rpy="0 0 0" xyz="0.8750 -1.013637 -0.144363"/>
-  <parent link="chassis_link"/>
+  <parent link="base_link"/>
   <child link="br_1"/>
   <axis xyz="-1.0 0.0 0.0"/>
 </joint>
 
 <joint name="bl_axle" type="continuous">
   <origin rpy="0 0 0" xyz="-0.8750 -1.013637 -0.144363"/>
-  <parent link="chassis_link"/>
+  <parent link="base_link"/>
   <child link="bl_1"/>
   <axis xyz="-1.0 0.0 0.0"/>
 </joint>
@@ -258,7 +246,7 @@
 
 <joint name="r_steer" type="revolute">
   <origin rpy="0 0 0" xyz="0.8250 1.517363 -0.144363"/>
-  <parent link="chassis_link"/>
+  <parent link="base_link"/>
   <child link="r_steer_1"/>
   <axis xyz="0.0 0.0 1.0"/>
   <dynamics damping="0.01" friction="0.01"/>
@@ -267,7 +255,7 @@
 
 <joint name="l_steer" type="revolute">
   <origin rpy="0 0 0" xyz="-0.8250 1.517363 -0.144363"/>
-  <parent link="chassis_link"/>
+  <parent link="base_link"/>
   <child link="l_steer_1"/>
   <axis xyz="0.0 0.0 1.0"/>
   <dynamics damping="0.01" friction="0.01"/>
@@ -275,15 +263,16 @@
 </joint>
 
 <!-- GAZEBO -->
-<gazebo>
+<!-- <gazebo>
 <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
     <robot_param>robot_description</robot_param>
     <robot_param_node>robot_state_publisher</robot_param_node>
     <parameters>$(find ngeeann_av_description)/config/controller.yaml</parameters>
 </plugin>
-</gazebo>
 
-<gazebo reference="chassis_link">
+</gazebo> -->
+
+<gazebo reference="base_link">
   <material>Gazebo/White</material>
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
