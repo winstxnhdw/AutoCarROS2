@@ -4,7 +4,7 @@ import threading
 import rclpy
 import numpy as np
 import numpy.ma as ma
-import sensor_msgs.point_cloud2 as pc2
+#import sensor_msgs.point_cloud2 as pc2
 
 from rclpy.node import Node
 from geometry_msgs.msg import Pose, Point, Quaternion, Pose2D
@@ -93,7 +93,7 @@ class Map():
         grid_msg = OccupancyGrid()
 
         # Set up the header.
-        grid_msg.header.stamp = self.get_clock().now().to_msg(
+        grid_msg.header.stamp = self.get_clock().now().to_msg()
         grid_msg.header.frame_id = "odom"
 
         # .info is a nav_msgs/MapMetaData message. 
@@ -156,7 +156,7 @@ class GridMapping(Node):
 
         # Initialise subscribers
         self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
-        self.create_subscription(LaserScan, '/laser/scan', self.scan_cb, 10)
+        self.create_subscription(LaserScan, '/scan', self.scan_cb, 10)
 
     def publish_map(self, gmap):
         '''
@@ -285,11 +285,14 @@ def main(args=None):
     '''
         The main function.
     '''
-    grid_mapping = GridMapping()
-
     # Initialise the node
     rclpy.init(args=args)
 
+    grid_mapping = GridMapping()
+
+    while grid_mapping.scan == None:
+        pass
+    
     while rclpy.ok():
         try:
             grid_mapping.inverse_range_sensor_model()
