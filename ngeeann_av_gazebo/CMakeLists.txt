@@ -42,10 +42,9 @@ include_directories(
 )
 
 install(DIRECTORY
-  launch
   models
   worlds
-  DESTINATION share/${PROJECT_NAME}/
+  DESTINATION share/${PROJECT_NAME}
 )
 
 ament_package()
