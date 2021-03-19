@@ -34,7 +34,15 @@
     <model name="ngeeann_av">
       <pose>0 0 0.0 0 0 0</pose>
 
-      <link name='base_link'>
+      <link name='base_link'/>
+
+      <joint name='chassis_link_joint' type='fixed'>
+        <pose>0.0 0.0 0.0 0 0 0</pose>
+        <parent>base_link</parent>
+        <child>chassis_link</child>
+      </joint>
+
+      <link name='chassis_link'>
         <inertial>
           <pose>1e-06 0.07307 0.65096 0 -0 0</pose>
           <mass>1580</mass>
@@ -47,7 +55,7 @@
             <izz>2238.05</izz>
           </inertia>
         </inertial>
-        <collision name='base_link_fixed_joint_lump__chassis_link_collision'>
+        <collision name='chassis_link_fixed_joint_lump__chassis_link_collision'>
           <pose>0 0 0.46936 0 -0 0</pose>
           <geometry>
             <mesh>
@@ -67,7 +75,7 @@
             </friction>
           </surface>
         </collision>
-        <collision name='base_link_fixed_joint_lump__spoiler_link_collision_1'>
+        <collision name='chassis_link_fixed_joint_lump__spoiler_link_collision_1'>
           <pose>0 0.05 0.41936 1.5708 -0 3.14159</pose>
           <geometry>
             <mesh>
@@ -87,7 +95,7 @@
             </friction>
           </surface>
         </collision>
-        <visual name='base_link_fixed_joint_lump__chassis_link_visual'>
+        <visual name='chassis_link_fixed_joint_lump__chassis_link_visual'>
           <pose>0 0 0.46936 0 -0 0</pose>
           <geometry>
             <mesh>
@@ -96,7 +104,7 @@
             </mesh>
           </geometry>
         </visual>
-        <visual name='base_link_fixed_joint_lump__spoiler_link_visual_1'>
+        <visual name='chassis_link_fixed_joint_lump__spoiler_link_visual_1'>
           <pose>0 0.05 0.41936 1.5708 -0 3.14159</pose>
           <geometry>
             <mesh>
@@ -114,8 +122,8 @@
       </link>
       
       <joint name='bl_axle' type='revolute'>
-        <pose relative_to='base_link'>-0.875 -1.01364 0.324997 0 -0 0</pose>
-        <parent>base_link</parent>
+        <pose relative_to='chassis_link'>-0.875 -1.01364 0.324997 0 -0 0</pose>
+        <parent>chassis_link</parent>
         <child>bl_1</child>
         <axis>
           <xyz>-1 0 0</xyz>
@@ -172,8 +180,8 @@
         <self_collide>1</self_collide>
       </link>
       <joint name='br_axle' type='revolute'>
-        <pose relative_to='base_link'>0.875 -1.01364 0.324997 0 -0 0</pose>
-        <parent>base_link</parent>
+        <pose relative_to='chassis_link'>0.875 -1.01364 0.324997 0 -0 0</pose>
+        <parent>chassis_link</parent>
         <child>br_1</child>
         <axis>
           <xyz>-1 0 0</xyz>
@@ -230,8 +238,8 @@
         <self_collide>1</self_collide>
       </link>
       <joint name='l_steer' type='revolute'>
-        <pose relative_to='base_link'>-0.825 1.51736 0.324997 0 -0 0</pose>
-        <parent>base_link</parent>
+        <pose relative_to='chassis_link'>-0.825 1.51736 0.324997 0 -0 0</pose>
+        <parent>chassis_link</parent>
         <child>l_steer_1</child>
         <axis>
           <xyz>0 0 1</xyz>
@@ -322,8 +330,8 @@
         <self_collide>1</self_collide>
       </link>
       <joint name='r_steer' type='revolute'>
-        <pose relative_to='base_link'>0.825 1.51736 0.324997 0 -0 0</pose>
-        <parent>base_link</parent>
+        <pose relative_to='chassis_link'>0.825 1.51736 0.324997 0 -0 0</pose>
+        <parent>chassis_link</parent>
         <child>r_steer_1</child>
         <axis>
           <xyz>0 0 1</xyz>
@@ -418,7 +426,7 @@
 
       <joint name="steering_joint" type="revolute">
         <pose>-0.002 0 0 0 0 0</pose>
-        <parent>base_link</parent>
+        <parent>chassis_link</parent>
         <child>steering_wheel</child>
         <axis>
           <xyz>-0.964118 0.000768 0.265556</xyz>
@@ -488,6 +496,7 @@
         <robot_base_frame>base_link</robot_base_frame>
 
       </plugin>
+  
     </model>
 
   </world>
