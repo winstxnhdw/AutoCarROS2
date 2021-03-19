@@ -150,7 +150,7 @@ class GlobalPathPlanner(Node):
     def frame_transform(self, point_x, point_y, axle_x, axle_y, theta):
         ''' 
             Recieves position of vehicle front axle, and id of closest waypoint. This waypoint is transformed from
-            "map" frame to the vehicle frame
+            "odom" frame to the vehicle frame
 
             Arguments:
                 closest_id          - Index to closest waypoint to front axle in master waypoint list
@@ -177,7 +177,7 @@ class GlobalPathPlanner(Node):
         goals = Path2D()
 
         viz_goals = PoseArray()
-        viz_goals.header.frame_id = "map"
+        viz_goals.header.frame_id = "odom"
         viz_goals.header.stamp = self.get_clock().now().to_msg()
 
         for i in range(0, waypoints):
