@@ -164,7 +164,7 @@ class LocalPathPlanner(Node):
         target_path = Path2D()
         
         viz_path = Path()
-        viz_path.header.frame_id = "map"
+        viz_path.header.frame_id = "odom"
         viz_path.header.stamp = self.get_clock().now().to_msg()
 
         for n in range(0, cells):
