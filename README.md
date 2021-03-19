@@ -1,4 +1,4 @@
-# AutoCarROS2: CONTROL AND BEHAVIOUR
+# AUTONOMOUS VEHICLE: CONTROL AND BEHAVIOUR
 ### AutoCarROS has migrated to ROS 2 Foxy Fitzroy
 <div align="center">
 	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/ngeeann_av_ultrawide.png?raw=true" />
