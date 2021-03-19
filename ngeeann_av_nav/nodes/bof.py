@@ -94,7 +94,7 @@ class Map():
 
         # Set up the header.
         grid_msg.header.stamp = self.get_clock().now().to_msg(
-        grid_msg.header.frame_id = "map"
+        grid_msg.header.frame_id = "odom"
 
         # .info is a nav_msgs/MapMetaData message. 
         grid_msg.info.resolution = self.resolution
