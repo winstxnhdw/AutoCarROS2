@@ -19,20 +19,6 @@ class Localisation(Node):
 
         # Initialise subscribers
         self.odom_sub = self.create_subscription(Odometry, '/odom', self.vehicle_state_cb, 20)
-        
-        # Load parameters
-        try:
-            self.declare_parameters(
-                namespace='',
-                parameters=[
-                    ('model_name', None)
-                ]
-            )
-
-            self.model = self.get_parameter("model_name")
-
-        except:
-            raise Exception("Missing ROS parameters. Check the configuration file.")
 
         # Class constants
         self.state = None

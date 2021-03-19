@@ -32,7 +32,6 @@ def generate_launch_description():
         package = navpkg,
         name = 'localisation',
         executable = 'localisation.py',
-        parameters = [config]
     )
 
     node=Node(
