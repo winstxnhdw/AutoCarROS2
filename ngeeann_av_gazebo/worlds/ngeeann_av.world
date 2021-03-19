@@ -42,6 +42,51 @@
         <child>chassis_link</child>
       </joint>
 
+      <joint name="hokuyo_joint" type="fixed">
+        <parent>base_link</parent>
+        <child>hokuyo_link</child>
+        <pose>0 0 0 0 0 0</pose>
+        <axis>
+          <xyz>0 0 1</xyz>
+        </axis>
+      </joint>
+
+      <link name="hokuyo_link">
+        <sensor name="head_hokuyo_sensor" type="ray">
+          <always_on>true</always_on>
+          <visualize>true</visualize>
+          <pose relative_to='base_link'>0 2.34 0.72 0 0 1.5708</pose>
+          <update_rate>40</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>720</samples>
+                <resolution>1.000000</resolution>
+                <min_angle>-1.570796</min_angle>
+                <max_angle>1.570796</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.120000</min>
+              <max>30.0</max>
+              <resolution>0.010</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </ray>
+          <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_ray_sensor.so">
+            <ros>
+              <remapping>~/out:=scan</remapping>
+            </ros>
+            <output_type>sensor_msgs/LaserScan</output_type>
+            <frame_name>hokuyo_link</frame_name>
+          </plugin>
+        </sensor>
+      </link>
+
       <link name='chassis_link'>
         <inertial>
           <pose>1e-06 0.07307 0.65096 0 -0 0</pose>
@@ -449,10 +494,10 @@
       <plugin name='ackermann_drive' filename='libgazebo_ros_ackermann_drive.so'>
 
         <ros>
-          <namespace>demo</namespace>
-          <remapping>cmd_vel:=cmd_demo</remapping>
-          <remapping>odom:=odom_demo</remapping>
-          <remapping>distance:=distance_demo</remapping>
+          <namespace></namespace>
+          <remapping>cmd_vel:=cmd_vel</remapping>
+          <remapping>odom:=odom</remapping>
+          <remapping>distance:=distance</remapping>
         </ros>
 
         <update_rate>100.0</update_rate>

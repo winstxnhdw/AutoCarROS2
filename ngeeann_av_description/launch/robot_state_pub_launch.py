@@ -11,6 +11,7 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     urdf_file_name = 'ngeeann_av.xacro'
+    rviz_file_name = 'view.rviz'
 
     print('urdf_file_name : {}'.format(urdf_file_name))
 
@@ -18,6 +19,10 @@ def generate_launch_description():
         get_package_share_directory('ngeeann_av_description'),
         'urdf',
         urdf_file_name)
+    rviz = os.path.join(
+        get_package_share_directory('ngeeann_av_description'),
+        'rviz',
+        rviz_file_name)
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -32,4 +37,11 @@ def generate_launch_description():
             output='screen',
             parameters=[{'use_sim_time': use_sim_time}],
             arguments=[urdf]),
+
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', rviz],
+            output='screen'),
     ])
