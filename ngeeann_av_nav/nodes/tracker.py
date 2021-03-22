@@ -6,8 +6,8 @@ import threading
 import numpy as np
 
 from rclpy.node import Node
-from ngeeann_av_msgs.msg import State2D, Path2D, AckermannDrive
-from geometry_msgs.msg import Pose2D, PoseStamped, Quaternion
+from ngeeann_av_msgs.msg import State2D, Path2D
+from geometry_msgs.msg import Pose2D, PoseStamped, Quaternion, Twist
 from std_msgs.msg import Float32
 from normalise_angle import normalise_angle
 from heading2quaternion import heading_to_quaternion
@@ -19,7 +19,7 @@ class PathTracker(Node):
         super().__init__('path_tracker')
 
         # Initialise publishers
-        self.tracker_pub = self.create_publisher(AckermannDrive, '/ngeeann_av/ackermann_cmd', 10)
+        self.tracker_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.lateral_ref_pub = self.create_publisher(PoseStamped, '/ngeeann_av/lateral_ref', 10)
 
         # Initialise subscribers
@@ -192,11 +192,15 @@ class PathTracker(Node):
 
         ''' Publishes the calculated steering angle  '''
         
-        drive = AckermannDrive()
-        drive.speed = velocity
-        drive.acceleration = 1.0
-        drive.steering_angle = steering_angle
-        drive.steering_angle_velocity = 0.0
+        drive = Twist()
+        drive.linear.x = velocity
+        drive.linear.y = 0.0
+        drive.linear.z = 0.0
+
+        drive.angular.x = 0.0
+        drive.angular.y = 0.0
+        drive.angular.z = steering_angle
+        
         self.tracker_pub.publish(drive)
 
 def main(args=None):
@@ -211,6 +215,12 @@ def main(args=None):
 
     # Initialise the class
     path_tracker = PathTracker()
+
+    while not path_tracker.x or not path_tracker.y:
+            pass
+
+    while not path_tracker.cx or not path_tracker.cy or not path_tracker.cyaw:
+        pass
 
     while rclpy.ok():
         try:

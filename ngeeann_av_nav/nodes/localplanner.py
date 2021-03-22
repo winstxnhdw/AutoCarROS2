@@ -96,6 +96,9 @@ class LocalPathPlanner(Node):
         '''
         Default path draw across waypoints
         '''
+
+        print(self.ax)
+
         cx, cy, cyaw = calc_spline_course(self.ax, self.ay, self.ds)
 
         path_length = min(len(cx), len(cy), len(cyaw))
@@ -137,6 +140,9 @@ def main(args=None):
 
     # Initialise the class
     local_planner = LocalPathPlanner()
+
+    while not local_planner.ax or not local_planner.ay or not local_planner.ds:
+            pass
 
     while rclpy.ok():
         try:

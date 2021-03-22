@@ -208,6 +208,9 @@ def main(args=None):
     # Initialise the class
     global_planner = GlobalPathPlanner()
 
+    while not global_planner.x or global_planner.y or global_planner.theta:
+            pass
+
     while rclpy.ok():
         try:
             global_planner.set_waypoints()
