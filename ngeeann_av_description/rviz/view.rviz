@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /LaserScan1/Status1
+        - /Map1/Status1
       Splitter Ratio: 0.5
     Tree Height: 745
   - Class: rviz_common/Selection
@@ -56,7 +56,7 @@ Visualization Manager:
         Value: /robot_description
       Enabled: true
       Links:
-        All Links Enabled: false
+        All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
@@ -91,10 +91,10 @@ Visualization Manager:
           Show Trail: false
           Value: true
         hokuyo_link:
-          Alpha: 0.20000000298023224
+          Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: false
+          Value: true
         l_steer_1:
           Alpha: 1
           Show Axes: false
@@ -204,6 +204,26 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_updates
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -265,7 +285,7 @@ Visualization Manager:
       Pitch: 0.38539835810661316
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.243588447570801
+      Yaw: 5.238588333129883
     Saved: ~
 Window Geometry:
   Displays:
