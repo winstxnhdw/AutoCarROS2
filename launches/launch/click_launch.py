@@ -12,13 +12,16 @@ def generate_launch_description():
     navpkg = 'ngeeann_av_nav'
     gzpkg = 'ngeeann_av_gazebo'
     descpkg = 'ngeeann_av_description'
+    mappkg = 'ngeeann_av_map'
 
     pkg_gazebo = get_package_share_directory('gazebo_ros')
 
     world = os.path.join(get_package_share_directory(gzpkg), 'worlds', 'ngeeann_av.world')
     urdf = os.path.join(get_package_share_directory(descpkg),'urdf', 'ngeeann_av.xacro')
     rviz = os.path.join(get_package_share_directory(descpkg), 'rviz', 'view.rviz')
-    config = os.path.join(get_package_share_directory(navpkg), 'config', 'navigation_params.yaml')
+    
+    navconfig = os.path.join(get_package_share_directory(navpkg), 'config', 'navigation_params.yaml')
+
     gzserver = os.path.join(pkg_gazebo, 'launch', 'gzserver.launch.py')
     gzclient = os.path.join(pkg_gazebo, 'launch', 'gzclient.launch.py')
 
@@ -65,21 +68,27 @@ def generate_launch_description():
             package = navpkg,
             name = 'localisation',
             executable = 'localisation.py',
-            parameters = [config]
+            parameters = [navconfig]
+        ),
+
+        Node(
+            package = mappkg,
+            name = 'bof',
+            executable = 'bof',
         ),
 
         Node(
             package = navpkg,
             name = 'click_planner',
             executable = 'clickplanner.py',
-            parameters = [config]
+            parameters = [navconfig]
         ),
 
         Node(
             package = navpkg,
             name = 'path_tracker',
             executable = 'tracker.py',
-            parameters = [config]
+            parameters = [navconfig]
         )
     ])
 
