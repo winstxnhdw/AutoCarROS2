@@ -70,9 +70,9 @@ class PathTracker(Node):
         self.dt = 1 / self.frequency
 
         # Intialise timers
-        self.timer = self.create_timer(self.dt, self.timer_callback)
+        self.timer = self.create_timer(self.dt, self.timer_cb)
 
-    def timer_callback(self):
+    def timer_cb(self):
 
         self.stanley_control()
 

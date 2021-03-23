@@ -60,13 +60,11 @@ class LocalPathPlanner(Node):
         # For debug purposes, do not delete
         # self.ax = [103.67, 102.6610906864386, 99.65400001792553, 94.70725759380844, 87.91714612853669]
         # self.ay = [0, 14.428075376529984, 28.575324677548302, 42.16638778766821, 54.93673012305635]
-        self.ay = [0, 14.428075376529984, 28.575324677548302, 42.16638778766821, 54.93673012305635]
-        self.ax = [0, 14.428075376529984, 28.575324677548302, 42.16638778766821, 54.93673012305635]
 
         # Initialise timer
-        self.timer = self.create_timer(self.ds, self.timer_callback)
+        self.timer = self.create_timer(self.ds, self.timer_cb)
 
-    def timer_callback(self):
+    def timer_cb(self):
 
         msg = Float32()
         msg.data = self.target_vel
@@ -99,7 +97,7 @@ class LocalPathPlanner(Node):
         '''
         Default path draw across waypoints
         '''
-        
+
         cx, cy, cyaw = calc_spline_course(self.ax, self.ay, self.ds)
 
         path_length = min(len(cx), len(cy), len(cyaw))
