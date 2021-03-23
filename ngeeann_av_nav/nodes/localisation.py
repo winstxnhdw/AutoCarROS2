@@ -18,7 +18,7 @@ class Localisation(Node):
         self.localisation_pub = self.create_publisher(State2D, '/ngeeann_av/state2D', 10)
 
         # Initialise subscribers
-        self.odom_sub = self.create_subscription(Odometry, '/odom', self.vehicle_state_cb, 10)
+        self.odom_sub = self.create_subscription(Odometry, '/ngeeann_av/odom', self.vehicle_state_cb, 10)
 
         # Load parameters
         try:

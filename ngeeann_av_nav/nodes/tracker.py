@@ -19,7 +19,7 @@ class PathTracker(Node):
         super().__init__('path_tracker')
 
         # Initialise publishers
-        self.tracker_pub = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.tracker_pub = self.create_publisher(Twist, '/ngeeann_av/cmd_vel', 10)
         self.lateral_ref_pub = self.create_publisher(PoseStamped, '/ngeeann_av/lateral_ref', 10)
 
         # Initialise subscribers
@@ -140,7 +140,7 @@ class PathTracker(Node):
             self.yawrate_error = 0.0
     
         pose = PoseStamped()
-        pose.header.frame_id = "map"
+        pose.header.frame_id = "odom"
         pose.header.stamp = self.get_clock().now().to_msg()
         pose.pose.position.x = self.cx[target_idx]
         pose.pose.position.y = self.cy[target_idx]

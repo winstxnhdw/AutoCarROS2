@@ -26,6 +26,7 @@ class ClickPlanner(Node):
         self.local_planner_pub = self.create_publisher(Path2D, '/ngeeann_av/path', 10)
         self.path_viz_pub = self.create_publisher(Path, '/ngeeann_av/viz_path', 10)
         self.goals_viz_pub = self.create_publisher(Marker, '/ngeeann_av/viz_goals', 10)
+        self.target_vel_pub = self.create_publisher(Float32, '/ngeeann_av/target_velocity', 10)
 
         # Initialise subscribers
         self.goals_sub = self.create_subscription(PoseStamped, '/goal_pose', self.goals_cb, 10)
@@ -44,6 +45,10 @@ class ClickPlanner(Node):
 
         if (self.goals >= 2):
             self.create_display_path()
+
+        vel = Float32()
+        vel.data = 2.5
+        self.target_vel_pub.publish(vel)
 
 
     def display_waypoint(self,x,y):

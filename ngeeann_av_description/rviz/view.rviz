@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /Path1/Status1
         - /Path1/Topic1
       Splitter Ratio: 0.5
     Tree Height: 745
@@ -264,6 +263,25 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /ngeeann_av/viz_goals
       Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz_default_plugins/Pose
+      Color: 114; 159; 207
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: Pose
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /ngeeann_av/lateral_ref
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -307,16 +325,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 27.761308670043945
+      Distance: 111.42443084716797
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.9888757467269897
-        Y: 0.6058027148246765
-        Z: 1.1973282098770142
+        X: 19.59930419921875
+        Y: 10.158567428588867
+        Z: -1.4811134338378906
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
