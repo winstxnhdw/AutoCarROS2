@@ -1,14 +1,15 @@
 '''
 This is a waypoint generator for circular roads.
 '''
-
-from __future__ import print_function
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+from __future__ import print_function
 from matplotlib.pyplot import figure
 
 def main():
+
     mode = raw_input("Point or Angle mode (p/a): ")
 
     # Point mode
@@ -21,6 +22,7 @@ def main():
         main()
 
 def point_mode():
+
     try:
         path = raw_input("Path mode (inner/outer/custom): ")
         if path == "inner":
@@ -69,6 +71,7 @@ def point_mode():
     plot_waypoints(df)
 
 def angle_mode():
+
     try:
         path = raw_input("Path mode (inner/outer/custom): ")
         if path == "inner":
@@ -115,6 +118,7 @@ def angle_mode():
     plot_waypoints(df)
 
 def plot_waypoints(df):
+
     figure(num=None, figsize=(10, 10), dpi=80, facecolor='w', edgecolor='k')
     x = df['X-axis']
     y = df['Y-axis']
