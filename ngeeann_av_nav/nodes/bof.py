@@ -4,7 +4,6 @@ import threading
 import rclpy
 import numpy as np
 import numpy.ma as ma
-#import sensor_msgs.point_cloud2 as pc2
 
 from rclpy.node import Node
 from geometry_msgs.msg import Pose, Point, Quaternion, Pose2D

@@ -21,18 +21,10 @@ find_package(sensor_msgs REQUIRED)
 
 include_directories(include)
 
-add_executable(talker src/publisher_member_function.cpp)
-ament_target_dependencies(talker rclcpp std_msgs)
-
-add_executable(listener src/subscriber_member_function.cpp)
-ament_target_dependencies(listener rclcpp std_msgs)
-
 add_executable(bof src/bof.cpp)
 ament_target_dependencies(bof rclcpp std_msgs nav_msgs tf2 tf2_ros geometry_msgs sensor_msgs)
 
 install(TARGETS
-  talker
-  listener
   bof
   DESTINATION lib/${PROJECT_NAME})
 
