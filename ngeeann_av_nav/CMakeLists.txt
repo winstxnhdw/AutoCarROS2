@@ -29,10 +29,12 @@ install(DIRECTORY
   launch
   config
   scripts
+  nodes
   DESTINATION share/${PROJECT_NAME}
 )
 
 install(PROGRAMS
+  nodes/command_goals.py
   nodes/bof.py
   nodes/globalplanner.py
   nodes/localisation.py

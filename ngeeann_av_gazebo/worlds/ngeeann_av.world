@@ -537,7 +537,7 @@
         <publish_wheel_tf>true</publish_wheel_tf>
         <publish_distance>true</publish_distance>
 
-        <odometry_frame>odom_demo</odometry_frame>
+        <odometry_frame>odom</odometry_frame>
         <robot_base_frame>base_link</robot_base_frame>
 
       </plugin>

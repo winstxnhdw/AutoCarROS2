@@ -77,7 +77,7 @@ class OccupancyMapping : public rclcpp::Node
         updateMap(msg);
         nav_msgs::msg::OccupancyGrid occ_map;
         occ_map.header.frame_id = "odom";
-        occ_map.info.width = 
+        occ_map.info.width = 0.0;
     }
 
     void updateMap( sensor_msgs::msg::LaserScan::SharedPtr scan )
