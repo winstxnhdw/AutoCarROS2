@@ -61,11 +61,6 @@ class Localisation(Node):
 
         self.localisation_pub.publish(state2d)
 
-        # Print state
-        print("Position (x,y): ({},{})".format(round(state2d.pose.x, 5), round(state2d.pose.y, 5)))
-        print("Heading: {}".format(round(state2d.pose.theta, 5)))
-        print("Velocity (x,y): ({},{})".format(round(state2d.twist.x, 5), round(state2d.twist.y, 5)))
-
 def main(args=None):
 
     # Initialise the node

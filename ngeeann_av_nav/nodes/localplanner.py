@@ -68,7 +68,6 @@ class LocalPathPlanner(Node):
 
         msg = Float32()
         msg.data = self.target_vel
-        self.get_logger().info('Publishing: "{0}"'.format(msg.data))
         self.target_vel_pub.publish(msg)
 
     def goals_cb(self, msg):
@@ -98,9 +97,7 @@ class LocalPathPlanner(Node):
         '''
         Default path draw across waypoints
         '''
-
-        print(self.ax)
-
+        
         cx, cy, cyaw = calc_spline_course(self.ax, self.ay, self.ds)
 
         path_length = min(len(cx), len(cy), len(cyaw))
