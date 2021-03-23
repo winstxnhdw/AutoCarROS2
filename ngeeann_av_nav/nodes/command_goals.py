@@ -54,7 +54,7 @@ class ClickPlanner(Node):
         points.action = points.ADD
 
         life = Duration()
-        life.sec = 10
+        life.sec = 1000
         life.nanosec = 0
 
         points.lifetime = life
