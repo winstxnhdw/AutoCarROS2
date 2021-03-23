@@ -63,7 +63,7 @@ $ ros2 launch launches click_launch.py
 |launches|Contains the main launch files for quick launching|
 |ngeeann_av_description|Contains the model's URDF and RViz configuration files|
 |ngeeann_av_gazebo|Contains the world files and model's SDF|
-|ngeeann_av_map|Contains the bayesian occupancy filter|
+|ngeeann_av_map|Contains the Bayesian Occupancy Filter stack|
 |ngeeann_av_msgs|Contains all custom messages used throughout every package|
 |ngeeann_av_nav|Contains the navigation stack|
 
