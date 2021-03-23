@@ -1,18 +1,23 @@
-from __future__ import print_function
-import math
 import numpy as np
 
-r = input("Radius in metres: ")
-angle = input("Angle in radians: ")
+from __future__ import print_function
 
-print("\nRadius: ", r, "\nAngle: ", angle)
+def main():
 
-theta = 0
+	r = input("Radius in metres: ")
+	angle = input("Angle in radians: ")
 
-for n in np.arange(0, 2*math.pi, angle):
-	x = r * math.cos(theta)
-	y = r * math.sin(theta)
-	theta = theta + angle
-	print ('<point>', x, ' ', y, ' ', 0, '</point>', sep = '')
+	print("\nRadius: ", r, "\nAngle: ", angle)
 
-print ('<point>', r, ' ', 0, ' ', 0, '</point>', sep = '')
+	theta = 0
+
+	for n in np.arange(0, 2*math.pi, angle):
+		x = r * np.cos(theta)
+		y = r * np.sin(theta)
+		theta = theta + angle
+		print ('<point>', x, ' ', y, ' ', 0, '</point>', sep = '')
+
+	print ('<point>', r, ' ', 0, ' ', 0, '</point>', sep = '')
+
+if __name__ == '__main__':
+	main()
