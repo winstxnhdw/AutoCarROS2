@@ -24,66 +24,6 @@ class Map():
         self.height = height 
         self.grid = np.zeros((height, width))
 
-        # Creates occupied roadmap
-        self.roadmap = np.zeros((height, width))
-
-        # Lane Overrun Region
-        for r in np.arange(97, 100, 0.05):
-            for theta in np.arange(0, 0.5 * np.pi, 0.001):
-                x = r * np.cos(theta)
-                y = r * np.sin(theta)
-
-                try:
-                    ix = int((x - self.origin_x) / self.resolution)
-                    iy = int((y - self.origin_y) / self.resolution)
-                    self.roadmap[iy, ix] = 0.4
-
-                except:
-                    pass
-
-        for r in np.arange(107.5, 110.5, 0.05):
-            for theta in np.arange(0, 0.5*np.pi, 0.001):
-                x = r * np.cos(theta)
-                y = r * np.sin(theta)
-
-                try:
-                    ix = int((x - self.origin_x) / self.resolution)
-                    iy = int((y - self.origin_y) / self.resolution)
-                    self.roadmap[iy, ix] = 0.4
-
-                except:
-                    pass
-
-        # Add barriers
-        for r in np.arange(110.5, 110.75, 0.05):
-            for theta in np.arange(0, 0.5*np.pi, 0.001):
-                x = r * np.cos(theta)
-                y = r * np.sin(theta)
-
-                try:
-                    ix = int((x - self.origin_x) / self.resolution)
-                    iy = int((y - self.origin_y) / self.resolution)
-                    self.roadmap[iy, ix] = 0.8
-
-                except:
-                    pass
-
-        for r in np.arange(96.75, 97, 0.05):
-            for theta in np.arange(0, 0.5*np.pi, 0.001):
-                x = r * np.cos(theta)
-                y = r * np.sin(theta)
-
-                try:
-                    ix = int((x - self.origin_x) / self.resolution)
-                    iy = int((y - self.origin_y) / self.resolution)
-                    self.roadmap[iy, ix] = 0.8
-
-                except:
-                    pass
-
-        print('Road map initialised.')
-        
-        self.mask = self.roadmap
     
     def to_message(self):
         '''
@@ -111,7 +51,7 @@ class Map():
         # entries are given a different interpretation (like
         # log-odds).
         
-        self.mask = np.clip((self.roadmap + self.grid), 0, 1)
+        self.mask = np.clip((self.grid), 0, 1)
         flat_grid = self.mask.reshape((self.grid.size,)) * 100
         grid_msg.data = list(np.round(flat_grid))
         return grid_msg
@@ -177,9 +117,17 @@ class GridMapping(Node):
         self.y = data.pose.y
         self.vel = np.sqrt(data.twist.x**2 + data.twist.y**2)
         self.yaw = data.pose.theta
+        print('recieved state')
+        self.inverse_range_sensor_model()
         #self.lock.release()
 
     def raycasting(self):
+
+        if self.scan == None:
+            return
+        
+        if self.x == None:
+            return
 
         # Lidar Properties
         angle_min = self.scan.angle_min
@@ -224,6 +172,8 @@ class GridMapping(Node):
         self.publish_map(self.gmap)
 
     def inverse_range_sensor_model(self):
+        if self.scan == None:
+            return
 
         # Lidar Properties
         angle_min = self.scan.angle_min
@@ -287,20 +237,17 @@ def main(args=None):
     # Initialise the node
     rclpy.init(args=args)
 
-    grid_mapping = GridMapping()
-
-    while grid_mapping.scan == None:
-        pass
     
     while rclpy.ok():
         try:
-            grid_mapping.inverse_range_sensor_model()
-            
-            rclpy.spin(bof)
+            grid_mapping = GridMapping()
+            rclpy.spin(grid_mapping)
 
         except KeyboardInterrupt:
             print("\n")
             print("Shutting down ROS node...")
+            grid_mapping.destroy_node()
+            rclpy.shutdown()
 
 if __name__ == "__main__":
     main()
