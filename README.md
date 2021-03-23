@@ -67,7 +67,7 @@ $ ros2 launch launches click_launch.py
 |ngeeann_av_msgs|Contains all custom messages used throughout every package|
 |ngeeann_av_nav|Contains the navigation stack|
 
-## Quick Fix
+## Troubleshoot
 There are occasions where `colcon build` does not properly rebuild the 'build' and 'install' folders, especially when one has made changes to the CMakeLists.txt. In the following, a simple quick fix can be performed.
 ```bash
 # Remove build and install files

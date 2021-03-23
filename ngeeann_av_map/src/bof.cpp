@@ -24,8 +24,7 @@ class OccupancyMapping : public rclcpp::Node
     OccupancyMapping()
     : Node("bof")
     {
-        subscription_ = this->create_subscription<nav_msgs::msg::Odometry>(
-        "ngeeann_av/odom", 20, std::bind(&OccupancyMapping::odom_callback, this, _1));
+        subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("ngeeann_av/odom", 20, std::bind(&OccupancyMapping::odom_callback, this, _1));
         subscription2_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", rclcpp::SensorDataQoS(), std::bind(&OccupancyMapping::scanCallback, this, _1));
         publisher_ = this->create_publisher<nav_msgs::msg::OccupancyGrid>("map", rclcpp::SensorDataQoS());
     }
