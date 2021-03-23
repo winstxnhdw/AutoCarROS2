@@ -15,10 +15,24 @@ class Localisation(Node):
         super().__init__('localisation')
 
         # Initialise publishers
-        self.localisation_pub = self.create_publisher(State2D, '/ngeeann_av/state2D', 20)
+        self.localisation_pub = self.create_publisher(State2D, '/ngeeann_av/state2D', 10)
 
         # Initialise subscribers
-        self.odom_sub = self.create_subscription(Odometry, '/odom', self.vehicle_state_cb, 20)
+        self.odom_sub = self.create_subscription(Odometry, '/odom', self.vehicle_state_cb, 10)
+
+        # Load parameters
+        try:
+            self.declare_parameters(
+                namespace='',
+                parameters=[
+                    ('update_frequency', None)
+                ]
+            )
+
+            self.frequency = float(self.get_parameter("update_frequency").value)
+
+        except:
+            raise Exception("Missing ROS parameters. Check the configuration file.")
 
         # Class constants
         self.state = None
@@ -56,16 +70,18 @@ def main(args=None):
 
     # Initialise the node
     rclpy.init(args=args)
-    
-    # Initialise the class
-    localisation = Localisation()
 
-    while rclpy.ok():
-        try:
-            rclpy.spin(localisation)
 
-        except KeyboardInterrupt:
-            print("Shutting down ROS node...")
+    try:
+        # Initialise the class
+        localisation = Localisation()
+
+        # Stop the node from exiting
+        rclpy.spin(localisation)
+
+    finally:
+        localisation.destroy_node()
+        rclpy.shutdown()
 
 if __name__=="__main__":
     main()

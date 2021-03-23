@@ -74,10 +74,10 @@ class GlobalPathPlanner(Node):
                 self.y          - Represents the current y-coordinate of the vehicle
                 self.theta      - Represents the current yaw of the vehicle
         '''
-
         self.x = msg.pose.x
         self.y = msg.pose.y
         self.theta = msg.pose.theta
+        self.set_waypoints()
 
     def set_waypoints(self):
         ''' 
@@ -205,21 +205,16 @@ def main(args=None):
     # Initialise the node
     rclpy.init(args=args)
     
-    # Initialise the class
-    global_planner = GlobalPathPlanner()
+    try:
+        # Initialise the class
+        global_planner = GlobalPathPlanner()
 
-    while not global_planner.x or global_planner.y or global_planner.theta:
-            pass
+        # Stop the node from exiting
+        rclpy.spin(global_planner)
 
-    while rclpy.ok():
-        try:
-            global_planner.set_waypoints()
-         
-            rclpy.spin(global_planner)
-
-        except KeyboardInterrupt:
-            print("\n")
-            print("Shutting down ROS node...")
+    finally:
+        global_planner.destroy_node()
+        rclpy.shutdown()
 
 if __name__=="__main__":
     main()

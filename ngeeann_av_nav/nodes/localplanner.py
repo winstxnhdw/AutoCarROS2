@@ -6,7 +6,7 @@ import numpy as np
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Quaternion, Pose2D
 from ngeeann_av_msgs.msg import Path2D, State2D
-from nav_msgs.msg import Path, MapMetaData
+from nav_msgs.msg import Path
 from std_msgs.msg import Float32
 from heading2quaternion import heading_to_quaternion
 from cubic_spline_planner import calc_spline_course
@@ -61,12 +61,14 @@ class LocalPathPlanner(Node):
         # self.ax = [103.67, 102.6610906864386, 99.65400001792553, 94.70725759380844, 87.91714612853669]
         # self.ay = [0, 14.428075376529984, 28.575324677548302, 42.16638778766821, 54.93673012305635]
 
+        # Initialise timer
         self.timer = self.create_timer(self.ds, self.timer_callback)
 
     def timer_callback(self):
 
         msg = Float32()
         msg.data = self.target_vel
+        self.get_logger().info('Publishing: "{0}"'.format(msg.data))
         self.target_vel_pub.publish(msg)
 
     def goals_cb(self, msg):
@@ -82,7 +84,7 @@ class LocalPathPlanner(Node):
             self.ax.append(px)
             self.ay.append(py)
 
-        print("\nGoals received: {}".format(len(msg.poses)))
+        self.publish_path()
 
     def vehicle_state_cb(self, msg):
         ''' 
@@ -103,8 +105,10 @@ class LocalPathPlanner(Node):
 
         path_length = min(len(cx), len(cy), len(cyaw))
 
-        target_path = Path()
+        target_path = Path2D()
         viz_path = Path()
+        vpose = PoseStamped()
+
         viz_path.header.frame_id = "odom"
         viz_path.header.stamp = self.get_clock().now().to_msg()
 
@@ -117,9 +121,7 @@ class LocalPathPlanner(Node):
             target_path.poses.append(npose)
 
             # Appending to Visualization Path
-            vpose = PoseStamped()
             vpose.header.frame_id = self.frame_id
-            vpose.header.seq = n
             vpose.header.stamp = self.get_clock().now().to_msg()
             vpose.pose.position.x = cx[n]
             vpose.pose.position.y = cy[n]
@@ -138,21 +140,16 @@ def main(args=None):
     # Initialise the node
     rclpy.init(args=args)
 
-    # Initialise the class
-    local_planner = LocalPathPlanner()
+    try:
+        # Initialise the class
+        local_planner = LocalPathPlanner()
 
-    while not local_planner.ax or not local_planner.ay or not local_planner.ds:
-            pass
+        # Stop the node from exiting
+        rclpy.spin(local_planner)
 
-    while rclpy.ok():
-        try:
-            target_path = local_planner.publish_path()
-
-            rclpy.spin(local_planner)
-
-        except KeyboardInterrupt:
-            print("\n")
-            print("Shutting down ROS node...")
+    finally:
+        local_planner.destroy_node()
+        rclpy.shutdown()
 
 if __name__=="__main__":
     main()

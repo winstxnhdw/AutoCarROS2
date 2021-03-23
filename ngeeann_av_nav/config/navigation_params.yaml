@@ -1,7 +1,6 @@
 localisation:
     ros__parameters:
         update_frequency: 50.0
-        model_name: "ngeeann_av"
 
 local_planner:
     ros__parameters:

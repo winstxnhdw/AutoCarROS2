@@ -30,6 +30,7 @@ def generate_launch_description():
         package = navpkg,
         name = 'localisation',
         executable = 'localisation.py',
+        parameters = [config]
     )
 
     local_planner=Node(
@@ -40,8 +41,8 @@ def generate_launch_description():
     )
 
     ld.add_action(localisation)
-    # ld.add_action(global_planner)
-    # ld.add_action(local_planner)
-    # ld.add_action(path_tracker)
+    ld.add_action(global_planner)
+    ld.add_action(local_planner)
+    ld.add_action(path_tracker)
 
     return ld

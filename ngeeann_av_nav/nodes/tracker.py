@@ -32,6 +32,7 @@ class PathTracker(Node):
             self.declare_parameters(
                 namespace='',
                 parameters=[
+                    ('update_frequency', None),
                     ('control_gain', None),
                     ('softening_gain', None),
                     ('yawrate_gain', None),
@@ -40,6 +41,7 @@ class PathTracker(Node):
                 ]
             )
 
+            self.frequency = float(self.get_parameter("update_frequency").value)
             self.k = float(self.get_parameter("control_gain").value)
             self.ksoft = float(self.get_parameter("softening_gain").value)
             self.kyaw = float(self.get_parameter("yawrate_gain").value)
@@ -55,9 +57,6 @@ class PathTracker(Node):
         self.yaw = None
         self.target_vel = 0.0
 
-        self.points = 1
-        self.lock = threading.Lock()
-
         self.cx = []
         self.cy = []
         self.cyaw = []
@@ -66,6 +65,16 @@ class PathTracker(Node):
         self.heading_error = 0.0
         self.crosstrack_error = 0.0
         self.yawrate_error = 0.0
+
+        self.lock = threading.Lock()
+        self.dt = 1 / self.frequency
+
+        # Intialise timers
+        self.timer = self.create_timer(self.dt, self.timer_callback)
+
+    def timer_callback(self):
+
+        self.stanley_control()
 
     def vehicle_state_cb(self, msg):
 
@@ -205,43 +214,22 @@ class PathTracker(Node):
 
 def main(args=None):
     
-    # Time execution
-    begin_time = datetime.datetime.now()
-    n = 0
-    track_error = []
-
     # Initialise the node
     rclpy.init(args=args)
 
     # Initialise the class
     path_tracker = PathTracker()
 
-    while not path_tracker.x or not path_tracker.y:
-            pass
+    try:
+        # Initialise the class
+        path_tracker = PathTracker()
 
-    while not path_tracker.cx or not path_tracker.cy or not path_tracker.cyaw:
-        pass
+        # Stop the node from exiting
+        rclpy.spin(path_tracker)
 
-    while rclpy.ok():
-        try:
-            if path_tracker.cyaw:
-                path_tracker.stanley_control()
-
-            rclpy.spin(path_tracker)
-
-            if n == 100:
-                print("\nCurrent Tracking Error: {} m".format(path_tracker.crosstrack_error))
-                print("Point {} of {} in current path".format(path_tracker.target_idx, len(path_tracker.cyaw)))
-                track_error.append(path_tracker.crosstrack_error)
-                n = 0
-                
-            else:
-                n += 1
-
-        except KeyboardInterrupt:
-            print("\n\nExecution time     : {}".format(datetime.datetime.now() - begin_time))
-            print("Average track error  : {}".format(sum(track_error) / len(track_error)))
-            print("Shutting down ROS node...")
+    finally:
+        path_tracker.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == "__main__":
     main()
