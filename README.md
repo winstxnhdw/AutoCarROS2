@@ -57,6 +57,16 @@ $ ros2 launch launches click_launch.py
 |default_launch.py|Complete pipeline with preset waypoints|
 |click_launch.py|Interactive pipeline for testing and fun|
 
+## Packages
+|Package|Purpose|
+|-----------|-------|
+|launches|Contains the main launch files for quick launching|
+|ngeeann_av_description|Contains the model's URDF and RViz configuration files|
+|ngeeann_av_gazebo|Contains the world files and model's SDF|
+|ngeeann_av_map|Contains the bayesian occupancy filter|
+|ngeeann_av_msgs|Contains all custom messages used throughout every package|
+|ngeeann_av_nav|Contains the navigation stack|
+
 ## Quick Fix
 There are occasions where `colcon build` does not properly rebuild the 'build' and 'install' folders, especially when one has made changes to the CMakeLists.txt. In the following, a simple quick fix can be performed.
 ```bash
