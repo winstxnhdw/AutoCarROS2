@@ -5,7 +5,7 @@
 </div>
 
 ## Abstract
-This project contains the ROS 2 variant of the AutoCarROS repository. It covers the development of a robust non-holonomic autonomous vehicle platform in a simulated environment using ROS and Gazebo. A sense-think-act cycle is implemented to navigate the virtual world, avoiding static and moving objects.
+This project contains the ROS 2 variant of the AutoCarROS repository. It covers the development of a robust non-holonomic autonomous vehicle platform in a simulated environment using ROS 2 and Gazebo 11. A sense-think-act cycle is implemented to navigate the virtual world, avoiding static and moving objects.
 <br />
 <br />
 <div align="center">
@@ -22,20 +22,47 @@ $ cd PATH/TO/WORKSPACE/src/AutoCarROS2
 # Install additional dependencies
 $ chmod +x requirements.sh
 $ ./requirements.sh
+
+# Append workspace to .bashrc
+$ cd PATH/TO/WORKSPACE/src/AutoCarROS2
+$ echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
+$ echo "PATH/TO/WORKSPACE/install/setup.bash" >> ~/.bashrc
+$ source ~/.bashrc
 ```
 
 ## Usage
+When using this project for the first time, it is necessary that the user builds the packages before attempting to run the launch files.
 ```bash
-# Source workspace
-$ cd PATH/TO/WORKSPACE/src/AutoCarROS2
-$ source /opt/ros/foxy/setup.bash
-$ . install/setup.bash
+# Change directory to your desired workspace
+cd PATH/TO/WORKSPACE/
 
 # Build packages
 $ colcon build
 
-# Launch
-$ ros2 launch launches av_launch.py
+```
+There are two launch files the user can use. More details in the [Launch Files](#Launch-Files) section.
+```bash
+# Launch the default launch file
+$ ros2 launch launches default_launch.py
+
+# OR
+
+# Launch the interactive launch file
+$ ros2 launch launches click_launch.py
+```
+
+## Launch Files
+|Launch File|Purpose|
+|-----------|-------|
+|default_launch.py|Complete pipeline with preset waypoints|
+|click_launch.py|Interactive pipeline for testing and fun|
+
+## Quick Fix
+There are occasions where `colcon build` does not properly rebuild the 'build' and 'install' folders, especially when one has made changes to the CMakeLists.txt. In the following, a simple quick fix can be performed.
+```bash
+# Remove build and install files
+$ cd PATH/TO/WORKSPACE/
+$ rm -rf build install
 ```
 
 ## Renders

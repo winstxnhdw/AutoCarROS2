@@ -26,19 +26,17 @@ find_package(nav_msgs REQUIRED)
 ament_python_install_package(nodes/)
 
 install(DIRECTORY
-  launch
   config
-  scripts
+  data
   nodes
   DESTINATION share/${PROJECT_NAME}
 )
 
 install(PROGRAMS
-  nodes/command_goals.py
-  nodes/bof.py
   nodes/globalplanner.py
   nodes/localisation.py
   nodes/localplanner.py
+  nodes/clickplanner.py
   nodes/tracker.py
 
   src/utils/normalise_angle.py

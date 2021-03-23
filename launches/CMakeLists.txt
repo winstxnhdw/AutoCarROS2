@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(ngeeann_av_msgs)
+project(launches)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,16 +17,11 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(rosidl_default_generators REQUIRED)
 
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/Path2D.msg"
-  "msg/State2D.msg"
-  "msg/Twist2D.msg"
-DEPENDENCIES geometry_msgs std_msgs
- )
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

@@ -38,6 +38,7 @@ class ClickPlanner(Node):
 
 
     def goals_cb(self, msg):
+
         self.goals += 1
         self.ax.append(msg.pose.position.x)
         self.ay.append(msg.pose.position.y)
@@ -81,8 +82,6 @@ class ClickPlanner(Node):
         # Publish the MarkerArray
         self.goals_viz_pub.publish(points)
 
-
-
     def create_display_path(self):
 
         cx, cy, cyaw = calc_spline_course(self.ax, self.ay, self.ds)
@@ -113,7 +112,6 @@ class ClickPlanner(Node):
 
         self.local_planner_pub.publish(target_path)
         self.path_viz_pub.publish(viz_path)
-
 
 def main(args=None):
     ''' 

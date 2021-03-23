@@ -4,7 +4,6 @@ import rclpy
 import numpy as np
 
 from rclpy.node import Node
-from gazebo_msgs.srv import GetModelState  
 from nav_msgs.msg import Odometry
 from ngeeann_av_msgs.msg import State2D
 
