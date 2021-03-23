@@ -50,8 +50,6 @@ class GlobalPathPlanner(Node):
         dir_path = os.path.join(get_package_share_directory('ngeeann_av_nav'), 'scripts', 'waypoints.csv')
         df = pd.read_csv(dir_path)
 
-        print("Waypoint directory: {}".format(dir_path))
-
         # Import waypoints.csv into class variables ax and ay
         self.ax = df['X-axis'].values.tolist()
         self.ay = df['Y-axis'].values.tolist()
@@ -74,10 +72,10 @@ class GlobalPathPlanner(Node):
                 self.y          - Represents the current y-coordinate of the vehicle
                 self.theta      - Represents the current yaw of the vehicle
         '''
-
         self.x = msg.pose.x
         self.y = msg.pose.y
         self.theta = msg.pose.theta
+        self.set_waypoints()
 
     def set_waypoints(self):
         ''' 
@@ -109,25 +107,25 @@ class GlobalPathPlanner(Node):
 
         if closest_id < 2:
             # If the vehicle is starting along the path
-            print('Closest Waypoint #{} (Starting Path)'.format(closest_id))
+            self.get_logger().info('Closest Waypoint #{} (Starting Path)'.format(closest_id))
             px = self.ax[0: self.wp_published]
             py = self.ay[0: self.wp_published]
 
         elif closest_id > (self.waypoints - self.wp_published):
             # If the vehicle is finishing the given set of waypoints
-            print('Closest Waypoint #{} (Terminating Path)'.format(closest_id))
+            self.get_logger().info('Closest Waypoint #{} (Terminating Path)'.format(closest_id))
             px = self.ax[-self.wp_published:]
             py = self.ay[-self.wp_published:]    
 
         elif transform[1] < (0.0 - self.passed_threshold):
             # If the vehicle has passed, closest point is preserved as a point behind the car
-            print('Closest Waypoint #{} (Passed)'.format(closest_id))
+            self.get_logger().info('Closest Waypoint #{} (Passed)'.format(closest_id))
             px = self.ax[closest_id - (self.wp_behind - 1) : closest_id + (self.wp_ahead + 1)]
             py = self.ay[closest_id - (self.wp_behind - 1) : closest_id + (self.wp_ahead + 1)]
 
         else:
             # If the vehicle has yet to pass, a point behind the closest is preserved as a point behind the car
-            print('Closest Waypoint #{} (Approaching)'.format(closest_id))
+            self.get_logger().info('Closest Waypoint #{} (Approaching)'.format(closest_id))
             px = self.ax[(closest_id - self.wp_behind) : (closest_id + self.wp_ahead)]
             py = self.ay[(closest_id - self.wp_behind) : (closest_id + self.wp_ahead)]
         
@@ -197,26 +195,22 @@ class GlobalPathPlanner(Node):
         
         self.goals_pub.publish(goals)
         self.goals_viz_pub.publish(viz_goals)
-
-        print("Total goals published: {}\n".format(waypoints))
         
 def main(args=None):
     
     # Initialise the node
     rclpy.init(args=args)
     
-    # Initialise the class
-    global_planner = GlobalPathPlanner()
+    try:
+        # Initialise the class
+        global_planner = GlobalPathPlanner()
 
-    while rclpy.ok():
-        try:
-            global_planner.set_waypoints()
-         
-            rclpy.spin(global_planner)
+        # Stop the node from exiting
+        rclpy.spin(global_planner)
 
-        except KeyboardInterrupt:
-            print("\n")
-            print("Shutting down ROS node...")
+    finally:
+        global_planner.destroy_node()
+        rclpy.shutdown()
 
 if __name__=="__main__":
     main()

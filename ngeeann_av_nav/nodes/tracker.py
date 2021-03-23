@@ -6,8 +6,8 @@ import threading
 import numpy as np
 
 from rclpy.node import Node
-from ngeeann_av_msgs.msg import State2D, Path2D, AckermannDrive
-from geometry_msgs.msg import Pose2D, PoseStamped, Quaternion
+from ngeeann_av_msgs.msg import State2D, Path2D
+from geometry_msgs.msg import Pose2D, PoseStamped, Quaternion, Twist
 from std_msgs.msg import Float32
 from normalise_angle import normalise_angle
 from heading2quaternion import heading_to_quaternion
@@ -19,7 +19,7 @@ class PathTracker(Node):
         super().__init__('path_tracker')
 
         # Initialise publishers
-        self.tracker_pub = self.create_publisher(AckermannDrive, '/ngeeann_av/ackermann_cmd', 10)
+        self.tracker_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         self.lateral_ref_pub = self.create_publisher(PoseStamped, '/ngeeann_av/lateral_ref', 10)
 
         # Initialise subscribers
@@ -32,6 +32,7 @@ class PathTracker(Node):
             self.declare_parameters(
                 namespace='',
                 parameters=[
+                    ('update_frequency', None),
                     ('control_gain', None),
                     ('softening_gain', None),
                     ('yawrate_gain', None),
@@ -40,6 +41,7 @@ class PathTracker(Node):
                 ]
             )
 
+            self.frequency = float(self.get_parameter("update_frequency").value)
             self.k = float(self.get_parameter("control_gain").value)
             self.ksoft = float(self.get_parameter("softening_gain").value)
             self.kyaw = float(self.get_parameter("yawrate_gain").value)
@@ -55,9 +57,6 @@ class PathTracker(Node):
         self.yaw = None
         self.target_vel = 0.0
 
-        self.points = 1
-        self.lock = threading.Lock()
-
         self.cx = []
         self.cy = []
         self.cyaw = []
@@ -66,6 +65,16 @@ class PathTracker(Node):
         self.heading_error = 0.0
         self.crosstrack_error = 0.0
         self.yawrate_error = 0.0
+
+        self.lock = threading.Lock()
+        self.dt = 1 / self.frequency
+
+        # Intialise timers
+        self.timer = self.create_timer(self.dt, self.timer_callback)
+
+    def timer_callback(self):
+
+        self.stanley_control()
 
     def vehicle_state_cb(self, msg):
 
@@ -192,46 +201,35 @@ class PathTracker(Node):
 
         ''' Publishes the calculated steering angle  '''
         
-        drive = AckermannDrive()
-        drive.speed = velocity
-        drive.acceleration = 1.0
-        drive.steering_angle = steering_angle
-        drive.steering_angle_velocity = 0.0
+        drive = Twist()
+        drive.linear.x = velocity
+        drive.linear.y = 0.0
+        drive.linear.z = 0.0
+
+        drive.angular.x = 0.0
+        drive.angular.y = 0.0
+        drive.angular.z = steering_angle
+        
         self.tracker_pub.publish(drive)
 
 def main(args=None):
     
-    # Time execution
-    begin_time = datetime.datetime.now()
-    n = 0
-    track_error = []
-
     # Initialise the node
     rclpy.init(args=args)
 
     # Initialise the class
     path_tracker = PathTracker()
 
-    while rclpy.ok():
-        try:
-            if path_tracker.cyaw:
-                path_tracker.stanley_control()
+    try:
+        # Initialise the class
+        path_tracker = PathTracker()
 
-            rclpy.spin(path_tracker)
+        # Stop the node from exiting
+        rclpy.spin(path_tracker)
 
-            if n == 100:
-                print("\nCurrent Tracking Error: {} m".format(path_tracker.crosstrack_error))
-                print("Point {} of {} in current path".format(path_tracker.target_idx, len(path_tracker.cyaw)))
-                track_error.append(path_tracker.crosstrack_error)
-                n = 0
-                
-            else:
-                n += 1
-
-        except KeyboardInterrupt:
-            print("\n\nExecution time     : {}".format(datetime.datetime.now() - begin_time))
-            print("Average track error  : {}".format(sum(track_error) / len(track_error)))
-            print("Shutting down ROS node...")
+    finally:
+        path_tracker.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == "__main__":
     main()
