@@ -22,6 +22,9 @@ find_package(rclpy REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+
 
 ament_python_install_package(nodes/)
 
@@ -31,6 +34,15 @@ install(DIRECTORY
   nodes
   DESTINATION share/${PROJECT_NAME}
 )
+
+include_directories(include)
+
+add_executable(localplanner nodes/localplanner.cpp)
+ament_target_dependencies(localplanner rclcpp std_msgs nav_msgs tf2 tf2_ros geometry_msgs)
+
+install(TARGETS
+  localplanner
+  DESTINATION lib/${PROJECT_NAME})
 
 install(PROGRAMS
   nodes/globalplanner.py
