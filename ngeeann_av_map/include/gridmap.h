@@ -71,7 +71,7 @@ void GridMap::setGridOcc(double x, double y)
         setRepositionMap(idx, idy);    
 }
 
-// Increase probability that point is free
+
 void GridMap::setGridFree(double x, double y)
 {
     int idx = floor( (x / cell_size ) - origin_x );
