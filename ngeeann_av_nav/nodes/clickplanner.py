@@ -48,7 +48,7 @@ class ClickPlanner(Node):
             self.create_display_path()
 
         vel = Float32()
-        vel.data = 2.5
+        vel.data = 4.0
         self.target_vel_pub.publish(vel)
 
 

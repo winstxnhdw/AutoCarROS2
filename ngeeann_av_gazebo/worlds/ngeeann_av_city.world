@@ -41,6 +41,20 @@
       <direction>-0.5 0.1 -0.4</direction>
     </light>
 
+
+    <include>
+      <name>ngeeann_av</name>
+      <pose>
+      0.0
+      0.0
+      0.0
+      0
+      0
+      1.5708
+      </pose>
+      <uri>model://ngeeann_av</uri>
+    </include>
+
     <!-- ground plane -->
     <model name="ground_plane">
       <static>true</static>
