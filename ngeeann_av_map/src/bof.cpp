@@ -16,7 +16,7 @@
 using std::placeholders::_1;
 using namespace std;
 
-GridMap gmap(-300, -300, 0.2, 600, 600);
+GridMap gmap(-200, -200, 0.2, 500, 500);
 
 class OccupancyMapping : public rclcpp::Node
 {
@@ -34,7 +34,7 @@ class OccupancyMapping : public rclcpp::Node
     double x = 0.0;
     double y = 0.0;
     double theta = 0.0;
-    double cg2lidar = 1.5;
+    double cg2lidar = 2.4;
     float lat_update_range = 10.0, long_update_range = 30.0;
 
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr subscription_;

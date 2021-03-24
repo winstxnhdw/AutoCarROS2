@@ -90,7 +90,6 @@ void GridMap::setGridFree(double x, double y)
 void GridMap::setRepositionMap(int idx, int idy)
 {
     Eigen::MatrixXd old_occ_grid = occ_grid.replicate(1,1);
-    Eigen::MatrixXd old_occ_grid2 = occ_grid.replicate(1,1);
 
     float boundary_thresh = 0.25;
     int shift_cells = round(size_y * boundary_thresh);
@@ -114,7 +113,7 @@ void GridMap::setRepositionMap(int idx, int idy)
     {
         origin_y = origin_y + shift_cells;
         origin_pose_y = origin_y*cell_size;
-        occ_grid.leftCols(size_y - shift_cells) = old_occ_grid2.rightCols(size_y - shift_cells);
+        occ_grid.leftCols(size_y - shift_cells) = old_occ_grid.rightCols(size_y - shift_cells);
         occ_grid.rightCols(shift_cells).setOnes() *= 0.5;
     }
     
@@ -122,10 +121,9 @@ void GridMap::setRepositionMap(int idx, int idy)
     {
         origin_y = origin_y - shift_cells;
         origin_pose_y = origin_y*cell_size;
-        occ_grid.rightCols(size_y - shift_cells) = old_occ_grid2.leftCols(size_y - shift_cells);
+        occ_grid.rightCols(size_y - shift_cells) = old_occ_grid.leftCols(size_y - shift_cells);
         occ_grid.leftCols(shift_cells).setOnes() *= 0.5;
     }
-
 
 
 }
