@@ -20,7 +20,6 @@ $ git clone https://github.com/winstxnhdw/AutoCarROS2.git
 $ cd PATH/TO/WORKSPACE/src/AutoCarROS2
 
 # Install additional dependencies
-$ chmod +x requirements.sh
 $ ./requirements.sh
 
 # Append workspace to .bashrc
