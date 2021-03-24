@@ -16,7 +16,7 @@
 using std::placeholders::_1;
 using namespace std;
 
-GridMap gmap(-400, -400, 0.2, 800, 800);
+GridMap gmap(-200, -200, 0.2, 400, 400);
 
 class OccupancyMapping : public rclcpp::Node
 {
@@ -85,7 +85,7 @@ class OccupancyMapping : public rclcpp::Node
                 pxl = r*cos(angle);
                 pyl = r*sin(angle);
 
-                if (pxl > lat_update_range || pyl > long_update_range)
+                if ( (abs(pxl) > lat_update_range || abs(pyl) > long_update_range) && (R >range_max) )
                     continue;
 
                 // Location of lidar in global frame

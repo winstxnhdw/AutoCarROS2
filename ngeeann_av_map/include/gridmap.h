@@ -22,6 +22,7 @@ public:
     void setGridOcc(double x, double y);
     void setGridFree(double x, double y);
     float getCellSize(){ return cell_size; }
+    void setRepositionMap(int idx, int idy);
 };
 
 GridMap::GridMap(double origin_x_, double origin_y_, float cell_size_, int size_x_, int size_y_)
@@ -65,7 +66,9 @@ void GridMap::setGridOcc(double x, double y)
         occ_grid(idx, idy) = occ_grid(idx, idy) + 0.05;
         if ( occ_grid(idx, idy) > 1.0 )
             occ_grid(idx, idy) = 1.0;
-    }    
+    }
+    else
+        setRepositionMap(idx, idy);    
 }
 
 // Increase probability that point is free
@@ -79,5 +82,50 @@ void GridMap::setGridFree(double x, double y)
         occ_grid(idx, idy) = occ_grid(idx, idy) - 0.05;
         if ( occ_grid(idx, idy) < 0.0 )
             occ_grid(idx, idy) = 0.0;
-    }  
+    }
+    else
+        setRepositionMap(idx, idy);    
+}
+
+void GridMap::setRepositionMap(int idx, int idy)
+{
+    Eigen::MatrixXd old_occ_grid = occ_grid.replicate(1,1);
+    Eigen::MatrixXd old_occ_grid2 = occ_grid.replicate(1,1);
+
+    float boundary_thresh = 0.25;
+    int shift_cells = round(size_y * boundary_thresh);
+
+    if (idx > size_x)
+    {
+        origin_x = origin_x + shift_cells;
+        origin_pose_x = origin_x*cell_size;
+        occ_grid.topRows(size_x - shift_cells) = old_occ_grid.bottomRows(size_x - shift_cells);
+        occ_grid.bottomRows(shift_cells).setOnes() *= 0.5;
+    }
+    if (idx < 0)
+    {
+        origin_x = origin_x - shift_cells;
+        origin_pose_x = origin_x*cell_size;
+        occ_grid.bottomRows(size_x - shift_cells) = old_occ_grid.topRows(size_x - shift_cells);
+        occ_grid.topRows(shift_cells).setOnes() *= 0.5;
+    }
+
+    if (idy > size_y)
+    {
+        origin_y = origin_y + shift_cells;
+        origin_pose_y = origin_y*cell_size;
+        occ_grid.leftCols(size_y - shift_cells) = old_occ_grid2.rightCols(size_y - shift_cells);
+        occ_grid.rightCols(shift_cells).setOnes() *= 0.5;
+    }
+    
+    if (idy < 0)
+    {
+        origin_y = origin_y - shift_cells;
+        origin_pose_y = origin_y*cell_size;
+        occ_grid.rightCols(size_y - shift_cells) = old_occ_grid2.leftCols(size_y - shift_cells);
+        occ_grid.leftCols(shift_cells).setOnes() *= 0.5;
+    }
+
+
+
 }
