@@ -57,13 +57,12 @@ void GridMap::toRosOccMap(nav_msgs::msg::OccupancyGrid& ros_occ_grid)
 // Increase probability that point is occupied
 void GridMap::setGridOcc(double x, double y)
 {
-    int idx = floor( (x - origin_pose_x) / cell_size );
-    int idy = floor( (y - origin_pose_y) / cell_size );
-    // printf("\nidx = %d    idy = %d", idx, idy);
+    int idx = floor( (x / cell_size ) - origin_x );
+    int idy = floor( (y / cell_size ) - origin_y );
 
     if ( (idx < size_x) && (idy < size_y) && (0 <= idx) && (0 <= idy) )
     {
-        occ_grid(idx, idy) = occ_grid(idx, idy) + 0.1;
+        occ_grid(idx, idy) = occ_grid(idx, idy) + 0.05;
         if ( occ_grid(idx, idy) > 1.0 )
             occ_grid(idx, idy) = 1.0;
     }    
@@ -72,13 +71,12 @@ void GridMap::setGridOcc(double x, double y)
 // Increase probability that point is free
 void GridMap::setGridFree(double x, double y)
 {
-    int idx = floor( (x - origin_pose_x) / cell_size );
-    int idy = floor( (y - origin_pose_y) / cell_size );
-    // printf("\nidx = %d    idy = %d", idx, idy);
+    int idx = floor( (x / cell_size ) - origin_x );
+    int idy = floor( (y / cell_size ) - origin_y );
 
     if ( (idx < size_x) && (idy < size_y) && (0 <= idx) && (0 <= idy) )
     {
-        occ_grid(idx, idy) = occ_grid(idx, idy) - 0.1;
+        occ_grid(idx, idy) = occ_grid(idx, idy) - 0.05;
         if ( occ_grid(idx, idy) < 0.0 )
             occ_grid(idx, idy) = 0.0;
     }  

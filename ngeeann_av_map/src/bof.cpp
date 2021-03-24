@@ -16,7 +16,7 @@
 using std::placeholders::_1;
 using namespace std;
 
-GridMap gmap(-200, -200, 0.2, 400, 400);
+GridMap gmap(-400, -400, 0.2, 800, 800);
 
 class OccupancyMapping : public rclcpp::Node
 {
