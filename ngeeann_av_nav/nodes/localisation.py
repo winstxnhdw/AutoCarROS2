@@ -65,7 +65,6 @@ def main(args=None):
     # Initialise the node
     rclpy.init(args=args)
 
-
     try:
         # Initialise the class
         localisation = Localisation()

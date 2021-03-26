@@ -217,9 +217,6 @@ def main(args=None):
     # Initialise the node
     rclpy.init(args=args)
 
-    # Initialise the class
-    path_tracker = PathTracker()
-
     try:
         # Initialise the class
         path_tracker = PathTracker()
