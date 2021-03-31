@@ -12,6 +12,9 @@ This project contains the ROS 2 variant of the [AutoCarROS](https://github.com/w
 	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/obstacle_avoidance.gif?raw=true" />
 </div>
 
+> No avoidance manoeuvre has been added to this ROS 2 variant yet.
+>
+
 ## Installation
 After installing [ROS 2 Foxy Fitzroy](https://docs.ros.org/en/foxy/Installation.html),
 ```bash
