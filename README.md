@@ -8,8 +8,6 @@
 This project contains the ROS 2 variant of the [AutoCarROS](https://github.com/winstxnhdw/AutoCarROS) repository. It covers the development of a robust non-holonomic autonomous vehicle platform in a simulated environment using ROS 2 and Gazebo 11. A sense-think-act cycle is implemented to navigate the virtual world, avoiding static and moving objects.
 > No avoidance manoeuvre has been added to this ROS 2 variant yet.
 >
-<br />
-<br />
 <div align="center">
 	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/obstacle_avoidance.gif?raw=true" />
 </div>
