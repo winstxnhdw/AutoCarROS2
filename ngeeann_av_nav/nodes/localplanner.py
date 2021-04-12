@@ -9,7 +9,7 @@ from ngeeann_av_msgs.msg import Path2D, State2D
 from nav_msgs.msg import Path
 from std_msgs.msg import Float32
 from heading2quaternion import heading_to_quaternion
-from cubic_spline_planner import calc_spline_course
+from cubic_spline_pp import generate_cubic_path
 
 class LocalPathPlanner(Node):
 
@@ -98,7 +98,7 @@ class LocalPathPlanner(Node):
         Default path draw across waypoints
         '''
 
-        cx, cy, cyaw = calc_spline_course(self.ax, self.ay, self.ds)
+        cx, cy, cyaw = generate_cubic_path(self.ax, self.ay, self.ds)
 
         path_length = min(len(cx), len(cy), len(cyaw))
 
