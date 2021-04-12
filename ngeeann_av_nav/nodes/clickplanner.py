@@ -11,7 +11,7 @@ from std_msgs.msg import Float32
 from visualization_msgs.msg import Marker
 from builtin_interfaces.msg import Duration, Time
 from heading2quaternion import heading_to_quaternion
-from cubic_spline_planner import calc_spline_course
+from cubic_spline_pp import generate_cubic_path
 
 class ClickPlanner(Node):
 
@@ -84,7 +84,7 @@ class ClickPlanner(Node):
 
     def create_display_path(self):
 
-        cx, cy, cyaw = calc_spline_course(self.ax, self.ay, self.ds)
+        cx, cy, cyaw = generate_cubic_path(self.ax, self.ay, self.ds)
 
         target_path = Path2D()
         viz_path = Path()
