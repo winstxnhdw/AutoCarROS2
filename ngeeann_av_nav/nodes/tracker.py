@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
 import rclpy
-import datetime
 import threading
 import numpy as np
 
 from rclpy.node import Node
 from ngeeann_av_msgs.msg import State2D, Path2D
-from geometry_msgs.msg import Pose2D, PoseStamped, Quaternion, Twist
+from geometry_msgs.msg import Pose2D, Twist
 from std_msgs.msg import Float32
 from normalise_angle import normalise_angle
 from heading2quaternion import heading_to_quaternion
@@ -48,7 +47,7 @@ class PathTracker(Node):
             self.max_steer = float(self.get_parameter("steering_limits").value)
             self.cg2frontaxle = float(self.get_parameter("centreofgravity_to_frontaxle").value)
         
-        except:
+        except ValueError:
             raise Exception("Missing ROS parameters. Check the configuration file.")
 
         # Class variables to use whenever within the class when necessary
