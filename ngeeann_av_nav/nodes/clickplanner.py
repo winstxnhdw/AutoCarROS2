@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 
 import rclpy
-import numpy as np
 
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Quaternion, Pose2D, Point
-from ngeeann_av_msgs.msg import Path2D, State2D
+from ngeeann_av_msgs.msg import Path2D
 from nav_msgs.msg import Path
 from std_msgs.msg import Float32
 from visualization_msgs.msg import Marker
-from builtin_interfaces.msg import Duration, Time
-from heading2quaternion import heading_to_quaternion
+from builtin_interfaces.msg import Duration
 from cubic_spline_pp import generate_cubic_path
 
 class ClickPlanner(Node):

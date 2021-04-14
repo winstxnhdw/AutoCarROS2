@@ -4,7 +4,7 @@ import rclpy
 import numpy as np
 
 from rclpy.node import Node
-from geometry_msgs.msg import PoseStamped, Quaternion, Pose2D
+from geometry_msgs.msg import PoseStamped, Pose2D
 from ngeeann_av_msgs.msg import Path2D, State2D
 from nav_msgs.msg import Path
 from std_msgs.msg import Float32
