@@ -82,7 +82,7 @@ class ClickPlanner(Node):
 
     def create_display_path(self):
 
-        cx, cy, cyaw = generate_cubic_path(self.ax, self.ay, self.ds)
+        cx, cy, cyaw, _ = generate_cubic_path(self.ax, self.ay, self.ds)
 
         target_path = Path2D()
         viz_path = Path()
