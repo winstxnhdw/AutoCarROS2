@@ -6,7 +6,7 @@ import numpy as np
 
 from rclpy.node import Node
 from ngeeann_av_msgs.msg import State2D, Path2D
-from geometry_msgs.msg import Pose2D, Twist
+from geometry_msgs.msg import Twist, PoseStamped
 from std_msgs.msg import Float32
 from normalise_angle import normalise_angle
 from heading2quaternion import heading_to_quaternion
@@ -63,7 +63,6 @@ class PathTracker(Node):
         self.target_idx = None
         self.heading_error = 0.0
         self.crosstrack_error = 0.0
-        self.yawrate_error = 0.0
 
         self.lock = threading.Lock()
         self.dt = 1 / self.frequency
@@ -130,13 +129,6 @@ class PathTracker(Node):
         # Heading error
         self.heading_error = normalise_angle(self.cyaw[target_idx] - self.yaw - np.pi * 0.5)
         self.target_idx = target_idx
-
-        # Yaw rate discrepancy
-        try:
-            self.yawrate_error = self.trajectory_yawrate_calc() - self.yawrate
-
-        except:
-            self.yawrate_error = 0.0
     
         pose = PoseStamped()
         pose.header.frame_id = "odom"
@@ -146,33 +138,6 @@ class PathTracker(Node):
         pose.pose.position.z = 0.0
         pose.pose.orientation = heading_to_quaternion(self.cyaw[target_idx])
         self.lateral_ref_pub.publish(pose)
-    
-    # Calculates the desired yawrate of the vehicle
-    def trajectory_yawrate_calc(self):
-
-        target_range = 2    #number of points to look ahead and behind
-        delta_theta = 0.0
-        delta_s = 0.0
-        w = 0.0
-
-        start = self.target_idx - target_range
-        end = self.target_idx + target_range
-
-        for n in range(start, end + 1):
-            if (n >= 0) and ((n + 1) < len(self.cyaw)):
-
-                x1 = self.cx[n]
-                y1 = self.cy[n]
-                x2 = self.cx[n+1]
-                y2 = self.cy[n+1]
-
-                delta_s += np.hypot(x2 - x1, y2 - y1)
-                delta_theta += self.cyaw[n + 1] - self.cyaw[n]
-
-            # Angular velocity calculation
-            w = -(delta_theta / delta_s) * self.vel
-
-        return w
 
     # Stanley controller determines the appropriate steering angle
     def stanley_control(self):
@@ -180,10 +145,8 @@ class PathTracker(Node):
         self.lock.acquire()
         crosstrack_term = np.arctan2((self.k * self.crosstrack_error), (self.ksoft + self.target_vel))
         heading_term = normalise_angle(self.heading_error)
-        yawrate_term = 0.0
-        #yawrate_term = -self.kyaw * self.yawrate_error
         
-        sigma_t = crosstrack_term + heading_term + yawrate_term
+        sigma_t = crosstrack_term + heading_term
 
         # Constrains steering angle to the vehicle limits
         if sigma_t >= self.max_steer:
