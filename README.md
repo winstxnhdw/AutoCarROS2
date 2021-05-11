@@ -1,5 +1,7 @@
 # AUTONOMOUS VEHICLE: CONTROL AND BEHAVIOUR
 ### AutoCarROS has migrated to ROS 2 Foxy Fitzroy
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/winstxnhdw/AutoCarROS2.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/winstxnhdw/AutoCarROS2/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/winstxnhdw/AutoCarROS2.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/winstxnhdw/AutoCarROS2/context:python)
 <div align="center">
 	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/ngeeann_av_ultrawide.png?raw=true" />
 </div>
