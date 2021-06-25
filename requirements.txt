@@ -1,3 +1,6 @@
 pandas >= 1.2.3
 xacro >= 1.13.3
 numpy >= 1.17.4
+catkin-pkg >= 0.4.23
+empy>=3.3.4
+lark>=0.11.3
