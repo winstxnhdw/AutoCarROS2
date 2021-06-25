@@ -15,19 +15,27 @@ This project contains the ROS 2 variant of the [AutoCarROS](https://github.com/w
 </div>
 
 ## Installation
-After installing [ROS 2 Foxy Fitzroy](https://docs.ros.org/en/foxy/Installation.html),
 ```bash
-# Clone repository
-$ git clone https://github.com/winstxnhdw/AutoCarROS2.git
-$ cd PATH/TO/WORKSPACE/src/AutoCarROS2
+# Create a workspace
+$ mkdir -p PATH/TO/WORKSPACE/src
+$ cd src
 
-# Install additional dependencies
+# Clone repository
+$ git clone git@bitbucket.org:Kendrick1501/dynamic_rpp.git
+$ cd PATH/TO/WORKSPACE/src/dynamic_rpp
+
+# Install ROS 2 and the required dependencies
 $ sh requirements.sh
 
-# Append workspace to .bashrc
-$ cd PATH/TO/WORKSPACE/src/AutoCarROS2
+# Append ROS to .bashrc
 $ echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
-$ echo "PATH/TO/WORKSPACE/install/setup.bash" >> ~/.bashrc
+
+# Build the packages
+$ cd PATH/TO/WORKSPACE/
+$ colcon build
+
+# Append the workspace to .bashrc
+$ echo "source PATH/TO/WORKSPACE/install/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
 ```
 
