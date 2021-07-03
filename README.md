@@ -14,7 +14,7 @@ This project contains the ROS 2 variant of the [AutoCarROS](https://github.com/w
 	<img src="resources/reactive_path_planning.gif" />
 </div>
 
-> The above GIF contains a simulation built on top of AutoCarROS 2
+> The above GIF demonstrates a simulation built on top of AutoCarROS 2
 
 ## Installation
 ```bash
