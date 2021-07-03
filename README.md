@@ -9,10 +9,12 @@
 ## Abstract
 This project contains the ROS 2 variant of the [AutoCarROS](https://github.com/winstxnhdw/AutoCarROS) repository. It is a template for the development of a robust non-holonomic autonomous vehicle platform in a simulated environment using ROS 2 and Gazebo 11.
 > No avoidance manoeuvre has been added to this ROS 2 variant yet.
->
+
 <div align="center">
-	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/obstacle_avoidance.gif?raw=true" />
+	<img src="resources/reactive_path_planning.gif" />
 </div>
+
+> The above GIF contains a simulation built on top of AutoCarROS 2
 
 ## Installation
 ```bash
