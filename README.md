@@ -23,8 +23,8 @@ $ mkdir -p PATH/TO/WORKSPACE/src
 $ cd src
 
 # Clone repository
-$ git clone git@bitbucket.org:Kendrick1501/dynamic_rpp.git
-$ cd PATH/TO/WORKSPACE/src/dynamic_rpp
+$ git clone https://github.com/winstxnhdw/AutoCarROS2.git
+$ cd PATH/TO/WORKSPACE/src/AutoCarROS2
 
 # Install ROS 2 and the required dependencies
 $ sh requirements.sh
