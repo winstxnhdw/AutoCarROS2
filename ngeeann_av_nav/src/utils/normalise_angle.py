@@ -1,15 +1,7 @@
 import numpy as np
 
 def normalise_angle(angle):
-    """
-    Normalize an angle to [-pi, pi].
-    :param angle: (float)
-    :return: (float) Angle in radian in [-pi, pi]
-    """
-    while angle > np.pi:
-        angle -= 2.0 * np.pi
-
-    while angle < -np.pi:
-        angle += 2.0 * np.pi
+    
+    angle = m.atan2(m.sin(angle), m.cos(angle))
 
     return angle

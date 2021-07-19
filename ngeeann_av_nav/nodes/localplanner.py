@@ -9,7 +9,7 @@ from ngeeann_av_msgs.msg import Path2D, State2D
 from nav_msgs.msg import Path
 from std_msgs.msg import Float32
 from heading2quaternion import heading_to_quaternion
-from cubic_spline_pp import generate_cubic_path
+from cubic_spline_interpolator import generate_cubic_path
 
 class LocalPathPlanner(Node):
 

@@ -9,7 +9,7 @@ from nav_msgs.msg import Path
 from std_msgs.msg import Float32
 from visualization_msgs.msg import Marker
 from builtin_interfaces.msg import Duration
-from cubic_spline_pp import generate_cubic_path
+from cubic_spline_interpolator import generate_cubic_path
 
 class ClickPlanner(Node):
 
