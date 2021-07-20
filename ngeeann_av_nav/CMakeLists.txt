@@ -26,23 +26,13 @@ find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 
 
-ament_python_install_package(nodes/)
+ament_python_install_package(${PROJECT_NAME})
 
 install(DIRECTORY
   config
   data
-  nodes
   DESTINATION share/${PROJECT_NAME}
 )
-
-include_directories(include)
-
-add_executable(localplanner nodes/localplanner.cpp)
-ament_target_dependencies(localplanner rclcpp std_msgs nav_msgs tf2 tf2_ros geometry_msgs)
-
-install(TARGETS
-  localplanner
-  DESTINATION lib/${PROJECT_NAME})
 
 install(PROGRAMS
   nodes/globalplanner.py
@@ -50,10 +40,6 @@ install(PROGRAMS
   nodes/localplanner.py
   nodes/clickplanner.py
   nodes/tracker.py
-
-  src/utils/normalise_angle.py
-  src/utils/heading2quaternion.py
-  src/utils/cubic_spline_planner.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
