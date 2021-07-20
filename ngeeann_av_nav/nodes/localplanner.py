@@ -7,9 +7,9 @@ from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Pose2D
 from ngeeann_av_msgs.msg import Path2D, State2D
 from nav_msgs.msg import Path
-from std_msgs.msg import Float32
-from heading2quaternion import heading_to_quaternion
-from cubic_spline_interpolator import generate_cubic_path
+from std_msgs.msg import Float64
+from ngeeann_av_nav.heading2quaternion import heading_to_quaternion
+from ngeeann_av_nav.cubic_spline_interpolator import generate_cubic_path
 
 class LocalPathPlanner(Node):
 
@@ -23,7 +23,7 @@ class LocalPathPlanner(Node):
         # Initialise publishers
         self.local_planner_pub = self.create_publisher(Path2D, '/ngeeann_av/path', 10)
         self.path_viz_pub = self.create_publisher(Path, '/ngeeann_av/viz_path', 10)
-        self.target_vel_pub = self.create_publisher(Float32, '/ngeeann_av/target_velocity', 10)
+        self.target_vel_pub = self.create_publisher(Float64, '/ngeeann_av/target_velocity', 10)
 
         # Initialise subscribers
         self.goals_sub = self.create_subscription(Path2D, '/ngeeann_av/goals', self.goals_cb, 10)
@@ -66,7 +66,7 @@ class LocalPathPlanner(Node):
 
     def timer_cb(self):
 
-        msg = Float32()
+        msg = Float64()
         msg.data = self.target_vel
         self.target_vel_pub.publish(msg)
 

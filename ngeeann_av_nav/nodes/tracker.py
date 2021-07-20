@@ -7,9 +7,9 @@ import numpy as np
 from rclpy.node import Node
 from ngeeann_av_msgs.msg import State2D, Path2D
 from geometry_msgs.msg import Twist, PoseStamped
-from std_msgs.msg import Float32
-from normalise_angle import normalise_angle
-from heading2quaternion import heading_to_quaternion
+from std_msgs.msg import Float64
+from ngeeann_av_nav.normalise_angle import normalise_angle
+from ngeeann_av_nav.heading2quaternion import heading_to_quaternion
 
 class PathTracker(Node):
 
@@ -24,7 +24,7 @@ class PathTracker(Node):
         # Initialise subscribers
         self.localisation_sub = self.create_subscription(State2D, '/ngeeann_av/state2D', self.vehicle_state_cb, 10)
         self.path_sub = self.create_subscription(Path2D, '/ngeeann_av/path', self.path_cb, 10)
-        self.target_vel_sub = self.create_subscription(Float32, '/ngeeann_av/target_velocity', self.target_vel_cb, 10)
+        self.target_vel_sub = self.create_subscription(Float64, '/ngeeann_av/target_velocity', self.target_vel_cb, 10)
 
         # Load parameters
         try:

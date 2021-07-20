@@ -6,10 +6,10 @@ from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Pose2D, Point
 from ngeeann_av_msgs.msg import Path2D
 from nav_msgs.msg import Path
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from visualization_msgs.msg import Marker
 from builtin_interfaces.msg import Duration
-from cubic_spline_interpolator import generate_cubic_path
+from ngeeann_av_nav.cubic_spline_interpolator import generate_cubic_path
 
 class ClickPlanner(Node):
 
@@ -24,7 +24,7 @@ class ClickPlanner(Node):
         self.local_planner_pub = self.create_publisher(Path2D, '/ngeeann_av/path', 10)
         self.path_viz_pub = self.create_publisher(Path, '/ngeeann_av/viz_path', 10)
         self.goals_viz_pub = self.create_publisher(Marker, '/ngeeann_av/viz_goals', 10)
-        self.target_vel_pub = self.create_publisher(Float32, '/ngeeann_av/target_velocity', 10)
+        self.target_vel_pub = self.create_publisher(Float64, '/ngeeann_av/target_velocity', 10)
 
         # Initialise subscribers
         self.goals_sub = self.create_subscription(PoseStamped, '/goal_pose', self.goals_cb, 10)
@@ -45,7 +45,7 @@ class ClickPlanner(Node):
         if (self.goals >= 2):
             self.create_display_path()
 
-        vel = Float32()
+        vel = Float64()
         vel.data = 4.0
         self.target_vel_pub.publish(vel)
 
