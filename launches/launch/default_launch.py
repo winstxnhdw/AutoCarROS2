@@ -1,11 +1,11 @@
 import os
+import subprocess
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, SetEnvironmentVariable
 
 def generate_launch_description():
 
@@ -14,31 +14,28 @@ def generate_launch_description():
     descpkg = 'ngeeann_av_description'
     mappkg = 'ngeeann_av_map'
 
-    pkg_gazebo = get_package_share_directory('gazebo_ros')
-
     world = os.path.join(get_package_share_directory(gzpkg), 'worlds', 'ngeeann_av.world')
     urdf = os.path.join(get_package_share_directory(descpkg),'urdf', 'ngeeann_av.xacro')
     rviz = os.path.join(get_package_share_directory(descpkg), 'rviz', 'view.rviz')
     
     navconfig = os.path.join(get_package_share_directory(navpkg), 'config', 'navigation_params.yaml')
 
-    gzserver = os.path.join(pkg_gazebo, 'launch', 'gzserver.launch.py')
-    gzclient = os.path.join(pkg_gazebo, 'launch', 'gzclient.launch.py')
-
     use_sim_time = LaunchConfiguration('use_sim_time', default='True')
 
+    subprocess.run(['killall', 'gzserver'])
+    subprocess.run(['killall', 'gzclient'])
+
     return LaunchDescription([
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(gzserver), launch_arguments={'world': world}.items()
+        SetEnvironmentVariable(
+            'RCUTILS_CONSOLE_OUTPUT_FORMAT', '[{severity}]: {message}'
         ),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(gzclient)
+        SetEnvironmentVariable(
+            'RCUTILS_COLORIZED_OUTPUT', '1'
         ),
 
         ExecuteProcess(
-            cmd=['ros2', 'param', 'set', '/gazebo', 'use_sim_time', use_sim_time],
-            output='screen'
+            cmd=['gzserver', '--verbose', world, '-s', 'libgazebo_ros_factory.so'],
         ),
 
         DeclareLaunchArgument(
@@ -49,9 +46,9 @@ def generate_launch_description():
 
         Node(
             package='robot_state_publisher',
-            executable='robot_state_publisher',
             name='robot_state_publisher',
-            output='screen',
+            executable='robot_state_publisher',
+            output={'both': 'log'},
             parameters=[{'use_sim_time': use_sim_time}],
             arguments=[urdf]
         ),
@@ -61,7 +58,7 @@ def generate_launch_description():
             executable='rviz2',
             name='rviz2',
             arguments=['-d', rviz],
-            output='screen'
+            output={'both': 'log'}
         ),
 
         Node(

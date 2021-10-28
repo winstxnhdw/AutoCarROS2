@@ -37,7 +37,6 @@ link_directories(
 )
 
 include_directories(
-  include
   ${GAZEBO_INCLUDE_DIRS}
 )
 
@@ -47,6 +46,10 @@ set(GAZEBO_MODEL_PATH $ENV{HOME}/.gazebo/models)
 
 add_custom_target(COMMAND cmake -E make_directory ${GAZEBO_MODEL_PATH})
 
+install(DIRECTORY
+  worlds
+  DESTINATION share/${PROJECT_NAME}
+)
 
 install(DIRECTORY
   models/ngeeann_av
