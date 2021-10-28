@@ -35,7 +35,7 @@ def generate_launch_description():
         ),
 
         ExecuteProcess(
-            cmd=['gzserver', '--verbose', world, '-s', 'libgazebo_ros_factory.so'],
+            cmd=['gzserver', '--verbose', world, 'libgazebo_ros_factory.so'],
         ),
 
         DeclareLaunchArgument(
