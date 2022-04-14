@@ -109,7 +109,6 @@ $ rm -rf build install
 ## Renders
 <b>"Because the layman doesn't care unless it looks cool."<b>
 <br />
-<br />
 <div align="center">
     <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/renders.gif?raw=true" />
     <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/1.gif?raw=true" />
