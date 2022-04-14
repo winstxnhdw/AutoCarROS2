@@ -15,41 +15,55 @@ This project contains the ROS 2 variant of the [AutoCarROS](https://github.com/w
 </div>
 
 ## Installation
+
+Create a workspace
+
 ```bash
-# Create a workspace
 $ mkdir -p PATH/TO/WORKSPACE/src
 $ cd src
+```
 
-# Clone repository
+Clone repository
+
+```bash
 $ git clone https://github.com/winstxnhdw/AutoCarROS2.git
 $ cd PATH/TO/WORKSPACE/src/AutoCarROS2
+```
 
-# Install ROS 2 and the required dependencies
-$ sh requirements.sh
+Install ROS 2  and the required dependencies
 
-# Append ROS to .bashrc
-$ echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
+```bash
+sh ros-foxy-desktop-full-install.sh
+sh requirements.sh
+```
 
-# Build the packages
+Build the packages
+
+```bash
 $ cd PATH/TO/WORKSPACE/
 $ colcon build
+```
 
-# Append the workspace to .bashrc
+Append the workspace to .bashrc
+
+```bash
 $ echo "source PATH/TO/WORKSPACE/install/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc
 ```
 
 ## Usage
 When using this project for the first time, it is necessary that the user builds the packages before attempting to run the launch files.
+
 ```bash
 # Change directory to your desired workspace
 cd PATH/TO/WORKSPACE/
 
 # Build packages
 $ colcon build
-
 ```
+
 There are two launch files the user can use. More details in the [Launch Files](#Launch-Files) section.
+
 ```bash
 # Launch the default launch file
 $ ros2 launch launches default_launch.py
