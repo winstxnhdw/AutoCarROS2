@@ -1,17 +1,20 @@
 # AUTONOMOUS VEHICLE: CONTROL AND BEHAVIOUR
 ### AutoCarROS has migrated to ROS 2 Foxy Fitzroy
+
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/winstxnhdw/AutoCarROS2.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/winstxnhdw/AutoCarROS2/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/winstxnhdw/AutoCarROS2.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/winstxnhdw/AutoCarROS2/context:python)
+
 <div align="center">
-	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/ngeeann_av_ultrawide.png?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/ngeeann_av_ultrawide.png?raw=true" />
 </div>
 
 ## Abstract
+
 This project contains the ROS 2 variant of the [AutoCarROS](https://github.com/winstxnhdw/AutoCarROS) repository. It is a template for the development of a robust non-holonomic autonomous vehicle platform in a simulated environment using ROS 2 and Gazebo 11.
 > The following GIF demonstrates a simulation built on top of AutoCarROS 2.
 
 <div align="center">
-	<img src="resources/reactive_path_planning.gif" />
+    <img src="resources/reactive_path_planning.gif" />
 </div>
 
 ## Installation
@@ -52,6 +55,7 @@ $ source ~/.bashrc
 ```
 
 ## Usage
+
 When using this project for the first time, it is necessary that the user builds the packages before attempting to run the launch files.
 
 ```bash
@@ -75,12 +79,14 @@ $ ros2 launch launches click_launch.py
 ```
 
 ## Launch Files
+
 |Launch File|Purpose|
 |-----------|-------|
 |default_launch.py|Complete pipeline with preset waypoints|
 |click_launch.py|Interactive pipeline for testing and fun|
 
 ## Packages
+
 |Package|Purpose|
 |-----------|-------|
 |launches|Contains the main launch files for quick launching|
@@ -91,7 +97,9 @@ $ ros2 launch launches click_launch.py
 |ngeeann_av_nav|Contains the navigation stack|
 
 ## Troubleshoot
+
 There are occasions where `colcon build` does not properly rebuild the 'build' and 'install' folders, especially when one has made changes to the CMakeLists.txt. In the following, a simple quick fix can be performed.
+
 ```bash
 # Remove build and install files
 $ cd PATH/TO/WORKSPACE/
@@ -103,10 +111,9 @@ $ rm -rf build install
 <br />
 <br />
 <div align="center">
-	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/renders.gif?raw=true" />
-	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/1.gif?raw=true" />
-	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/2.gif?raw=true" />
-	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/3.gif?raw=true" />
-	<img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/4.gif?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/renders.gif?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/1.gif?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/2.gif?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/3.gif?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/gifs/4.gif?raw=true" />
 </div>
-
