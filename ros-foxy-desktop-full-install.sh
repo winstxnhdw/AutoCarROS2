@@ -1,3 +1,5 @@
+#!/bin/bash
+
 locale
 read -p "Do you want to update your locale to en_SG.UTF-8 (y/n)?" input
 if ["$input" = "y"];
