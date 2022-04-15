@@ -1,3 +1,5 @@
+#!/bin/sh
+
 sudo apt update
 sudo apt install python3-pip
 sudo apt install -y python3-argcomplete
