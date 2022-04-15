@@ -7,4 +7,5 @@ sudo apt install ros-foxy-joint-state-publisher
 sudo apt install ros-foxy-vision-msgs
 sudo apt install ros-foxy-gazebo-ros-pkgs
 
+pip install --upgrade pip
 pip install -r requirements.txt
