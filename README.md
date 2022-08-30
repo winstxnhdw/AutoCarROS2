@@ -27,33 +27,33 @@ $ mkdir -p PATH/TO/WORKSPACE/src
 $ cd src
 ```
 
-Clone repository
+Clone the repository.
 
 ```bash
 $ git clone https://github.com/winstxnhdw/AutoCarROS2.git
 $ cd PATH/TO/WORKSPACE/src/AutoCarROS2
 ```
 
-Install ROS 2  and the required dependencies
+Install ROS 2 **and** the required dependencies.
 
 ```bash
 sh ros-foxy-desktop-full-install.sh
 ```
 
-If you only need to install the required dependencies, run the following.
+If you only need to install the required dependencies, run the following. Otherwise, skip this step.
 
 ```bash
 sh requirements.sh
 ```
 
-Build the packages
+Build the packages.
 
 ```bash
 $ cd PATH/TO/WORKSPACE/
 $ colcon build
 ```
 
-Append the workspace to .bashrc
+Append the workspace to .bashrc.
 
 ```bash
 $ echo "source PATH/TO/WORKSPACE/install/setup.bash" >> ~/.bashrc
@@ -88,23 +88,23 @@ $ ros2 launch launches click_launch.py
 
 |Launch File|Purpose|
 |-----------|-------|
-|default_launch.py|Complete pipeline with preset waypoints|
-|click_launch.py|Interactive pipeline for testing and fun|
+|`default_launch.py`|Complete pipeline with preset waypoints|
+|`click_launch.py`|Interactive pipeline for testing and fun|
 
 ## Packages
 
 |Package|Purpose|
 |-----------|-------|
-|launches|Contains the main launch files for quick launching|
-|ngeeann_av_description|Contains the model's URDF and RViz configuration files|
-|ngeeann_av_gazebo|Contains the world files and model's SDF|
-|ngeeann_av_map|Contains the Bayesian Occupancy Filter stack|
-|ngeeann_av_msgs|Contains all custom messages used throughout every package|
-|ngeeann_av_nav|Contains the navigation stack|
+|`launches`|Contains the main launch files for quick launching|
+|`ngeeann_av_description`|Contains the model's URDF and RViz configuration files|
+|`ngeeann_av_gazebo`|Contains the world files and model's SDF|
+|`ngeeann_av_map`|Contains the Bayesian Occupancy Filter stack|
+|`ngeeann_av_msgs`|Contains all custom messages used throughout every package|
+|`ngeeann_av_nav`|Contains the navigation stack|
 
 ## Troubleshoot
 
-There are occasions where `colcon build` does not properly rebuild the 'build' and 'install' folders, especially when one has made changes to the CMakeLists.txt. In the following, a simple quick fix can be performed.
+There are occasions where `colcon build` does not properly rebuild the 'build' and 'install' folders, especially when one has made changes to the `CMakeLists.txt`. In the following, a simple quick fix can be performed.
 
 ```bash
 # Remove build and install files
