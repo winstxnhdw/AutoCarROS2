@@ -38,6 +38,11 @@ Install ROS 2  and the required dependencies
 
 ```bash
 sh ros-foxy-desktop-full-install.sh
+```
+
+If you only need to install the required dependencies, run the following.
+
+```bash
 sh requirements.sh
 ```
 
