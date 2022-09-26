@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
-import rclpy
 import numpy as np
-
-from rclpy.node import Node
-from geometry_msgs.msg import PoseStamped, Pose2D
-from autocar_msgs.msg import Path2D, State2D
+import rclpy
+from geometry_msgs.msg import Pose2D, PoseStamped
 from nav_msgs.msg import Path
+from rclpy.node import Node
 from std_msgs.msg import Float64
-from autocar_nav.heading2quaternion import heading_to_quaternion
-from autocar_nav.cubic_spline_interpolator import generate_cubic_path
+
+from autocar_msgs.msg import Path2D, State2D
+from autocar_nav import generate_cubic_path, yaw_to_quaternion
+
 
 class LocalPathPlanner(Node):
 
@@ -123,7 +123,7 @@ class LocalPathPlanner(Node):
             vpose.pose.position.x = cx[n]
             vpose.pose.position.y = cy[n]
             vpose.pose.position.z = 0.0
-            vpose.pose.orientation = heading_to_quaternion(np.pi * 0.5 - cyaw[n])
+            vpose.pose.orientation = yaw_to_quaternion(np.pi * 0.5 - cyaw[n])
             viz_path.poses.append(vpose)
 
         self.local_planner_pub.publish(target_path)

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-import rclpy
 import numpy as np
-
-from rclpy.node import Node
+import rclpy
 from nav_msgs.msg import Odometry
+from rclpy.node import Node
+
 from autocar_msgs.msg import State2D
+
 
 class Localisation(Node):
 

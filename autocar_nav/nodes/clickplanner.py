@@ -1,22 +1,20 @@
 #!/usr/bin/env python3
 
 import rclpy
-
-from rclpy.node import Node
-from geometry_msgs.msg import PoseStamped, Pose2D, Point
-from autocar_msgs.msg import Path2D
+from builtin_interfaces.msg import Duration
+from geometry_msgs.msg import Point, Pose2D, PoseStamped
 from nav_msgs.msg import Path
+from rclpy.node import Node
 from std_msgs.msg import Float64
 from visualization_msgs.msg import Marker
-from builtin_interfaces.msg import Duration
-from autocar_nav.cubic_spline_interpolator import generate_cubic_path
+
+from autocar_msgs.msg import Path2D
+from autocar_nav import generate_cubic_path
+
 
 class ClickPlanner(Node):
 
     def __init__(self):
-        ''' 
-        Class constructor to initialise the class 
-        '''
 
         super().__init__('click_planner')
 

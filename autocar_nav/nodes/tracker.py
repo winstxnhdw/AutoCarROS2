@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
-import rclpy
 import threading
-import numpy as np
 
+import numpy as np
+import rclpy
+from geometry_msgs.msg import PoseStamped, Twist
 from rclpy.node import Node
-from autocar_msgs.msg import State2D, Path2D
-from geometry_msgs.msg import Twist, PoseStamped
 from std_msgs.msg import Float64
-from autocar_nav.normalise_angle import normalise_angle
-from autocar_nav.heading2quaternion import heading_to_quaternion
+
+from autocar_msgs.msg import Path2D, State2D
+from autocar_nav import normalise_angle, yaw_to_quaternion
+
 
 class PathTracker(Node):
 
@@ -136,7 +137,7 @@ class PathTracker(Node):
         pose.pose.position.x = self.cx[target_idx]
         pose.pose.position.y = self.cy[target_idx]
         pose.pose.position.z = 0.0
-        pose.pose.orientation = heading_to_quaternion(self.cyaw[target_idx])
+        pose.pose.orientation = yaw_to_quaternion(self.cyaw[target_idx])
         self.lateral_ref_pub.publish(pose)
 
     # Stanley controller determines the appropriate steering angle

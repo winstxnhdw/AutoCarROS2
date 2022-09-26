@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-import rclpy
 import os
+
 import numpy as np
 import pandas as pd
-
-from rclpy.node import Node
-from geometry_msgs.msg import Pose2D, Pose, PoseArray
-from autocar_msgs.msg import Path2D, State2D
+import rclpy
 from ament_index_python.packages import get_package_share_directory
+from geometry_msgs.msg import Pose, Pose2D, PoseArray
+from rclpy.node import Node
+
+from autocar_msgs.msg import Path2D, State2D
+
 
 class GlobalPathPlanner(Node):
 
