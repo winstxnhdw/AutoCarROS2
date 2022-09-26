@@ -9,13 +9,13 @@ from launch.actions import DeclareLaunchArgument, ExecuteProcess, SetEnvironment
 
 def generate_launch_description():
 
-    navpkg = 'ngeeann_av_nav'
-    gzpkg = 'ngeeann_av_gazebo'
-    descpkg = 'ngeeann_av_description'
-    mappkg = 'ngeeann_av_map'
+    navpkg = 'autocar_nav'
+    gzpkg = 'autocar_gazebo'
+    descpkg = 'autocar_description'
+    mappkg = 'autocar_map'
 
-    world = os.path.join(get_package_share_directory(gzpkg), 'worlds', 'ngeeann_av.world')
-    urdf = os.path.join(get_package_share_directory(descpkg),'urdf', 'ngeeann_av.xacro')
+    world = os.path.join(get_package_share_directory(gzpkg), 'worlds', 'autocar.world')
+    urdf = os.path.join(get_package_share_directory(descpkg),'urdf', 'autocar.xacro')
     rviz = os.path.join(get_package_share_directory(descpkg), 'rviz', 'view.rviz')
     
     navconfig = os.path.join(get_package_share_directory(navpkg), 'config', 'navigation_params.yaml')

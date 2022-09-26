@@ -6,7 +6,7 @@
 <p align="center"><b>AutoCarROS has migrated to ROS 2 Foxy Fitzroy</b></p>
 
 <div align="center">
-    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/ngeeann_av_ultrawide.png?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/autocar_ultrawide.png?raw=true" />
 </div>
 
 ## Abstract
@@ -96,11 +96,11 @@ $ ros2 launch launches click_launch.py
 |Package|Purpose|
 |-----------|-------|
 |`launches`|Contains the main launch files for quick launching|
-|`ngeeann_av_description`|Contains the model's URDF and RViz configuration files|
-|`ngeeann_av_gazebo`|Contains the world files and model's SDF|
-|`ngeeann_av_map`|Contains the Bayesian Occupancy Filter stack|
-|`ngeeann_av_msgs`|Contains all custom messages used throughout every package|
-|`ngeeann_av_nav`|Contains the navigation stack|
+|`autocar_description`|Contains the model's URDF and RViz configuration files|
+|`autocar_gazebo`|Contains the world files and model's SDF|
+|`autocar_map`|Contains the Bayesian Occupancy Filter stack|
+|`autocar_msgs`|Contains all custom messages used throughout every package|
+|`autocar_nav`|Contains the navigation stack|
 
 ## Troubleshoot
 

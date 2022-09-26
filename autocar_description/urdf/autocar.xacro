@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<robot name="autocar" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+  <!-- RVIZ MATERIAL COLOUR -->
+  <material name="silver">
+    <color rgba="0.1 0.1 0.1 0.5" />
+  </material>
+
+  <material name="darkgrey">
+    <color rgba="0 0 0 0.7" />
+  </material>
+
+
+  <!-- ROBOT DEFINITION -->
+  <link name="base_link" />
+
+  <joint name="chassis_link_joint" type="fixed">
+    <origin xyz="0 0 0.4936" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="chassis_link" />
+  </joint>
+
+  <joint name="hokuyo_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0 2.34 0.24" rpy="0 0 1.5708" />
+    <parent link="chassis_link" />
+    <child link="hokuyo_link" />
+  </joint>
+
+  <link name="hokuyo_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 1.0" />
+      <geometry>
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/hokuyo.dae" />
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <link name="chassis_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="1.04282e-06 0.07307 0.1816" />
+      <mass value="1580" />
+      <inertia ixx="1997.8579" ixy="-3e-05" ixz="-1e-06" iyy="442.7692" iyz="62.5206" izz="2238.0524" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/chassis_link.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="silver" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/chassis_link.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="spoiler_joint" type="fixed">
+    <origin xyz="0 0.05 -0.05" rpy="1.5708 0 3.14159" />
+    <parent link="chassis_link" />
+    <child link="spoiler_link" />
+  </joint>
+
+  <link name="spoiler_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/spoiler.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="silver" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/spoiler.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="br_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07" />
+      <mass value="24.5" />
+      <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.8750 1.0136 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/br_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="darkgrey" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.8750 1.0136 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/br_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="bl_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07" />
+      <mass value="24.5" />
+      <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.8750 1.0136 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/bl_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="darkgrey" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.8750 1.0136 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/bl_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="fr_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07" />
+      <mass value="24.5" />
+      <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.8750 -1.5174 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/fr_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="darkgrey" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.8750 -1.5174 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/fr_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="fl_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.0377 1.5929e-07 -1.5929e-07" />
+      <mass value="24.5" />
+      <inertia ixx="1.845139" ixy="-0.0" ixz="-0.0" iyy="1.049606" iyz="0.0" izz="1.049606" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.8750 -1.5174 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/fl_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="darkgrey" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.8750 -1.5174 0.1444" />
+      <geometry>
+        <mesh filename="package://autocar_description/meshes/fl_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="r_steer_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.003381 1.5929e-07 0.02162" />
+      <mass value="1" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+    </inertial>
+  </link>
+
+  <link name="l_steer_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.003381 1.5929e-07 0.02162" />
+      <mass value="1" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+    </inertial>
+  </link>
+
+  <joint name="br_axle" type="continuous">
+    <origin rpy="0 0 0" xyz="0.8750 -1.013637 -0.144363" />
+    <parent link="chassis_link" />
+    <child link="br_1" />
+    <axis xyz="-1.0 0.0 0.0" />
+  </joint>
+
+  <joint name="bl_axle" type="continuous">
+    <origin rpy="0 0 0" xyz="-0.8750 -1.013637 -0.144363" />
+    <parent link="chassis_link" />
+    <child link="bl_1" />
+    <axis xyz="-1.0 0.0 0.0" />
+  </joint>
+
+  <joint name="fr_axle" type="continuous">
+    <origin rpy="0 0 0" xyz="0.05 0.0 0.0" />
+    <parent link="r_steer_1" />
+    <child link="fr_1" />
+    <axis xyz="-1.0 0.0 0.0" />
+  </joint>
+
+  <joint name="fl_axle" type="continuous">
+    <origin rpy="0 0 0" xyz="-0.05 0.0 0.0" />
+    <parent link="l_steer_1" />
+    <child link="fl_1" />
+    <axis xyz="-1.0 0.0 0.0" />
+  </joint>
+
+  <joint name="r_steer" type="revolute">
+    <origin rpy="0 0 0" xyz="0.8250 1.517363 -0.144363" />
+    <parent link="chassis_link" />
+    <child link="r_steer_1" />
+    <axis xyz="0.0 0.0 1.0" />
+    <dynamics damping="0.01" friction="0.01" />
+    <limit effort="1000.0" lower="-0.95" upper="0.95" velocity="100" />
+  </joint>
+
+  <joint name="l_steer" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.8250 1.517363 -0.144363" />
+    <parent link="chassis_link" />
+    <child link="l_steer_1" />
+    <axis xyz="0.0 0.0 1.0" />
+    <dynamics damping="0.01" friction="0.01" />
+    <limit effort="1000.0" lower="-0.95" upper="0.95" velocity="100" />
+  </joint>
+
+  <gazebo reference="chassis_link">
+    <material>Gazebo/White</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+    <gravity>true</gravity>
+  </gazebo>
+
+  <gazebo reference="spoiler_link">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+    <gravity>true</gravity>
+  </gazebo>
+
+  <gazebo reference="br_1">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>1.7</mu1>
+    <mu2>1.7</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="bl_1">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>1.7</mu1>
+    <mu2>1.7</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="fr_1">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>1.7</mu1>
+    <mu2>1.7</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="fl_1">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>1.1</mu1>
+    <mu2>1.1</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="r_steer_1">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="l_steer_1">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+</robot>
