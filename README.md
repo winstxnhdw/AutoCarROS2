@@ -6,7 +6,7 @@
 <p align="center"><b>AutoCarROS has migrated to ROS 2 Foxy Fitzroy</b></p>
 
 <div align="center">
-    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/autocar_ultrawide.png?raw=true" />
+    <img src="https://github.com/winstxnhdw/AutoCarROS/blob/master/resources/pictures/ngeeann_av_ultrawide.png?raw=true" />
 </div>
 
 ## Abstract
