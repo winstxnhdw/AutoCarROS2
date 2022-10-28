@@ -48,7 +48,9 @@ class LocalPathPlanner(Node):
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
-
+        if self.frequency <= 0:
+            self.frequency = 10.0
+            self.get_logger().info('invalid value for update_frequency, which should be larger than zero, set it to default value 10.0 hz.')
         # Class constants
         self.ds = 1 / self.frequency
 
