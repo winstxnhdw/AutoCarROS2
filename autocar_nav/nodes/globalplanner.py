@@ -47,7 +47,11 @@ class GlobalPathPlanner(Node):
 
         except:
             raise Exception("Missing ROS parameters. Check the configuration file.")
-
+        if self.wp_ahead < 0 or self.wp_behind < 0 or self.wp_ahead+self.wp_behind < 2:
+            self.wp_ahead = 3
+            self.wp_behind = 3
+            self.get_logger().info('invalid values for waypoints selection, both of the ahead and behind waypoints should not be negative and 
+                                   the sum should be larger than 2, set both to default value 3.')
         # Get path to waypoints.csv
         dir_path = os.path.join(get_package_share_directory('autocar_nav'), 'data', 'waypoints.csv')
         df = pd.read_csv(dir_path)
