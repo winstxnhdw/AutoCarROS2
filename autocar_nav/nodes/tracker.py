@@ -50,7 +50,9 @@ class PathTracker(Node):
         
         except ValueError:
             raise Exception("Missing ROS parameters. Check the configuration file.")
-
+        if self.frequency <= 0:
+            self.frequency = 50.0
+            self.get_logger().info('invalid value for update_frequency, which should be larger than zero, set it to default value 50.0 hz.')
         # Class variables to use whenever within the class when necessary
         self.x = None
         self.y = None
